@@ -1,8 +1,10 @@
 import React from "react";
 import {
   Avatar,
+  Box,
   Button,
   Center,
+  Divider,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
@@ -11,10 +13,13 @@ import {
   DrawerHeader,
   DrawerOverlay,
   Flex,
+  Link,
   useDisclosure,
+  HStack,
 } from "@chakra-ui/react";
 
 import { BiMenu } from "react-icons/bi";
+import { BsFillBagCheckFill, BsFillBagPlusFill } from "react-icons/bs";
 
 function SideDrawer(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -23,20 +28,45 @@ function SideDrawer(props) {
       <Button colorScheme="teal" onClick={onOpen}>
         <BiMenu />
       </Button>
-      <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
+      <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
         <DrawerOverlay />
-        <DrawerContent>
+        <DrawerContent bgColor="gray.50">
           <DrawerCloseButton mt={2} />
-          <DrawerHeader>User Type</DrawerHeader>
+          <DrawerHeader borderBottomWidth="1px">PR/PO MONITORING</DrawerHeader>
 
-          <DrawerBody mt={20}>
-            <Center>
+          <DrawerBody p={0} mt={1}>
+            <Box p={5} _hover={{ bgColor: "green.100" }}>
+              <HStack>
+                <BsFillBagPlusFill color="teal" fontSize={25} />
+                <Link
+                  width="full"
+                  _hover={{ textDecoration: "none" }}
+                  fontWeight={600}
+                >
+                  Purchase Request
+                </Link>
+              </HStack>
+            </Box>
+            <Box p={5} _hover={{ bgColor: "green.100" }}>
+              <HStack>
+                <BsFillBagCheckFill color="teal" fontSize={25} />
+                <Link
+                  width="full"
+                  _hover={{ textDecoration: "none" }}
+                  fontWeight={600}
+                >
+                  Purchase Order
+                </Link>
+              </HStack>
+            </Box>
+
+            {/* <Center>
               <Avatar src="https://bit.ly/broken-link" size="2xl" />
-            </Center>
+            </Center> */}
           </DrawerBody>
 
           <DrawerFooter borderTopWidth="1px">
-            <Button colorScheme="blue">Logout</Button>
+            <Button colorScheme="green">Logout</Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
