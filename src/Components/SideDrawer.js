@@ -19,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 
 import { BiMenu } from "react-icons/bi";
-import { BsFillBagPlusFill } from "react-icons/bs";
+import { BsFillBagCheckFill, BsFillBagPlusFill } from "react-icons/bs";
 
 function SideDrawer(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -37,6 +37,7 @@ function SideDrawer(props) {
           <DrawerBody p={0} mt={1}>
             <Box p={5} _hover={{ bgColor: "green.100" }}>
               <HStack>
+                <BsFillBagPlusFill color="teal" fontSize={25} />
                 <Link
                   width="full"
                   _hover={{ textDecoration: "none" }}
@@ -44,11 +45,11 @@ function SideDrawer(props) {
                 >
                   Purchase Request
                 </Link>
-                <BsFillBagPlusFill color="green" />
               </HStack>
             </Box>
             <Box p={5} _hover={{ bgColor: "green.100" }}>
               <HStack>
+                <BsFillBagCheckFill color="teal" fontSize={25} />
                 <Link
                   width="full"
                   _hover={{ textDecoration: "none" }}
@@ -56,7 +57,6 @@ function SideDrawer(props) {
                 >
                   Purchase Order
                 </Link>
-                <BsFillBagPlusFill color="green" />
               </HStack>
             </Box>
 
