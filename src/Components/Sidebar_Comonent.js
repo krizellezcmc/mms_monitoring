@@ -8,7 +8,6 @@ import {
   Switch,
   VStack,
   Image,
-  Divider,
 } from "@chakra-ui/react";
 import { AiOutlineHome } from "react-icons/ai";
 import { BsBagCheck, BsBagPlus } from "react-icons/bs";

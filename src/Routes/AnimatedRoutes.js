@@ -1,6 +1,5 @@
 import React from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
-import useAuth from "../Hooks/useAuth";
+import { Route, Routes } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import PurchaseOrder from "../Pages/PurchaseOrder";
 import POReport from "../Components/POReport";

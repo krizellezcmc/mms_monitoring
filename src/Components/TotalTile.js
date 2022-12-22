@@ -2,12 +2,12 @@ import { Box, HStack, Icon, Spacer, Text } from "@chakra-ui/react";
 
 import "../Style/style.css";
 
-import {
-  BsCalendar,
-  BsCalendar2CheckFill,
-  BsCalendar2DateFill,
-  BsFillBagFill,
-} from "react-icons/bs";
+// import {
+//   BsCalendar,
+//   BsCalendar2CheckFill,
+//   BsCalendar2DateFill,
+//   BsFillBagFill,
+// } from "react-icons/bs";
 
 function TotalTile(props) {
   var sample = 1182;
