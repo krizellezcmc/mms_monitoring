@@ -10,7 +10,7 @@ function AnimatedRoutes(props) {
     <AnimatePresence>
       <Routes>
         <Route path="/"></Route>
-        <Route path="/po" element={<PurchaseOrder />}></Route>{" "}
+        <Route path="/po" element={<PurchaseOrder />}></Route>
         <Route path="/po-report" element={<POReport />}></Route>
       </Routes>
     </AnimatePresence>
