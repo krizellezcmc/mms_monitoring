@@ -5,6 +5,7 @@ import AnimatedRoutes from "./Routes/AnimatedRoutes";
 
 function App() {
   const { user } = useAuth();
+
   return (
     <div style={{ backgroundColor: "F7FAFC" }}>
       <Router>
