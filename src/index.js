@@ -1,13 +1,28 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { ChakraProvider } from "@chakra-ui/react";
+import { DataProvider } from "./Context/DataContext";
+import "./index.css";
+import { extendTheme } from "@chakra-ui/react";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+const theme = extendTheme({
+  fonts: {
+    heading: `'Poppins', sans-serif`,
+    body: `'Poppins', sans-serif`,
+  },
+});
+
 root.render(
   <React.StrictMode>
-    <App />
+    <DataProvider theme={theme}>
+      <ChakraProvider>
+        <App />
+      </ChakraProvider>
+    </DataProvider>
   </React.StrictMode>
 );
 

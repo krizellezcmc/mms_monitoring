@@ -1,23 +1,16 @@
-import logo from "./logo.svg";
 import "./App.css";
+import { BrowserRouter as Router } from "react-router-dom";
+import useAuth from "./Hooks/useAuth";
+import AnimatedRoutes from "./Routes/AnimatedRoutes";
 
 function App() {
+  const { user } = useAuth();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload. JEJEMON
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Krizelle
-        </a>
-      </header>
+    <div style={{ backgroundColor: "F7FAFC" }}>
+      <Router>
+        <AnimatedRoutes />
+      </Router>
     </div>
   );
 }
