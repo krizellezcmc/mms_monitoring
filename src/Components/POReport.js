@@ -15,10 +15,18 @@ import React from "react";
 function POReport(props) {
   return (
     <>
-      <Container maxW="container.lg" bgColor="white" p={5} boxShadow="md">
+      <Container
+        maxW="container.lg"
+        bgColor="white"
+        p={7}
+        borderRadius={8}
+        boxShadow="md"
+        fontSize={16}
+        mt={10}
+      >
         {/* CONTENT  */}
         <TableContainer>
-          <Table colorScheme="black" variant="simple" size="sm">
+          <Table colorScheme="black" variant="simple" size="2xl">
             <Tr>
               <Td colSpan={5} borderBottom={0}>
                 <Text>
@@ -74,7 +82,7 @@ function POReport(props) {
             </Tr>
           </Table>
         </TableContainer>
-        <TableContainer mx={4} my={2}>
+        <TableContainer my={2}>
           {/* <Text fontWeight={600}>Item List</Text> */}
           <Table
             bgColor="white"
@@ -103,7 +111,7 @@ function POReport(props) {
               </Td>
               <Td border="1px">Quantity</Td>
               <Td border="1px">Unit Cost</Td>
-              <Td border="1px">Amount</Td>
+              <Td border="1px"> 00, 00000</Td>
             </Tr>
             {/* END ITEM LIST HERE */}
             <Tr>
@@ -115,7 +123,7 @@ function POReport(props) {
               <Td border="1px"></Td>
               <Td border="1px"></Td>
               <Td border="1px" colSpan={1} fontWeight={700}>
-                00, 00000
+                Php 00, 00000
               </Td>
             </Tr>
             <Tr>
@@ -137,7 +145,7 @@ function POReport(props) {
                 textTransform="uppercase"
                 textAlign="center"
                 colSpan={4}
-                fontWeight={600}
+                fontWeight={700}
               >
                 EIGHT HUNDRED PESOS ONLY
               </Td>
