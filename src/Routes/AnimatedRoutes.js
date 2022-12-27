@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import PurchaseOrder from "../Pages/PurchaseOrder";
-import SearchPO from "../Components/SearchPO";
+import SearchPO from "../Pages/SearchPO";
 import Chart from "../Components/ChartSample";
 import ChartSample from "../Components/ChartSample";
 

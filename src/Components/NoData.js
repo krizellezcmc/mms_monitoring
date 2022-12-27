@@ -24,8 +24,7 @@ function NoData(props) {
           Purchase order number not found!
         </AlertTitle>
         <AlertDescription maxWidth="sm">
-          Thanks for submitting your application. Our team will get back to you
-          soon.
+          Please enter a valid PO number.
         </AlertDescription>
       </Alert>
     </div>

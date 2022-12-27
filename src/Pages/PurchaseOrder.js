@@ -20,6 +20,7 @@ import {
   BsFillCalendar2Fill,
   BsFillCalendar2RangeFill,
 } from "react-icons/bs";
+import NoData from "../Components/NoData";
 
 function PurchaseOrder(props) {
   const [year, setYear] = useState(moment().format("YYYY"));
@@ -58,7 +59,6 @@ function PurchaseOrder(props) {
           <BsArrowRightShort fontSize={20} />
         </Button>
       </Flex>
-
       <Wrap justify="center" spacing="30px" p={5}>
         <WrapItem>
           <TotalTile
