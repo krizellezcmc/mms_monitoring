@@ -85,7 +85,7 @@ function BarChart(props) {
 
   return (
     <div>
-      <Bar data={data} options={config} height={600} width={600} />
+      <Bar data={data} options={config} height={600} width={1300} />
     </div>
   );
 }
