@@ -4,9 +4,15 @@ import {
   Wrap,
   WrapItem,
   Flex,
+<<<<<<< HEAD
   HStack,
   Spacer,
   Center,
+=======
+  Spacer,
+  Button,
+  Link,
+>>>>>>> kriz
 } from "@chakra-ui/react";
 import SideDrawer from "../Components/SideDrawer";
 import TotalTile from "../Components/TotalTile";
@@ -15,11 +21,19 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import localApi from "../API/localAPI";
 import {
+<<<<<<< HEAD
+=======
+  BsArrowRightShort,
+>>>>>>> kriz
   BsFillCalendar2CheckFill,
   BsFillCalendar2Fill,
   BsFillCalendar2RangeFill,
 } from "react-icons/bs";
+<<<<<<< HEAD
 import BarChart from "../Components/Charts/BarChart";
+=======
+import NoData from "../Components/NoData";
+>>>>>>> kriz
 
 function PurchaseOrder(props) {
   const [year, setYear] = useState(moment().format("YYYY"));
@@ -46,9 +60,23 @@ function PurchaseOrder(props) {
 
   return (
     <div>
-      <Box p={5}>
+      <Flex p={5}>
         <SideDrawer />
+<<<<<<< HEAD
       </Box>
+=======
+        <Spacer />
+        <Button
+          as={Link}
+          href="po-report"
+          colorScheme="teal"
+          _hover={{ textDecoration: "none" }}
+        >
+          Search Purchase Order &nbsp;
+          <BsArrowRightShort fontSize={20} />
+        </Button>
+      </Flex>
+>>>>>>> kriz
       <Wrap justify="center" spacing="30px" p={5}>
         <WrapItem>
           <TotalTile
