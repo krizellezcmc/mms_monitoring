@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
   Container,
   Box,
@@ -14,6 +15,9 @@ import {
   Link,
 >>>>>>> kriz
 } from "@chakra-ui/react";
+=======
+import { Box, Wrap, WrapItem, Center } from "@chakra-ui/react";
+>>>>>>> 1bddfeec98e9ffaa0d5545796a4f6b754a784f29
 import SideDrawer from "../Components/SideDrawer";
 import TotalTile from "../Components/TotalTile";
 import "../Style/style.css";
@@ -104,24 +108,7 @@ function PurchaseOrder(props) {
         </WrapItem>
       </Wrap>
       <Center p={5} display={{ sm: "block", lg: "flex" }}>
-        <Box
-          boxShadow="md"
-          p={10}
-          borderRadius={20}
-          bgColor="white"
-          mr={{ sm: 0, lg: 5 }}
-        >
-          <BarChart />
-        </Box>
-
-        <Box
-          boxShadow="md"
-          p={10}
-          borderRadius={20}
-          bgColor="white"
-          ml={{ sm: 0, lg: 5 }}
-          mt={{ sm: 10, lg: 0 }}
-        >
+        <Box boxShadow="md" p={10} borderRadius={20} bgColor="white">
           <BarChart />
         </Box>
       </Center>
