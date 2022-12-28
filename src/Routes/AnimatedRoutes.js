@@ -4,6 +4,7 @@ import useAuth from "../Hooks/useAuth";
 import { AnimatePresence } from "framer-motion";
 import PurchaseOrder from "../Pages/PurchaseOrder";
 import POReport from "../Components/POReport";
+import Category from "../Components/Category";
 
 function AnimatedRoutes(props) {
   return (
@@ -12,6 +13,7 @@ function AnimatedRoutes(props) {
         <Route path="/"></Route>
         <Route path="/po" element={<PurchaseOrder />}></Route>
         <Route path="/po-report" element={<POReport />}></Route>
+        <Route path="/category" element={<Category />}></Route>
       </Routes>
     </AnimatePresence>
   );
