@@ -7,6 +7,7 @@ import {
   Spacer,
   Button,
   Link,
+  Center,
 } from "@chakra-ui/react";
 import SideDrawer from "../Components/SideDrawer";
 import TotalTile from "../Components/TotalTile";
@@ -20,6 +21,7 @@ import {
   BsFillCalendar2Fill,
   BsFillCalendar2RangeFill,
 } from "react-icons/bs";
+import BarChart from "../Components/Charts/BarChart";
 import NoData from "../Components/NoData";
 
 function PurchaseOrder(props) {
@@ -28,6 +30,7 @@ function PurchaseOrder(props) {
   const [totalYear, setTotalYear] = useState("");
   const [totalMonth, setTotalMonth] = useState("");
   const [totalNS, setTotalNS] = useState("");
+  const [supplier, setSupplier] = useState([]);
 
   const fetchTotal = async () => {
     let responseYear = await localApi.get("/get_TotalperYear.php");
@@ -85,6 +88,11 @@ function PurchaseOrder(props) {
           />
         </WrapItem>
       </Wrap>
+      <Center p={5} display={{ sm: "block", lg: "flex" }}>
+        <Box boxShadow="md" p={10} borderRadius={20} bgColor="white">
+          <BarChart />
+        </Box>
+      </Center>
     </div>
   );
 }
