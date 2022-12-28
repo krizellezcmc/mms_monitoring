@@ -4,15 +4,10 @@ import {
   WrapItem,
   Flex,
   Spacer,
-  Center,
   Button,
   Link,
   Center,
 } from "@chakra-ui/react";
-<<<<<<< HEAD
-=======
-
->>>>>>> master
 import SideDrawer from "../Components/SideDrawer";
 import TotalTile from "../Components/TotalTile";
 import "../Style/style.css";
@@ -20,20 +15,12 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import localApi from "../API/localAPI";
 import {
-<<<<<<< HEAD
-  BsArrowRightShort,
-=======
->>>>>>> master
   BsFillCalendar2CheckFill,
   BsFillCalendar2Fill,
   BsFillCalendar2RangeFill,
   BsArrowRightShort,
 } from "react-icons/bs";
 import BarChart from "../Components/Charts/BarChart";
-<<<<<<< HEAD
-import NoData from "../Components/NoData";
-=======
->>>>>>> master
 
 function PurchaseOrder(props) {
   const [year, setYear] = useState(moment().format("YYYY"));
