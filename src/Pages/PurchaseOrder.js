@@ -1,15 +1,13 @@
 import {
-  Container,
   Box,
   Wrap,
   WrapItem,
   Flex,
-  HStack,
   Spacer,
   Center,
+  Button,
+  Link,
 } from "@chakra-ui/react";
-
-import { Box, Wrap, WrapItem, Center } from "@chakra-ui/react";
 
 import SideDrawer from "../Components/SideDrawer";
 import TotalTile from "../Components/TotalTile";
@@ -21,6 +19,7 @@ import {
   BsFillCalendar2CheckFill,
   BsFillCalendar2Fill,
   BsFillCalendar2RangeFill,
+  BsArrowRightShort,
 } from "react-icons/bs";
 import BarChart from "../Components/Charts/BarChart";
 
@@ -51,6 +50,16 @@ function PurchaseOrder(props) {
     <div>
       <Flex p={5}>
         <SideDrawer />
+        <Spacer />
+        <Button
+          as={Link}
+          href="po-report"
+          colorScheme="teal"
+          _hover={{ textDecoration: "none" }}
+        >
+          Search Purchase Order &nbsp;
+          <BsArrowRightShort fontSize={20} />
+        </Button>
       </Flex>
       <Wrap justify="center" spacing="30px" p={5}>
         <WrapItem>
