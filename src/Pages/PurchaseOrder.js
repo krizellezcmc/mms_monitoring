@@ -1,4 +1,3 @@
-import { Box, Wrap, WrapItem, Center } from "@chakra-ui/react";
 import {
   Container,
   Box,
@@ -8,6 +7,7 @@ import {
   Spacer,
   Button,
   Link,
+  Center,
 } from "@chakra-ui/react";
 import SideDrawer from "../Components/SideDrawer";
 import TotalTile from "../Components/TotalTile";
