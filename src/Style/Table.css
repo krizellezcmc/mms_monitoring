@@ -2,4 +2,14 @@
 th {
   border: 1px solid gray;
   font-size: 15px;
+  padding: 4px;
+}
+
+.items-table tr td {
+  border: 1px solid gray;
+  font-size: 15px;
+}
+
+.items-table th {
+  background: lightgray;
 }
