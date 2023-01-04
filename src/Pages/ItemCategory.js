@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import Category from "../Components/Category";
 import { BiChevronLeft } from "react-icons/bi";
+import ItemsTable from "../Components/ItemsTable";
 
 function StocksIssuance(props) {
   return (
@@ -27,10 +28,11 @@ function StocksIssuance(props) {
           </Button>
           <Spacer />
           <Heading size="lg" fontWeight={500}>
-            P.O Items (Category)
+            All Items
           </Heading>
         </Flex>
-        <Category />
+
+        <ItemsTable />
       </Container>
     </div>
   );
