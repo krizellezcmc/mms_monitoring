@@ -55,7 +55,32 @@ function PurchaseOrder(props) {
         <Spacer />{" "}
         <Button
           as={Link}
+          href="po-report"
+          colorScheme="teal"
+          mr={2}
+          _hover={{ textDecoration: "none" }}
+        >
+          Search Purchase Order &nbsp;
+          <BsArrowRightShort fontSize={20} />
+        </Button>
+        <Button
+          as={Link}
           href="issuance"
+          colorScheme="teal"
+          variant="outline"
+          mr={2}
+          _hover={{
+            textDecoration: "none",
+            backgroundColor: "teal",
+            color: "white",
+          }}
+        >
+          Item Category &nbsp;
+          <BsBox fontSize={15} />
+        </Button>
+        <Button
+          as={Link}
+          href="dept"
           colorScheme="teal"
           variant="outline"
           mr={2}
@@ -67,15 +92,6 @@ function PurchaseOrder(props) {
         >
           Stocks Issuance &nbsp;
           <BsBox fontSize={15} />
-        </Button>
-        <Button
-          as={Link}
-          href="po-report"
-          colorScheme="teal"
-          _hover={{ textDecoration: "none" }}
-        >
-          Search Purchase Order &nbsp;
-          <BsArrowRightShort fontSize={20} />
         </Button>
       </Flex>
       <Wrap justify="center" spacing="30px" p={5}>
