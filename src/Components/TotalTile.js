@@ -10,7 +10,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-import "../Style/style.css";
+import "../Styles/style.css";
 
 import {
   BsCalendar,

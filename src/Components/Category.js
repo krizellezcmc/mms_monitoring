@@ -9,7 +9,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { Select } from "chakra-react-select";
 import localApi from "../API/localAPI";
-import "../Style/style.css";
+import "../Styles/style.css";
 
 function Category(props) {
   const [options, setOptions] = useState([]);
