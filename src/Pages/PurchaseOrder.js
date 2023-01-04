@@ -19,6 +19,7 @@ import {
   BsFillCalendar2Fill,
   BsFillCalendar2RangeFill,
   BsArrowRightShort,
+  BsBox,
 } from "react-icons/bs";
 import BarChart from "../Components/Charts/BarChart";
 
@@ -49,7 +50,22 @@ function PurchaseOrder(props) {
     <div>
       <Flex p={5}>
         <SideDrawer />
-        <Spacer />
+        <Spacer />{" "}
+        <Button
+          as={Link}
+          href="issuance"
+          colorScheme="teal"
+          variant="outline"
+          mr={2}
+          _hover={{
+            textDecoration: "none",
+            backgroundColor: "teal",
+            color: "white",
+          }}
+        >
+          Stocks Issuance &nbsp;
+          <BsBox fontSize={15} />
+        </Button>
         <Button
           as={Link}
           href="po-report"

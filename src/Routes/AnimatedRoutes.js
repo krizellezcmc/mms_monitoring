@@ -3,8 +3,9 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import PurchaseOrder from "../Pages/PurchaseOrder";
 import SearchPO from "../Pages/SearchPO";
-import Chart from "../Components/ChartSample";
 import ChartSample from "../Components/ChartSample";
+import ItemCategory from "../Pages/ItemCategory";
+import Table from "../Components/TableSample";
 
 function AnimatedRoutes(props) {
   return (
@@ -12,8 +13,12 @@ function AnimatedRoutes(props) {
       <Routes>
         <Route path="/"></Route>
         <Route path="/po" element={<PurchaseOrder />}></Route>
-        <Route path="/po-report" element={<SearchPO />}></Route>{" "}
+        <Route path="/po-report" element={<SearchPO />}></Route>
         <Route path="/chart" element={<ChartSample />}></Route>
+        <Route path="/issuance" element={<ItemCategory />}></Route>
+
+        {/* DELETE AFTER */}
+        <Route path="/sample" element={<Table />}></Route>
       </Routes>
     </AnimatePresence>
   );

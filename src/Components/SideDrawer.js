@@ -1,10 +1,7 @@
 import React from "react";
 import {
-  Avatar,
   Box,
   Button,
-  Center,
-  Divider,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
@@ -12,7 +9,6 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
-  Flex,
   Link,
   useDisclosure,
   HStack,
@@ -35,7 +31,7 @@ function SideDrawer(props) {
       <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent bgColor="gray.50">
-          <DrawerCloseButton mt={2} />
+          <DrawerCloseButton mt={2} border={0} />
           <DrawerHeader borderBottomWidth="1px">PR/PO MONITORING</DrawerHeader>
 
           <DrawerBody p={0} mt={1}>
