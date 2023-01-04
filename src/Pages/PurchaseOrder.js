@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import SideDrawer from "../Components/SideDrawer";
 import TotalTile from "../Components/TotalTile";
-import "../Style/style.css";
+import "../Styles/style.css";
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import localApi from "../API/localAPI";

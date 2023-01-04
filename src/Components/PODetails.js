@@ -12,7 +12,7 @@ import React, { useEffect, useState } from "react";
 import api from "../API/localAPI";
 import NoData from "./NoData";
 import moment from "moment";
-import "../Style/Table.css";
+import "../Styles/Table.css";
 
 const POReport = (props) => {
   const [data, setData] = useState([]);
