@@ -16,6 +16,7 @@ import cloneDeep from "lodash/cloneDeep";
 import throttle from "lodash/throttle";
 import { BsSearch } from "react-icons/bs";
 import { Paginate } from "react-paginate-chakra-ui";
+import "../Styles/style.css";
 
 function Category(props) {
   const [options, setOptions] = useState([]);

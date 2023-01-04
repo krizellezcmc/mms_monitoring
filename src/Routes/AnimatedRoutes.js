@@ -2,10 +2,12 @@ import React from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import PurchaseOrder from "../Pages/PurchaseOrder";
+import Category from "../Components/Category";
 import SearchPO from "../Pages/SearchPO";
 import ChartSample from "../Components/ChartSample";
 import ItemCategory from "../Pages/ItemCategory";
 import Table from "../Components/TableSample";
+import Department from "../Components/Department";
 
 function AnimatedRoutes(props) {
   return (
@@ -19,6 +21,8 @@ function AnimatedRoutes(props) {
 
         {/* DELETE AFTER */}
         <Route path="/sample" element={<Table />}></Route>
+        <Route path="/category" element={<Category />}></Route>
+        <Route path="/dept" element={<Department />}></Route>
       </Routes>
     </AnimatePresence>
   );
