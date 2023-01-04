@@ -20,7 +20,6 @@ import {
   BsFillCalendar2CheckFill,
   BsFillCalendar2Fill,
   BsFillCalendar2RangeFill,
-  BsArrowRightShort,
 } from "react-icons/bs";
 import BarChart from "../Components/Charts/BarChart";
 import NoData from "../Components/NoData";
