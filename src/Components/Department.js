@@ -12,13 +12,19 @@ import {
   TableContainer,
   Tr,
   Td,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
 } from "@chakra-ui/react";
 import { Select } from "chakra-react-select";
 import "../Styles/style.css";
 import "../Styles/Table.css";
 import NoDeptData from "./NoDeptData";
 import moment from "moment";
-import { BiChevronLeft, BiSearchAlt2 } from "react-icons/bi";
+import { BiChevronLeft, BiMinus, BiPlus } from "react-icons/bi";
+import ItemDesc from "./ItemDesc";
 
 function Department(props) {
   const [options, setOptions] = useState([]);
@@ -81,32 +87,61 @@ function Department(props) {
                 <td style={{ fontWeight: "bolder", padding: "5px" }}>
                   Issue No
                 </td>
-                <td style={{ fontWeight: "bolder", padding: "5px" }}>
+                {/* <td style={{ fontWeight: "bolder", padding: "5px" }}>
                   Item Code
-                </td>
-                <td style={{ fontWeight: "bolder", padding: "5px" }}>
+                </td> */}
+                <td
+                  style={{ fontWeight: "bolder", padding: "5px", width: "50%" }}
+                >
                   Item Description
                 </td>
                 <td style={{ fontWeight: "bolder", padding: "5px" }}>
                   Issue Date
                 </td>
-                <td style={{ fontWeight: "bolder", padding: "5px" }}>Unit</td>
-                <td style={{ fontWeight: "bolder", padding: "5px" }}>QTY</td>
-                <td style={{ fontWeight: "bolder", padding: "5px" }}>Price</td>
+                {/* <td style={{ fontWeight: "bolder", padding: "5px" }}>Unit</td>
+                <td style={{ fontWeight: "bolder", padding: "5px" }}>QTY</td> */}
+                <td style={{ fontWeight: "bolder", padding: "5px" }}>
+                  Grand Total
+                </td>
               </tr>
               {deptData.map((j, k) => {
                 return (
                   <>
                     <tr>
                       <td>{j.IssueNo}</td>
-                      <td>{j.ItemCode}</td>
-                      <td>{j.ItemDesc}</td>
+
                       <td>
-                        {moment(j.DateIssued).format("MMMM DD, YYYY, h:mm A")}
+                        <Accordion allowMultiple>
+                          <AccordionItem>
+                            {({ isExpanded }) => (
+                              <>
+                                <h2>
+                                  <AccordionButton>
+                                    <Box as="span" flex="1" textAlign="left">
+                                      Items
+                                    </Box>
+                                    {isExpanded ? (
+                                      <BiMinus fontSize="12px" />
+                                    ) : (
+                                      <BiPlus fontSize="12px" />
+                                    )}
+                                  </AccordionButton>
+                                </h2>
+                                <AccordionPanel pb={4}>
+                                  <ItemDesc
+                                    id={j.IssueNo}
+                                    selected={selected}
+                                  />
+                                </AccordionPanel>
+                              </>
+                            )}
+                          </AccordionItem>
+                        </Accordion>
                       </td>
-                      <td>{j.Unit}</td>
-                      <td>{j.QTY}</td>
-                      <td>{j.Price}</td>
+                      <td>
+                        {moment(j.DateIssued).format("MMMM DD, YYYY, HH:mm A")}
+                      </td>
+                      <td>{j.Total}</td>
                     </tr>
                   </>
                 );
