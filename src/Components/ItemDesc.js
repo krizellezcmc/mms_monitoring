@@ -10,11 +10,10 @@ function ItemDesc(props) {
       params: { mscWarehouseDST: props.selected, issueNo: props.id },
     });
     setItems(response.data);
-    console.log(response.data);
   };
   useEffect(() => {
     getData();
-  }, []);
+  }, [props.selected, props.id]);
   return (
     <div>
       {items.map((j, k) => {
