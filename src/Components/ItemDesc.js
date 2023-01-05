@@ -14,7 +14,7 @@ function ItemDesc(props) {
   };
   useEffect(() => {
     getData();
-  }, []);
+  }, [props.selected, props.id]);
   return (
     <div>
       {items.map((j, k) => {
