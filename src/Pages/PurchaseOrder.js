@@ -1,5 +1,4 @@
 import {
-  Container,
   Box,
   Wrap,
   WrapItem,
@@ -23,7 +22,6 @@ import {
   BsBox,
 } from "react-icons/bs";
 import BarChart from "../Components/Charts/BarChart";
-import NoData from "../Components/NoData";
 
 function PurchaseOrder(props) {
   const [year, setYear] = useState(moment().format("YYYY"));
@@ -31,7 +29,7 @@ function PurchaseOrder(props) {
   const [totalYear, setTotalYear] = useState("");
   const [totalMonth, setTotalMonth] = useState("");
   const [totalNS, setTotalNS] = useState("");
-  const [supplier, setSupplier] = useState([]);
+  // const [supplier, setSupplier] = useState([]);
 
   const fetchTotal = async () => {
     let responseYear = await localApi.get("/get_TotalperYear.php");
@@ -65,7 +63,7 @@ function PurchaseOrder(props) {
         </Button>
         <Button
           as={Link}
-          href="issuance"
+          href="po/items"
           colorScheme="teal"
           variant="outline"
           mr={2}

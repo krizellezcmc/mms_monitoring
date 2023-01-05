@@ -6,9 +6,11 @@ import Category from "../Components/Category";
 import SearchPO from "../Pages/SearchPO";
 import ChartSample from "../Components/ChartSample";
 import ItemCategory from "../Pages/ItemCategory";
+import ItemsTable from "../Components/ItemsTable";
 import Table from "../Components/TableSample";
 import Department from "../Pages/Department";
 import DepartmentReport from "../Components/DepartmentReport";
+
 
 function AnimatedRoutes(props) {
   return (
@@ -18,6 +20,8 @@ function AnimatedRoutes(props) {
         <Route path="/po" element={<PurchaseOrder />}></Route>
         <Route path="/po-report" element={<SearchPO />}></Route>
         <Route path="/chart" element={<ChartSample />}></Route>
+  
+        <Route path="/po/items" element={<ItemCategory />}></Route>
         <Route path="/issuance" element={<ItemCategory />}></Route>
         <Route path="/dept" element={<Department />}></Route>
         <Route path="/deptreport" element={<DepartmentReport />}></Route>
@@ -25,6 +29,7 @@ function AnimatedRoutes(props) {
         {/* DELETE AFTER */}
         <Route path="/sample" element={<Table />}></Route>
         <Route path="/category" element={<Category />}></Route>
+
       </Routes>
     </AnimatePresence>
   );
