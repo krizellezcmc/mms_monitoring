@@ -6,11 +6,11 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
-function NoSelectedCat(props) {
+function NoInput(props) {
   return (
     <div>
       <Alert
-        mt={10}
+        mt={5}
         status="warning"
         variant="subtle"
         flexDirection="column"
@@ -21,14 +21,14 @@ function NoSelectedCat(props) {
       >
         <AlertIcon boxSize="40px" mr={0} />
         <AlertTitle mt={4} mb={1} fontSize="lg">
-          No selected category
+          Search Purchase Order
         </AlertTitle>
         <AlertDescription maxWidth="sm">
-          Kindly select item category to view list of items.
+          Kindly select category to view list of items.
         </AlertDescription>
       </Alert>
     </div>
   );
 }
 
-export default NoSelectedCat;
+export default NoInput;

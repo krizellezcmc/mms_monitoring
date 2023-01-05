@@ -7,15 +7,17 @@ import {
   Text,
   Th,
   Tr,
+  Badge,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import api from "../API/localAPI";
 import NoData from "./NoData";
 import moment from "moment";
 import "../Styles/Table.css";
-
+import { ToWords } from "to-words";
 
 const POReport = (props) => {
+  let converter = require("number-to-words");
   const [data, setData] = useState([]);
   const [items, setItems] = useState([]);
   const [supplier, setSupplier] = useState("");
@@ -51,6 +53,25 @@ const POReport = (props) => {
       setTerm(res.term);
     }
   };
+  const toWords = new ToWords({
+    localeCode: "en-US",
+    converterOptions: {
+      currency: true,
+      ignoreDecimal: false,
+      ignoreZeroCurrency: false,
+      doNotAddOnly: false,
+      currencyOptions: {
+        name: "Peso",
+        plural: "Pesos",
+        symbol: "₱",
+        fractionalUnit: {
+          name: "Cent",
+          plural: "Cents",
+          symbol: "",
+        },
+      },
+    },
+  });
 
   useEffect(() => {
     getDetails();
@@ -62,13 +83,13 @@ const POReport = (props) => {
         <NoData />
       ) : (
         <Container
-          maxW="container.lg"
+          maxW="auto"
           bgColor="white"
           p={7}
           borderRadius={8}
           boxShadow="md"
           fontSize={16}
-          mt={10}
+          mt={5}
         >
           {/* CONTENT  */}
           <TableContainer>
@@ -111,7 +132,7 @@ const POReport = (props) => {
                 </Td>
                 <Td borderBottom={0}>Mode of Procurement:</Td>
                 <Td textAlign="right" borderBottom={0}>
-                  Direct Contracting
+                  {mode}
                 </Td>
               </Tr>
 
@@ -132,9 +153,9 @@ const POReport = (props) => {
 
           {/* <Text fontWeight={600}>Item List</Text> */}
           <Box mt={5}>
-            <table className="items-table">
+            <table className="items-table" style={{ width: "100%" }}>
               <tr>
-                <th border="1px" width="10%">
+                <th border="1px" width="10%" align="left">
                   Item ID
                 </th>
                 <th border="1px" width="7%">
@@ -157,18 +178,22 @@ const POReport = (props) => {
                 return (
                   <>
                     <tr border="1px">
-                      <td border="1px">{el.itemId}</td>
-                      <td border="1px">{el.unit}</td>
-                      <td border="1px">
+                      <td border="1px" style={{ padding: 4 }}>
+                        {el.itemId}
+                      </td>
+                      <td border="1px" style={{ padding: 4 }}>
+                        {el.unit}
+                      </td>
+                      <td border="1px" style={{ padding: 4 }}>
                         <span>{el.itemDesc + " " + el.itemSpec}</span>
                       </td>
-                      <td border="1px" align="right">
+                      <td border="1px" style={{ padding: 4 }} align="right">
                         {(Math.round(el.qty * 100) / 100).toFixed(2)}
                       </td>
-                      <td border="1px" align="right">
+                      <td border="1px" style={{ padding: 4 }} align="right">
                         {(Math.round(el.price * 100) / 100).toFixed(2)}
                       </td>
-                      <td border="1px" align="right">
+                      <td border="1px" style={{ padding: 4 }} align="right">
                         {(Math.round(el.amount * 100) / 100).toFixed(2)}
                       </td>
                     </tr>
@@ -178,18 +203,18 @@ const POReport = (props) => {
 
               {/* END ITEM LIST HERE */}
               <tr>
-                <td border="1px"></td>
-                <td border="1px"></td>
-                <td border="1px" w="40%">
-                  x-x-x-x-x-x-x-x-x-x-x-x-x-x-x -x-x-x-x-x-x-x
-                </td>
-                <td border="1px"></td>
-                <td border="1px"></td>
+                <td border="1px" colspan={5}></td>
+                {/* <td border="1px"></td>
+                <td border="1px" w="40%" style={{ paddingLeft: "5px" }}> */}
+                {/* <b>x-x-x-x-x-x-x-x-x-x-x-x-x-x-x -x-x-x-x-x-x-x</b> */}
+                {/* </td> */}
+                {/* <td border="1px"></td>
+                <td border="1px"></td> */}
                 <td border="1px" colSpan={1} fontWeight={700} align="right">
                   {items.map((el) => {
                     total += parseFloat(el.amount);
                   })}
-                  <b>{total}</b>
+                  <b style={{ fontSize: 17 }}> ₱ {total.toLocaleString()}</b>
                 </td>
               </tr>
               <tr>
@@ -198,8 +223,19 @@ const POReport = (props) => {
                 </td>
               </tr>
               <tr>
-                <td border="1px" colSpan={6} fontWeight={700}>
-                  <b>{remarks}</b>
+                <td
+                  border="1px"
+                  colSpan={6}
+                  fontWeight={700}
+                  style={{ paddingBottom: 5, paddingLeft: 5 }}
+                >
+                  <b>
+                    {!remarks ? (
+                      <Badge colorScheme="orange">Remarks not available</Badge>
+                    ) : (
+                      remarks
+                    )}
+                  </b>
                 </td>
               </tr>
               <tr>
@@ -211,9 +247,10 @@ const POReport = (props) => {
                   texttransform="uppercase"
                   textAlign="center"
                   colSpan={4}
-                  fontWeight={700}
                 >
-                  EIGHT HUNDRED PESOS ONLY
+                  <Text textTransform="uppercase" fontWeight={600} pl={2}>
+                    {toWords.convert(total.toFixed(2), { currency: true })}
+                  </Text>
                 </td>
               </tr>
             </table>
