@@ -11,8 +11,13 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.2.1",
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     "chart.js": "^4.1.0",
+=======
+    "chakra-react-select": "^4.4.3",
+    "chart.js": "^4.1.1",
+>>>>>>> master
     "framer-motion": "^7.6.19",
     "moment": "^2.29.4",
 >>>>>>> master
