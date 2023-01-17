@@ -18,9 +18,17 @@ import NoData from "../Components/NoData";
 import NoInput from "../Components/NoInput";
 import NoSelectedCat from "../Components/NoSelectedCat";
 import PODetails from "../Components/PODetails";
+import { useNavigate } from "react-router-dom";
 
 function SearchPO(props) {
   const [val, setVal] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    navigate(-1);
+  };
 
   const submit = (event) => {
     event.preventDefault();
@@ -36,9 +44,10 @@ function SearchPO(props) {
         <Button
           as={Link}
           colorScheme="teal"
-          href="/po"
+          href="po"
           _hover={{ textDecoration: "none" }}
           leftIcon={<BiChevronLeft fontSize={20} />}
+          onClick={(e) => handleClick(e)}
         >
           Back to Dashboard
         </Button>

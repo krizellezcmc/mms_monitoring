@@ -22,8 +22,16 @@ import {
   BsBox,
 } from "react-icons/bs";
 import BarChart from "../Components/Charts/BarChart";
+import { useNavigate } from "react-router-dom";
 
 function PurchaseOrder(props) {
+  const navigate = useNavigate();
+
+  const handleClick = (e, path) => {
+    e.preventDefault();
+    navigate(path);
+  };
+
   const [year, setYear] = useState(moment().format("YYYY"));
   const [month, setMonth] = useState(moment().format("MMMM"));
   const [totalYear, setTotalYear] = useState("");
@@ -47,23 +55,19 @@ function PurchaseOrder(props) {
   }, []);
 
   return (
-    <div>
-      <Flex p={5}>
-        <SideDrawer />
-        <Spacer />{" "}
+    <Box pt={2}>
+      <Flex>
+        <Spacer />
         <Button
-          as={Link}
-          href="po-report"
           colorScheme="teal"
           mr={2}
           _hover={{ textDecoration: "none" }}
+          onClick={(e) => handleClick(e, "po-report")}
         >
           Search Purchase Order &nbsp;
           <BsArrowRightShort fontSize={20} />
         </Button>
         <Button
-          as={Link}
-          href="po/items"
           colorScheme="teal"
           variant="outline"
           mr={2}
@@ -72,13 +76,12 @@ function PurchaseOrder(props) {
             backgroundColor: "teal",
             color: "white",
           }}
+          onClick={(e) => handleClick(e, "items")}
         >
           Item Category &nbsp;
           <BsBox fontSize={15} />
         </Button>
         <Button
-          as={Link}
-          href="dept"
           colorScheme="teal"
           variant="outline"
           mr={2}
@@ -87,6 +90,7 @@ function PurchaseOrder(props) {
             backgroundColor: "teal",
             color: "white",
           }}
+          onClick={(e) => handleClick(e, "dept")}
         >
           Stocks Issuance &nbsp;
           <BsBox fontSize={15} />
@@ -123,7 +127,7 @@ function PurchaseOrder(props) {
           <BarChart />
         </Box>
       </Center>
-    </div>
+    </Box>
   );
 }
 

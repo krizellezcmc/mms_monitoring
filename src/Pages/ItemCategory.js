@@ -11,18 +11,25 @@ import {
 import Category from "../Components/Category";
 import { BiChevronLeft } from "react-icons/bi";
 import ItemsTable from "../Components/ItemsTable";
+import { useNavigate } from "react-router-dom";
 
 function StocksIssuance(props) {
+  const navigate = useNavigate();
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    navigate(-1);
+  };
+
   return (
     <div>
       <Container maxW="container.xl" my={10}>
         <Flex>
           <Button
-            as={Link}
             colorScheme="teal"
-            href="/po"
             _hover={{ textDecoration: "none" }}
             leftIcon={<BiChevronLeft fontSize={20} />}
+            onClick={(e) => handleClick(e)}
           >
             Back to Dashboard
           </Button>

@@ -44,6 +44,11 @@ function Department(props) {
 
   const navigate = useNavigate();
 
+  const handleClick = (e) => {
+    e.preventDefault();
+    navigate(-1);
+  };
+
   const getList = async () => {
     let response = await localApi.get("/get_deptList.php");
     setOptions(response.data);
@@ -107,11 +112,10 @@ function Department(props) {
       <Container maxW="container.xl" p={10} align="center">
         <Flex>
           <Button
-            as={Link}
             colorScheme="teal"
-            href="/po"
             _hover={{ textDecoration: "none" }}
             leftIcon={<BiChevronLeft fontSize={20} />}
+            onClick={(e) => handleClick(e)}
           >
             Back to Dashboard
           </Button>
