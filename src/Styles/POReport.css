@@ -1,3 +1,7 @@
 .border {
   border: "1px solid black";
 }
+
+.items-table {
+  width: "100%";
+}

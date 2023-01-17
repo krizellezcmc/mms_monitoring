@@ -1,9 +1,15 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import PurchaseOrder from "../Pages/PurchaseOrder";
-import POReport from "../Components/POReport";
-import MainLayout from "../Pages/Main_Layout";
+import Category from "../Components/Category";
+import SearchPO from "../Pages/SearchPO";
+import ChartSample from "../Components/ChartSample";
+import ItemCategory from "../Pages/ItemCategory";
+import ItemsTable from "../Components/ItemsTable";
+import Table from "../Components/TableSample";
+import Department from "../Pages/Department";
+import DepartmentReport from "../Components/DepartmentReport";
 
 function AnimatedRoutes(props) {
   return (
@@ -11,8 +17,16 @@ function AnimatedRoutes(props) {
       <Routes>
         <Route path="/"></Route>
         <Route path="/po" element={<PurchaseOrder />}></Route>
-        <Route path="/po-report" element={<POReport />}></Route>
-        <Route path="/pr" element={<MainLayout />}></Route>
+        <Route path="/po-report" element={<SearchPO />}></Route>
+        <Route path="/chart" element={<ChartSample />}></Route>
+
+        <Route path="/po/items" element={<ItemCategory />}></Route>
+        <Route path="/issuance" element={<ItemCategory />}></Route>
+        <Route path="/dept" element={<Department />}></Route>
+        <Route path="/deptreport" element={<DepartmentReport />}></Route>
+
+        <Route path="/sample" element={<Table />}></Route>
+        <Route path="/category" element={<Category />}></Route>
       </Routes>
     </AnimatePresence>
   );
