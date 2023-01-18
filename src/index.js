@@ -18,8 +18,8 @@ const theme = extendTheme({
 
 root.render(
   <React.StrictMode>
-    <DataProvider theme={theme}>
-      <ChakraProvider>
+    <DataProvider>
+      <ChakraProvider theme={theme}>
         <App />
       </ChakraProvider>
     </DataProvider>

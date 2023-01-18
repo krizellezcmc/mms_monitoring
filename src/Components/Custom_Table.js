@@ -145,6 +145,9 @@ const CustomTable = ({
                 onClick={handleClick}
                 columnGap={2}
                 mt={5}
+                _hover={{
+                  bg: "teal",
+                }}
               >
                 {title === "Purchase Request" ? (
                   <BsFillCloudDownloadFill fontSize={20} marginRight="5px" />
@@ -263,7 +266,6 @@ const CustomTable = ({
           </Tbody>
         </Table>
       </TableContainer>
-
       {page.length >= 1 ? (
         <Flex justifyContent={"end"} bg={"rgba(0,0,0,0.05)"} mt={5}>
           <div id="btnleft">

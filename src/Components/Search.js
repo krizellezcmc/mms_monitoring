@@ -6,7 +6,7 @@ import "../Style/Table.css";
 function Search({ search, currsearch, placeholder }) {
   return (
     <div>
-      <Box mb={2} mt={2} bg={"white"} rounded={5}>
+      <Box mb={2} mt={2} bg={"white"} rounded={5} overflow={"hidden"}>
         <InputGroup id="searchbg">
           <InputLeftElement
             pointerEvents="none"

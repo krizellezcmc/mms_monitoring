@@ -106,7 +106,7 @@ export const User_Dataset = [
     first_name: "Jose",
     middle_name: "Dela",
     last_name: "Cruz",
-    department: "On Bidding",
+    department: "Planning Department",
     status: "Active",
   },
   {
@@ -114,7 +114,7 @@ export const User_Dataset = [
     first_name: "Jose",
     middle_name: "Dela",
     last_name: "Cruz",
-    department: "On Bidding",
+    department: "Planning Department",
     status: "Active",
   },
   {
@@ -122,7 +122,7 @@ export const User_Dataset = [
     first_name: "Jose",
     middle_name: "Dela",
     last_name: "Cruz",
-    department: "On Bidding",
+    department: "Planning Department",
     status: "Active",
   },
   {
@@ -130,7 +130,7 @@ export const User_Dataset = [
     first_name: "Jose",
     middle_name: "Dela",
     last_name: "Cruz",
-    department: "On Bidding",
+    department: "Planning Department",
     status: "Active",
   },
   {
@@ -138,7 +138,7 @@ export const User_Dataset = [
     first_name: "Jose",
     middle_name: "Dela",
     last_name: "Cruz",
-    department: "On Bidding",
+    department: "Planning Department",
     status: "Active",
   },
   {
@@ -146,7 +146,7 @@ export const User_Dataset = [
     first_name: "Jose",
     middle_name: "Dela",
     last_name: "Cruz",
-    department: "On Bidding",
+    department: "Planning Department",
     status: "Active",
   },
   {
@@ -154,7 +154,7 @@ export const User_Dataset = [
     first_name: "Jose",
     middle_name: "Dela",
     last_name: "Cruz",
-    department: "On Bidding",
+    department: "Planning Departmentg",
     status: "Active",
   },
   {
@@ -162,7 +162,7 @@ export const User_Dataset = [
     first_name: "Jose",
     middle_name: "Dela",
     last_name: "Cruz",
-    department: "On Bidding",
+    department: "Planning Department",
     status: "Active",
   },
   {
@@ -170,7 +170,7 @@ export const User_Dataset = [
     first_name: "Jose",
     middle_name: "Dela",
     last_name: "Cruz",
-    department: "On Bidding",
+    department: "Planning Department",
     status: "Active",
   },
   {
@@ -178,7 +178,7 @@ export const User_Dataset = [
     first_name: "Jose",
     middle_name: "Dela",
     last_name: "Cruz",
-    department: "On Bidding",
+    department: "Planning Department",
     status: "Active",
   },
   {
@@ -186,7 +186,7 @@ export const User_Dataset = [
     first_name: "Jose",
     middle_name: "Dela",
     last_name: "Cruz",
-    department: "On Bidding",
+    department: "Planning Department",
     status: "Active",
   },
 ];
@@ -279,5 +279,64 @@ export const Department_Dataset = [
     contact: "09123456789",
     head: "Nuradia Lagoyo",
     status: "08/12/2022",
+  },
+];
+
+export const PR_Data = [
+  {
+    id: 1,
+    unit: "Box",
+    description: "CAT 6 cable for data/cctv",
+    qty: 3,
+    unitCost: 7500,
+    totalCost: 22500,
+  },
+  {
+    id: 2,
+    unit: "Box",
+    description: "CAT 6 cable for data/cctv",
+    qty: 3,
+    unitCost: 7500,
+    totalCost: 22500,
+  },
+  {
+    id: 3,
+    unit: "Box",
+    description: "CAT 6 cable for data/cctv",
+    qty: 3,
+    unitCost: 7500,
+    totalCost: 22500,
+  },
+  {
+    id: 4,
+    unit: "Box",
+    description: "CAT 6 cable for data/cctv",
+    qty: 3,
+    unitCost: 7500,
+    totalCost: 22500,
+  },
+  {
+    id: 5,
+    unit: "Box",
+    description: "CAT 6 cable for data/cctv",
+    qty: 3,
+    unitCost: 7500,
+    totalCost: 22500,
+  },
+  {
+    id: 6,
+    unit: "Box",
+    description: "CAT 6 cable for data/cctv",
+    qty: 3,
+    unitCost: 7500,
+    totalCost: 22500,
+  },
+  {
+    id: 7,
+    unit: "Box",
+    description: "CAT 6 cable for data/cctv",
+    qty: 3,
+    unitCost: 7500,
+    totalCost: 22500,
   },
 ];
