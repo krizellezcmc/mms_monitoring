@@ -1,0 +1,128 @@
+
+
+
+.logo {
+    animation: fadeInAnimation ease 1500ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.container {
+    animation: containerFadeInAnimation ease 1500ms;
+    animation-delay:50ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.name {
+    animation: nameFadeInAnimation ease-in-out 1s;
+    animation-delay: 1100ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.name1 {
+    animation: nameFadeInAnimation1 ease-in-out 1s;
+    animation-delay: 1200ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.name2 {
+    animation: nameFadeInAnimation2 ease-in-out 1s;
+    animation-delay: 1300ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.name3 {
+    animation: nameFadeInAnimation3 ease-in-out 1s;
+    animation-delay: 1400ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+
+@keyframes containerFadeInAnimation {
+    0% {
+        margin-left: 25rem;
+    }
+    100% {
+        margin-left: 5rem;
+     }
+}
+
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+     }
+}
+
+
+@keyframes nameFadeInAnimation{
+    0% {
+        opacity: 0;
+        color:gray;
+    }
+    25% {
+        opacity: 0;
+        color:gray;
+    }
+    100% {
+        opacity: 1;
+        color:teal;
+     }
+}
+  
+@keyframes nameFadeInAnimation1{
+    0% {
+        opacity: 0;
+        color:gray;
+    }
+    25% {
+        opacity: 0;
+        color:gray;
+    }
+    100% {
+        opacity: 1;
+        color:teal;
+     }
+}
+  
+
+@keyframes nameFadeInAnimation2{
+    0% {
+        opacity: 0;
+        color:gray;
+    }
+    25% {
+        opacity: 0;
+        color:gray;
+    }
+    100% {
+        opacity: 1;
+        color:teal;
+     }
+}
+  
+
+@keyframes nameFadeInAnimation3{
+    0% {
+        opacity: 0;
+        color:gray;
+    }
+    25% {
+        opacity: 0;
+        color:gray;
+    }
+    100% {
+        opacity: 1;
+        color:teal;
+     }
+}
+  
+

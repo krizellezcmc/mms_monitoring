@@ -1,5 +1,3 @@
-import PurchaseRequest from "./PurchaseRequest";
-import SideDrawer from "../Components/SideDrawer";
 import {
   Avatar,
   Button,
@@ -7,23 +5,11 @@ import {
   Box,
   Heading,
   Spacer,
-  useDisclosure,
   Text,
 } from "@chakra-ui/react";
-import { Routes, Route } from "react-router-dom";
-import Departments from "./Deparments";
-import Users from "./Users";
-import PurchaseOrder from "./PurchaseOrder";
-import Dashboard from "./Dashboard";
-import PurchaseRequestView from "./Purchase_Request_View";
+import { Routes } from "react-router-dom";
 import { BiMenu } from "react-icons/bi";
-import {
-  collapseSidebar,
-  toggleSidebar,
-  collapsed,
-  toggled,
-  useProSidebar,
-} from "react-pro-sidebar";
+import { useProSidebar } from "react-pro-sidebar";
 import SidebarNavigation from "../Components/Sidebar_Component";
 
 const HeaderComponent = (props) => {
@@ -48,7 +34,7 @@ const HeaderComponent = (props) => {
   );
 };
 
-const MainLayout = () => {
+const MainLayout = ({ children }) => {
   const { collapseSidebar, toggleSidebar, collapsed, toggled, broken } =
     useProSidebar();
 
@@ -67,14 +53,7 @@ const MainLayout = () => {
       <Box w={"100%"} h={"100vh"} bg={"rgba(0,0,0,0.05)"}>
         <HeaderComponent action={actionHandle} />
         <Box w={"100%"} h={"93.4vh"}>
-          <Routes>
-            <Route path="/" exact element={<Dashboard />} />
-            <Route path="/po" element={<PurchaseOrder />} />
-            <Route path="/pr" element={<PurchaseRequest />} />
-            <Route path="/users" element={<Users />} />
-            <Route path="/departments" element={<Departments />} />
-            <Route path="/prview" element={<PurchaseRequestView />} />
-          </Routes>
+          <Routes>{children}</Routes>
         </Box>
       </Box>
     </Flex>

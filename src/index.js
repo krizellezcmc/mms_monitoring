@@ -17,13 +17,13 @@ const theme = extendTheme({
 });
 
 root.render(
-  <React.StrictMode>
-    <DataProvider>
-      <ChakraProvider theme={theme}>
-        <App />
-      </ChakraProvider>
-    </DataProvider>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <DataProvider>
+    <ChakraProvider theme={theme}>
+      <App />
+    </ChakraProvider>
+  </DataProvider>
+  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

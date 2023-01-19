@@ -26,9 +26,13 @@ const PageNotFound = () => {
         alignContent={"center"}
       >
         <Center>
-          <Box w={"30%"} h={"50vh"} textAlign={"center"}>
+          <Box
+            w={["70%", "50%", "40%", "30%"]}
+            h={["40vh", "40vh", "50vh", "50vh"]}
+            textAlign={"center"}
+          >
             <Text
-              fontSize={"12rem"}
+              fontSize={["5rem", "8rem", "10rem", "12rem"]}
               color={"teal"}
               fontWeight={900}
               letterSpacing={20}
@@ -36,8 +40,12 @@ const PageNotFound = () => {
             >
               404
             </Text>
-            <Flex justifyContent={"center"} columnGap={5}>
-              <Text fontSize={25} fontWeight={600} color={"gray"}>
+            <Flex
+              justifyContent={"center"}
+              columnGap={[4, 4, 5, 5]}
+              alignItems={"center"}
+            >
+              <Text fontSize={[12, 14, 16, 25]} fontWeight={600} color={"gray"}>
                 Page not found.
               </Text>
               <Button
@@ -54,7 +62,7 @@ const PageNotFound = () => {
                 }}
                 onClick={(e) => handleNavigate(e)}
               >
-                RETURN HOME
+                <Text fontSize={[12, 12, 14, 14]}>RETURN HOME</Text>
               </Button>
             </Flex>
           </Box>
