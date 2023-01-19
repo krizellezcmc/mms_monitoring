@@ -68,7 +68,7 @@ const MainLayout = () => {
         <HeaderComponent action={actionHandle} />
         <Box w={"100%"} h={"93.4vh"}>
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/" exact element={<Dashboard />} />
             <Route path="/po" element={<PurchaseOrder />} />
             <Route path="/pr" element={<PurchaseRequest />} />
             <Route path="/users" element={<Users />} />

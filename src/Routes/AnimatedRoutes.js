@@ -16,6 +16,7 @@ import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import PasswordRecovery from "../Pages/PasswordRecovery";
 import PurchaseRequestView from "../Pages/Purchase_Request_View";
+import PageNotFound from "../Pages/404";
 
 const ProtectedRoute = ({ user }) => {
   if (user === null) {
@@ -34,26 +35,33 @@ function AnimatedRoutes(props) {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/account-recovery" element={<PasswordRecovery />} />
-        {/* <Route
+        <Route path="*" element={<PageNotFound />} />
+        <Route
           path="/"
           element={
-            <ProtectedRoute user={user}> */}
-        <Route path="/m/*" element={<MainLayout />} />
-        <Route path="m/po/po" element={<PurchaseOrder />}></Route>
-        <Route path="m/po/po-report" element={<SearchPO />}></Route>
-        <Route path="m/po/chart" element={<ChartSample />}></Route>
+            <ProtectedRoute user={user}>
+              <Route path="m/*" element={<MainLayout />} />
+              <Route path="m/po/po" element={<PurchaseOrder />}></Route>
+              <Route path="m/po/po-report" element={<SearchPO />}></Route>
+              <Route path="m/po/chart" element={<ChartSample />}></Route>
 
-        <Route path="m/po/items" element={<ItemCategory />}></Route>
-        <Route path="m/po/issuance" element={<ItemCategory />}></Route>
-        <Route path="m/po/dept" element={<Department />}></Route>
-        <Route path="m/po/deptreport" element={<DepartmentReport />}></Route>
+              <Route path="m/po/items" element={<ItemCategory />}></Route>
+              <Route path="m/po/issuance" element={<ItemCategory />}></Route>
+              <Route path="m/po/dept" element={<Department />}></Route>
+              <Route
+                path="m/po/deptreport"
+                element={<DepartmentReport />}
+              ></Route>
 
-        <Route path="m/po/sample" element={<Table />}></Route>
-        <Route path="m/po/category" element={<Category />}></Route>
-        <Route path="m/pr/pr-view" element={<PurchaseRequestView />}></Route>
-        {/* </ProtectedRoute>
+              <Route path="m/po/sample" element={<Table />}></Route>
+              <Route path="m/po/category" element={<Category />}></Route>
+              <Route
+                path="m/pr/pr-view"
+                element={<PurchaseRequestView />}
+              ></Route>
+            </ProtectedRoute>
           }
-        ></Route> */}
+        ></Route>
       </Routes>
     </AnimatePresence>
   );
