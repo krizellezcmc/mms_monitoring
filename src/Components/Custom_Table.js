@@ -112,8 +112,6 @@ const CustomTable = ({
     fontSize: "20px",
   };
 
-  let i = pageIndex * 10;
-
   return (
     <Box h="91vh">
       <Box w={"100%"}>
@@ -186,6 +184,7 @@ const CustomTable = ({
           mt={5}
           mb={5}
           bg={"white"}
+          maxWidth={"100%"}
           className={"table"}
           variant="unstyled"
           boxShadow={"2xl"}
@@ -215,9 +214,8 @@ const CustomTable = ({
           </Thead>
           <Tbody {...getTableBodyProps()}>
             {page.length >= 1 ? (
-              page.map((row) => {
+              page.map((row, i) => {
                 prepareRow(row);
-                i++;
                 return (
                   <Tr className="td" {...row.getRowProps()}>
                     {row.cells.map((cell) => {
@@ -243,7 +241,7 @@ const CustomTable = ({
                             </Text>
                           ) : cell.column.Header === "ID" ? (
                             <Text fontWeight={"bold"} color={"green.600"}>
-                              {i}
+                              {pageIndex * 10 + ++i}
                             </Text>
                           ) : cell.column.Header === "users" ? (
                             <>{cell.row.values.user}</>
