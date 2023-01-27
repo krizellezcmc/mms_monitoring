@@ -10,8 +10,7 @@ import ItemsTable from "../Components/ItemsTable";
 import Table from "../Components/TableSample";
 import Department from "../Pages/Department";
 import DepartmentReport from "../Components/DepartmentReport";
-import DailyReport from "../Components/Reports/DailyReport";
-
+import DailyReport from "../Pages/DailyReport";
 function AnimatedRoutes(props) {
   return (
     <AnimatePresence>
