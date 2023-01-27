@@ -10,6 +10,7 @@ import Table from "../Components/TableSample";
 import Department from "../Pages/Department";
 import DepartmentReport from "../Components/DepartmentReport";
 import MonthlyDistribution from "../Components/Reports/MontlyDistribution";
+import DailyReport from "../Components/Reports/DailyReport";
 
 function AnimatedRoutes(props) {
   return (
@@ -28,6 +29,7 @@ function AnimatedRoutes(props) {
           path="/report/monthly-distribution"
           element={<MonthlyDistribution />}
         ></Route>
+        <Route path="/dailyrep" element={<DailyReport />}></Route>
         {/* DELETE AFTER */}
         <Route path="/sample" element={<Table />}></Route>
         <Route path="/category" element={<Category />}></Route>
