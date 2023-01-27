@@ -9,8 +9,8 @@ import ItemCategory from "../Pages/ItemCategory";
 import Table from "../Components/TableSample";
 import Department from "../Pages/Department";
 import DepartmentReport from "../Components/DepartmentReport";
+import DailyReport from "../Pages/DailyReport";
 import MonthlyDistribution from "../Components/Reports/MontlyDistribution";
-import DailyReport from "../Components/Reports/DailyReport";
 import ReportMonthly from "../Pages/ReportMonthly";
 
 function AnimatedRoutes(props) {
