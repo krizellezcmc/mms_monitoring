@@ -11,6 +11,7 @@ import Department from "../Pages/Department";
 import DepartmentReport from "../Components/DepartmentReport";
 import MonthlyDistribution from "../Components/Reports/MontlyDistribution";
 import DailyReport from "../Components/Reports/DailyReport";
+import ReportMonthly from "../Pages/ReportMonthly";
 
 function AnimatedRoutes(props) {
   return (
@@ -27,7 +28,7 @@ function AnimatedRoutes(props) {
         {/* REPORTS */}{" "}
         <Route
           path="/report/monthly-distribution"
-          element={<MonthlyDistribution />}
+          element={<ReportMonthly />}
         ></Route>
         <Route path="/dailyrep" element={<DailyReport />}></Route>
         {/* DELETE AFTER */}

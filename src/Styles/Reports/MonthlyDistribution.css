@@ -1,21 +1,44 @@
 .container {
   margin: auto;
-  width: 1600px;
-  border: 1px solid gray;
-  margin-top: 30px;
-}
-.header {
-  text-align: center;
-  font-family: "Times new roman";
-}
-.header .heading,
-.title {
-  line-height: 1.15;
+  padding: 0 30px;
 }
 
-.header .title {
+.table-container {
+  margin: "auto";
+}
+
+.top-text {
+  font-family: "Times new roman";
+}
+
+.header {
+  text-align: center;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+}
+
+.header .heading,
+.title {
+  line-height: 1.2;
+}
+
+.title {
   text-transform: uppercase;
+  text-align: center;
   margin-top: 20px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  font-size: 16px;
+}
+
+.office {
+  line-height: 1.3;
+}
+
+table.table th {
+  font-weight: 400;
+  font-size: 11px;
 }
