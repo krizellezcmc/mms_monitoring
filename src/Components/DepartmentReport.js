@@ -63,11 +63,13 @@ function DepartmentReport(props) {
                 <td style={{ padding: "5px" }}>{j.ItemCode}</td>
                 <td style={{ padding: "5px" }}>{j.ItemDesc}</td>
                 <td style={{ padding: "5px" }}>
-                  {" "}
                   {moment(j.DateIssued).format("MMMM DD, YYYY, hh:mm A")}
                 </td>
+
+                <td style={{ padding: "5px" }}>
+                  {(Math.round(j.QTY * 100) / 100).toFixed(2)}
+                </td>
                 <td style={{ padding: "5px" }}>{j.Unit}</td>
-                <td style={{ padding: "5px" }}>{j.QTY}</td>
               </tr>
             </>
           );
