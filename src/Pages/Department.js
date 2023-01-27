@@ -199,9 +199,9 @@ function Department(props) {
                   </td>
                   {/* <td style={{ fontWeight: "bolder", padding: "5px" }}>Unit</td>
                 <td style={{ fontWeight: "bolder", padding: "5px" }}>QTY</td> */}
-                  <td style={{ fontWeight: "bolder", padding: "5px" }}>
+                  {/* <td style={{ fontWeight: "bolder", padding: "5px" }}>
                     Grand Total
-                  </td>
+                  </td> */}
                 </tr>
                 {deptData
                   .filter((val) => {
@@ -263,7 +263,7 @@ function Department(props) {
                               "MMMM DD, YYYY, hh:mm A"
                             )}
                           </td>
-                          <td style={{ padding: "5px" }}>{j.Total}</td>
+                          {/* <td style={{ padding: "5px" }}>{j.Total}</td> */}
                         </tr>
                       </>
                     );
