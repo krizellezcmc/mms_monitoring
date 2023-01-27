@@ -88,8 +88,8 @@ function Table({ columns, data }) {
       ) : (
         <Center>
           <VStack>
-            <TableContainer>
-              <table {...getTableProps()} className="table">
+            <TableContainer overflowX="auto">
+              <table {...getTableProps()}>
                 <thead>
                   {headerGroups.map((headerGroup) => (
                     <tr {...headerGroup.getHeaderGroupProps()}>
@@ -194,9 +194,9 @@ function Table({ columns, data }) {
                 icon={<RxDoubleArrowRight />}
                 fontSize={18}
                 mr={1}
-              />{" "}
+              />
             </Flex>
-          </VStack>{" "}
+          </VStack>
         </Center>
       )}
     </>
