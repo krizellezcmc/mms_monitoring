@@ -141,7 +141,7 @@ const SidebarNavigation = (props) => {
         <Menu menuItemStyles={menuItemStyles}>
           <MenuItemComponent
             title={"Dashboard"}
-            path={"/m/"}
+            path={"/"}
             child={<MdSpaceDashboard color="teal" fontSize={25} />}
             click={handleClick}
           />

@@ -23,6 +23,7 @@ import Loading from "../Pages/Loading";
 const RegistrationPage = React.lazy(() => import("../Pages/Register"));
 const LoginPage = React.lazy(() => import("../Pages/Login"));
 const MainLayoutPage = React.lazy(() => import("../Pages/Main_Layout"));
+const AccountPage = React.lazy(() => import("../Pages/Account_Registration"));
 
 const RoutesData = [
   {
@@ -84,27 +85,7 @@ const RoutesData = [
 ];
 
 const ProtectedRoute = ({ user }) => {
-  if (user !== null) {
-    return <Outlet />;
-  }
-
-  return <Navigate to="/login" replace />;
-};
-
-const RedirectAuth = ({ user }) => {
-  if (user !== null) {
-    return <Navigate to="/m" replace />;
-  }
-
-  return <Navigate to="/login" replace />;
-};
-
-const ProtectedAuthRoute = ({ user }) => {
-  if (user !== null) {
-    return <Navigate to="/m" replace />;
-  }
-
-  return <Outlet />;
+  return user !== null ? <Outlet /> : <Navigate to="/login" replace />;
 };
 
 function AnimatedRoutes() {
@@ -114,12 +95,10 @@ function AnimatedRoutes() {
     <AnimatePresence>
       <Suspense fallback={<Loading />}>
         <Routes>
-          <Route element={<RedirectAuth user={user} />}>
-            <Route path="/" element={<Outlet />}></Route>
-          </Route>
           <Route element={<ProtectedRoute user={user} />}>
             <Route
-              path="/m/*"
+              path="/*"
+              exact
               element={
                 <MainLayoutPage>
                   {RoutesData.map((item) => {
@@ -129,12 +108,10 @@ function AnimatedRoutes() {
               }
             />
           </Route>
-          {/* public authentication Routes */}
-          <Route element={<ProtectedAuthRoute user={user} />}>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegistrationPage />} />
-            <Route path="/account-recovery" element={<PasswordRecovery />} />
-          </Route>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegistrationPage />} />
+          <Route path="/account" element={<AccountPage />} />
+          <Route path="/account-recovery" element={<PasswordRecovery />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Suspense>

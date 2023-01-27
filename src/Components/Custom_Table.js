@@ -194,7 +194,7 @@ const CustomTable = ({
           <Thead>
             {headerGroups.map((headerGroup) => (
               <Tr
-                h={"5rem"}
+                h={"4rem"}
                 fontSize={15}
                 {...headerGroup.getHeaderGroupProps()}
               >

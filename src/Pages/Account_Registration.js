@@ -8,11 +8,36 @@ import {
   Image,
   Grid,
   GridItem,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
 } from "@chakra-ui/react";
 import CustomInput from "../Components/CustomInput";
 import { useState } from "react";
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { CustomSelection } from "../Components/Custom_Selection";
+
+const Feedback = (props) => {
+  return (
+    <Modal>
+      <ModalContent>
+        <ModalHeader>{props.title}</ModalHeader>
+        <ModalBody>
+          <Text>{props.description}</Text>
+        </ModalBody>
+        <ModalFooter>
+          <Button onClick={props.onClose}>
+            <Text>Close</Text>
+          </Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
+  );
+};
 
 const LoginHeader = () => {
   return (
@@ -28,7 +53,7 @@ const LoginHeader = () => {
         <Box mt={4}>
           <Flex direction={"column"} justifyContent={"end"}>
             <Heading fontSize="26px" color="teal">
-              {"Sign In"}
+              User Information
             </Heading>
             <Text fontSize="sm" color="gray">
               Enter your credentials to continue.
@@ -47,10 +72,10 @@ const LoginFooter = () => {
         <svg
           stroke="currentColor"
           fill="currentColor"
-          stroke-width="0"
+          strokeWidth="0"
           viewBox="0 0 24 24"
           focusable="false"
-          class="chakra-icon css-13otjrl"
+          className="chakra-icon css-13otjrl"
           height="1em"
           width="1em"
           xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +102,11 @@ const LoginBackground = () => {
     >
       <Box w={"100%"} h={"100vh"} bg={"rgba(0,0,0,0.2)"}>
         <Box p={5} color={"white"} textAlign={"center"}>
-          <Heading mt={10} size={"lg"} letterSpacing={"0.34rem"}>
+          <Heading
+            mt={10}
+            size={["sm", "md", "md", "lg"]}
+            letterSpacing={"0.34rem"}
+          >
             ZCMC PR | PO MONITORING
           </Heading>
         </Box>
@@ -86,11 +115,17 @@ const LoginBackground = () => {
   );
 };
 
-const Login = () => {
+const AccountRegistration = () => {
   const navigate = useNavigate();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [feedbackTitle, setFeedBackTitle] = useState("");
+  const [feedbackDescription, setFeedBackDescription] = useState("");
+
+  const [fname, setFname] = useState("");
+  const [mname, setMname] = useState("");
+  const [lname, setLname] = useState("");
+  const [PK_department_ID, setPK_department_ID] = useState("");
 
   const [emailExc, setEmailExc] = useState("");
   const [passExc, setPassExc] = useState("");
@@ -102,22 +137,16 @@ const Login = () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      navigate("/");
+      console.log("Called");
+      onOpen();
+      setFeedBackTitle("Account Registered");
+      setFeedBackDescription("Please wait for approval of your account.");
     }, [1000]);
-  };
-
-  const handleNavigate = (e) => {
-    e.preventDefault();
-    navigate("/register");
-  };
-
-  const handleNavigateToRecovery = (e) => {
-    e.preventDefault();
-    navigate("/account-recovery");
   };
 
   return (
     <>
+      <Feedback />
       <Box
         w={"100%"}
         h={"100vh"}
@@ -160,92 +189,56 @@ const Login = () => {
                     h={"inherit"}
                     display={"flex"}
                     flexDirection={"column"}
-                    mt={"5rem"}
+                    mt={"2rem"}
                   >
                     <CustomInput
-                      isSignup={false}
+                      isSignup={true}
                       type={"text"}
-                      title={"Email"}
-                      value={email}
-                      setValue={setEmail}
-                      placeholder={"Email"}
+                      title={"First name"}
+                      value={fname}
+                      setValue={setFname}
+                      placeholder={"First name"}
                       errorMessage={emailExc}
                       isError={false}
-                      mt={5}
-                      children={
-                        <Box
-                          w={8}
-                          h={4}
-                          mt={6}
-                          mb={6}
-                          borderRight={"1px solid rgba(0,0,0,0.2)"}
-                        >
-                          <Center>
-                            <FaUserAlt color="teal" size={15} />
-                          </Center>
-                        </Box>
-                      }
+                      mt={3}
                     />
                     <CustomInput
-                      isSignup={false}
-                      type={"password"}
-                      title={"Password"}
-                      value={password}
-                      setValue={setPassword}
-                      placeholder={"Password"}
-                      errorMessage={passExc}
+                      isSignup={true}
+                      type={"text"}
+                      title={"Middle name"}
+                      value={mname}
+                      setValue={setMname}
+                      placeholder={"Middle name"}
+                      errorMessage={emailExc}
                       isError={false}
                       mt={3}
-                      children={
-                        <Box
-                          w={8}
-                          h={4}
-                          mt={6}
-                          mb={6}
-                          borderRight={"1px solid rgba(0,0,0,0.2)"}
-                        >
-                          <Center>
-                            <FaLock color="teal" size={15} />
-                          </Center>
-                        </Box>
-                      }
+                    />
+                    <CustomInput
+                      isSignup={true}
+                      type={"text"}
+                      title={"Last name"}
+                      value={lname}
+                      setValue={setLname}
+                      placeholder={"last name"}
+                      errorMessage={emailExc}
+                      isError={false}
+                      mt={3}
+                    />
+                    <CustomSelection
+                      value={PK_department_ID}
+                      setValue={setPK_department_ID}
+                      mt={5}
                     />
                     <Button
-                      color={"blackAlpha.500"}
-                      bg="transparent"
-                      mt={8}
-                      _hover={{
-                        bg: "transparent",
-                        color: "blackAlpha.700",
-                      }}
-                      _active={{ bg: "white", color: "gray" }}
-                      onClick={(e) => handleNavigateToRecovery(e)}
-                    >
-                      <Text fontWeight={400} fontSize={14}>
-                        Forgot password?
-                      </Text>
-                    </Button>
-                    <Button
                       isLoading={loading}
-                      loadingText={"Signing In"}
-                      mt={8}
+                      loadingText={"Saving"}
+                      mt={14}
                       bg={"teal"}
                       color={"white"}
                       _hover={{ bg: "teal" }}
                       onClick={(e) => handleClick(e)}
                     >
-                      <Text>Login</Text>
-                    </Button>
-                    <Button
-                      bg={"gray"}
-                      color={"white"}
-                      mt={3}
-                      _hover={{
-                        bg: "darkorange",
-                      }}
-                      onClick={(e) => handleNavigate(e)}
-                    >
-                      <Text>Create account?</Text>
+                      <Text>Save</Text>
                     </Button>
                   </Box>
                   <LoginFooter />
@@ -259,4 +252,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default AccountRegistration;

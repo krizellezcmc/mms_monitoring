@@ -1,19 +1,21 @@
 import "./App.css";
 import { BrowserRouter as Router } from "react-router-dom";
-import useAuth from "./Hooks/useAuth";
 import AnimatedRoutes from "./Routes/AnimatedRoutes";
 import { ProSidebarProvider } from "react-pro-sidebar";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 function App() {
-  const { user } = useAuth();
+  const queryClient = new QueryClient();
 
   return (
     <div style={{ backgroundColor: "F7FAFC" }}>
-      <ProSidebarProvider>
-        <Router>
-          <AnimatedRoutes />
-        </Router>
-      </ProSidebarProvider>
+      <QueryClientProvider client={queryClient}>
+        <ProSidebarProvider>
+          <Router>
+            <AnimatedRoutes />
+          </Router>
+        </ProSidebarProvider>
+      </QueryClientProvider>
     </div>
   );
 }

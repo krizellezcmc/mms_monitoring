@@ -5,6 +5,7 @@ import { Department_Dataset } from "../Data/PR_DataSet";
 
 const Departments = () => {
   const title = "Department";
+
   const [fetch, setFetch] = useState(false);
 
   const column = useMemo(

@@ -3,10 +3,11 @@ import { createContext, useState, useEffect } from "react";
 const DataContext = createContext({});
 
 export const DataProvider = ({ children }) => {
-  const [user, setUser] = useState({
-    name: "Dennis Falcasantos",
-    isLogin: true,
-  });
+  const [user, setUser] = useState(null);
+  // {
+  //   name: "Dennis Falcasantos",
+  //   isLogin: true,
+  // }
 
   const fetchUser = async () => {
     try {

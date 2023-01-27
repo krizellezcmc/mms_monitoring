@@ -59,7 +59,7 @@ function SideDrawer(props) {
           <DrawerBody p={0} mt={1}>
             <MenuItemComponent
               title={"Dashboard"}
-              path={"/m/"}
+              path={"/"}
               child={<MdSpaceDashboard color="teal" fontSize={25} />}
               click={handleClick}
             />
