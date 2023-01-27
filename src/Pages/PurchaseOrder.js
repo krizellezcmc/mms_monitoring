@@ -7,6 +7,13 @@ import {
   Button,
   Link,
   Center,
+  Select,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuGroup,
+  MenuDivider,
 } from "@chakra-ui/react";
 import SideDrawer from "../Components/SideDrawer";
 import TotalTile from "../Components/TotalTile";
@@ -20,8 +27,10 @@ import {
   BsFillCalendar2Fill,
   BsFillCalendar2RangeFill,
   BsBox,
+  BsPaperclip,
 } from "react-icons/bs";
 import BarChart from "../Components/Charts/BarChart";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 
 function PurchaseOrder(props) {
   const [year, setYear] = useState(moment().format("YYYY"));
@@ -61,6 +70,53 @@ function PurchaseOrder(props) {
           Search Purchase Order &nbsp;
           <BsArrowRightShort fontSize={20} />
         </Button>
+        <Menu>
+          <MenuButton
+            as={Button}
+            rightIcon={<ChevronDownIcon />}
+            mr={2}
+            variant="solid"
+            colorScheme="teal"
+          >
+            Reports
+          </MenuButton>
+          <MenuList>
+            <MenuGroup title="Issued">
+              <MenuItem
+                as={Link}
+                href="/report/daily-distribution"
+                _hover={{ textDecoration: "none" }}
+              >
+                Daily Report
+              </MenuItem>
+              <MenuItem
+                as={Link}
+                href="/report/monthly-distribution"
+                _hover={{ textDecoration: "none" }}
+              >
+                Monthly Distribution
+              </MenuItem>
+            </MenuGroup>
+            <MenuDivider />
+            <MenuGroup title="Others">
+              <MenuItem
+                as={Link}
+                href="/report/bin-card"
+                _hover={{ textDecoration: "none" }}
+              >
+                Bin Card
+              </MenuItem>
+              <MenuItem
+                as={Link}
+                href="/report/direct-purchase"
+                _hover={{ textDecoration: "none" }}
+              >
+                Direct Purchase
+              </MenuItem>
+            </MenuGroup>
+            <MenuDivider />
+          </MenuList>
+        </Menu>
         <Button
           as={Link}
           href="po/items"
