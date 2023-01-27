@@ -17,7 +17,6 @@ import "../Styles/Table.css";
 import { ToWords } from "to-words";
 
 const POReport = (props) => {
-  let converter = require("number-to-words");
   const [data, setData] = useState([]);
   const [items, setItems] = useState([]);
   const [supplier, setSupplier] = useState("");
