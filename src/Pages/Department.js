@@ -94,7 +94,7 @@ function Department(props) {
       height: 330.2,
       windowWidth: 1000,
       windowHeight: 2000,
-      margin: [5, 10, 10, 10],
+      margin: [6, 10, 8.9, 10],
 
       callback: function (doc) {
         // header();
