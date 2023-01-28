@@ -1,7 +1,18 @@
 import { Box, Center, Flex, Image, Text } from "@chakra-ui/react";
+import { useEffect } from "react";
 import "../Style/Loading.css";
+import { Get } from "../API/Base_Http_Request";
+import { primaryPathToken } from "../API/Path_List";
 
 const Loading = () => {
+  const fetchCsrf = () => {
+    const res = Get({ url: primaryPathToken });
+  };
+
+  useEffect(() => {
+    fetchCsrf();
+  }, []);
+
   return (
     <Flex
       w={"100%"}

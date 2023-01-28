@@ -1,94 +1,25 @@
 import {
   Box,
   Button,
-  Center,
   Heading,
   Flex,
   Text,
   Image,
   Grid,
   GridItem,
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
   useDisclosure,
 } from "@chakra-ui/react";
 import CustomInput from "../Components/CustomInput";
 import { useState } from "react";
-import { FaUserAlt, FaLock } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-
-const Feedback = (props) => {
-  return (
-    <Modal>
-      <ModalContent>
-        <ModalHeader>{props.title}</ModalHeader>
-        <ModalBody>
-          <Text>{props.description}</Text>
-        </ModalBody>
-        <ModalFooter>
-          <Button onClick={props.onClose}>
-            <Text>Close</Text>
-          </Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
-  );
-};
-
-const LoginHeader = () => {
-  return (
-    <Box mt={5}>
-      <Flex columnGap={5}>
-        <Box>
-          <Image
-            w="60px"
-            h={"80px"}
-            src={require("./../assets/other/logo.png")}
-          />
-        </Box>
-        <Box mt={4}>
-          <Flex direction={"column"} justifyContent={"end"}>
-            <Heading fontSize="26px" color="teal">
-              Sign up
-            </Heading>
-            <Text fontSize="sm" color="gray">
-              Enter your credentials to continue.
-            </Text>
-          </Flex>
-        </Box>
-      </Flex>
-    </Box>
-  );
-};
-
-const LoginFooter = () => {
-  return (
-    <>
-      <Box color={"gray"} display={"flex"} justifyContent={"center"}>
-        <svg
-          stroke="currentColor"
-          fill="currentColor"
-          strokeWidth="0"
-          viewBox="0 0 24 24"
-          focusable="false"
-          className="chakra-icon css-13otjrl"
-          height="1em"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path d="M12 22c5.421 0 10-4.579 10-10S17.421 2 12 2 2 6.579 2 12s4.579 10 10 10zm0-18c4.337 0 8 3.663 8 8s-3.663 8-8 8-8-3.663-8-8 3.663-8 8-8z"></path>
-          <path d="M12 17c.901 0 2.581-.168 3.707-1.292l-1.414-1.416C13.85 14.735 12.992 15 12 15c-1.626 0-3-1.374-3-3s1.374-3 3-3c.993 0 1.851.265 2.293.707l1.414-1.414C14.582 7.168 12.901 7 12 7c-2.757 0-5 2.243-5 5s2.243 5 5 5z"></path>
-        </svg>
-        <Text fontSize={12} fontWeight={600}>
-          2023 Zamboanga City Medical Center . All Rights reserved
-        </Text>
-      </Box>
-    </>
-  );
-};
+import { primaryPathSignup } from "../API/Path_List";
+import { Post } from "../API/Base_Http_Request";
+import Feedback from "../Components/Feedback";
+import {
+  AuthHeader,
+  AuthFooter,
+  AuthBackground,
+} from "../Components/Auth_Header_Design";
 
 const LoginBackground = () => {
   return (
@@ -131,26 +62,57 @@ const Register = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const handleClick = (e) => {
-    e.preventDefault();
-    setLoading(true);
+  const validatePasword = () => password === confirmPassword;
+
+  const resultFeedBack = () => {
     setTimeout(() => {
       setLoading(false);
-      console.log("Called");
       onOpen();
-      setFeedBackTitle("Account Registered");
-      setFeedBackDescription("Please wait for approval of your account.");
-    }, [1000]);
+    }, [200]);
+  };
+
+  const handleSignup = (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    if (validatePasword) {
+      let bodyForm = new FormData();
+      bodyForm.append("username", username);
+      bodyForm.append("email", email);
+      bodyForm.append("password", password);
+
+      Post({ url: primaryPathSignup }, bodyForm)
+        .then((response) => {
+          if (response.data.status === 200) {
+            setFeedBackTitle("Account created.");
+            setFeedBackDescription(response.data);
+            navigate("/account", { replace: true });
+            setLoading(false);
+            return;
+          }
+
+          setFeedBackTitle("Something went wrong!");
+          setFeedBackDescription(response.message);
+          resultFeedBack();
+          setLoading(false);
+        })
+        .catch((e) => console.log(e.message));
+    }
   };
 
   const handleNavigate = (e) => {
     e.preventDefault();
-    navigate("/login");
+    navigate("login");
   };
 
   return (
     <>
-      <Feedback />
+      <Feedback
+        title={feedbackTitle}
+        description={feedbackDescription}
+        onClose={onClose}
+        isOpen={isOpen}
+      />
       <Box
         w={"100%"}
         h={"100vh"}
@@ -174,7 +136,7 @@ const Register = () => {
             templateColumns="repeat(12, 1fr)"
           >
             <GridItem rowSpan={1} colSpan={7}>
-              <LoginBackground />
+              <AuthBackground />
             </GridItem>
             <GridItem colSpan={5}>
               <Box w={"100%"} h={"100%"} bg={"whiteAlpha.600"}>
@@ -187,7 +149,7 @@ const Register = () => {
                   pb={3}
                   h={"70vh"}
                 >
-                  <LoginHeader />
+                  <AuthHeader header={"Sign up"} />
                   <Box
                     w={"inherit"}
                     h={"inherit"}
@@ -246,7 +208,7 @@ const Register = () => {
                       bg={"teal"}
                       color={"white"}
                       _hover={{ bg: "teal" }}
-                      onClick={(e) => handleClick(e)}
+                      onClick={(e) => handleSignup(e)}
                     >
                       <Text>Register</Text>
                     </Button>
@@ -262,7 +224,7 @@ const Register = () => {
                       <Text>Sign In</Text>
                     </Button>
                   </Box>
-                  <LoginFooter />
+                  <AuthFooter />
                 </Flex>
               </Box>
             </GridItem>

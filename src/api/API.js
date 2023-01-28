@@ -14,11 +14,11 @@ const api = new axios.create({
   },
 });
 
-///ON REQUEST ATTACH AUTHORIZATION ON AXIOS INSTANCE
-api.interceptors.request.use(function (config) {
-  const token = sessionStorage.getItem("token");
-  config.headers.Authorization = `Bearer ${token}`;
-  return config;
-});
+// ///ON REQUEST ATTACH AUTHORIZATION ON AXIOS INSTANCE
+// api.interceptors.request.use(function (config) {
+//   const token = sessionStorage.getItem("token");
+//   config.headers.Authorization = `Bearer ${token}`;
+//   return config;
+// });
 
 export default api;

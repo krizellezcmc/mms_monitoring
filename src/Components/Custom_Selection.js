@@ -8,6 +8,7 @@ const Selection = ({ label, value, setValue, datas, mt }) => {
     <FormControl mt={mt}>
       <Select
         bg={"white"}
+        boxShadow={"md"}
         fontSize={14}
         focusBorderColor={"primary.900"}
         placeholder="- Please Select -"

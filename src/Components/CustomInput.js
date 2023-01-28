@@ -23,6 +23,7 @@ const CustomInput = ({
   isError,
   mt,
   children,
+  isRequired,
 }) => {
   const [show, setShow] = React.useState(false);
 
@@ -44,6 +45,7 @@ const CustomInput = ({
             onChange={(e) => setValue(e.target.value)}
             className={"inputs"}
             boxShadow={"md"}
+            isRequired={isRequired}
           />
           {type === "password" ? (
             <InputRightElement width="3rem" onClick={() => setShow(!show)}>

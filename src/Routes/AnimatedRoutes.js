@@ -19,11 +19,11 @@ import Dashboard from "../Pages//Dashboard";
 import PurchaseRequest from "../Pages//PurchaseRequest";
 import PurchaseRequestView from "../Pages/Purchase_Request_View";
 import Loading from "../Pages/Loading";
+import Register from "../Pages/Register";
+import AccountRegistration from "../Pages/Account_Registration";
 
-const RegistrationPage = React.lazy(() => import("../Pages/Register"));
 const LoginPage = React.lazy(() => import("../Pages/Login"));
 const MainLayoutPage = React.lazy(() => import("../Pages/Main_Layout"));
-const AccountPage = React.lazy(() => import("../Pages/Account_Registration"));
 
 const RoutesData = [
   {
@@ -85,7 +85,7 @@ const RoutesData = [
 ];
 
 const ProtectedRoute = ({ user }) => {
-  return user !== null ? <Outlet /> : <Navigate to="/login" replace />;
+  return user === null ? <Navigate to="/login" replace /> : <Outlet />;
 };
 
 function AnimatedRoutes() {
@@ -109,8 +109,8 @@ function AnimatedRoutes() {
             />
           </Route>
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegistrationPage />} />
-          <Route path="/account" element={<AccountPage />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/account" element={<AccountRegistration />} />
           <Route path="/account-recovery" element={<PasswordRecovery />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
