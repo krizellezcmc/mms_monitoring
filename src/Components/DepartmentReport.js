@@ -35,7 +35,7 @@ function DepartmentReport(props) {
               padding: "5px",
             }}
           >
-            Issue No
+            Issue &nbsp; No
           </td>
           <td style={{ fontWeight: "bolder", padding: "5px" }}>Item Code</td>
           <td
@@ -47,7 +47,9 @@ function DepartmentReport(props) {
           >
             Item Description
           </td>
-          <td style={{ fontWeight: "bolder", padding: "5px" }}>Issue Date</td>
+          <td style={{ fontWeight: "bolder", padding: "5px" }}>
+            Issue&nbsp; Date
+          </td>
           <td style={{ fontWeight: "bolder", padding: "5px" }}>Unit</td>
           <td style={{ fontWeight: "bolder", padding: "5px" }}>QTY</td>
           {/* <td style={{ fontWeight: "bolder", padding: "5px" }}>
@@ -61,7 +63,9 @@ function DepartmentReport(props) {
               <tr>
                 <td style={{ padding: "5px" }}>{j.IssueNo}</td>
                 <td style={{ padding: "5px" }}>{j.ItemCode}</td>
-                <td style={{ padding: "5px" }}>{j.ItemDesc}</td>
+                <td style={{ padding: "5px", textAlign: "left" }}>
+                  {j.ItemDesc}
+                </td>
                 <td style={{ padding: "5px" }}>
                   {moment(j.DateIssued).format("MMMM DD, YYYY, hh:mm A")}
                 </td>

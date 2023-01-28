@@ -39,7 +39,7 @@ function DailyIssued(props) {
       <p
         style={{
           fontWeight: "bold",
-          fontSize: "16px",
+          fontSize: "15px",
           textAlign: "center",
           marginTop: "10px",
           fontFamily: "Times New Roman",
@@ -58,7 +58,7 @@ function DailyIssued(props) {
       >
         <div
           style={{
-            width: "70%",
+            width: "80%",
             float: "left",
             padding: "3px",
             // border: "2px solid red",
@@ -69,7 +69,7 @@ function DailyIssued(props) {
             <p
               style={{
                 display: "inline",
-                fontSize: "11px",
+
                 fontWeight: "bold",
               }}
             >
@@ -80,9 +80,9 @@ function DailyIssued(props) {
               style={{
                 display: "inline",
                 fontWeight: "bold",
-                fontSize: "11px",
+
                 borderBottom: "1px solid black",
-                paddingBottom: "8px",
+                paddingBottom: "7px",
               }}
             >
               ZAMBOANGA CITY MEDICAL CENTER
@@ -92,7 +92,7 @@ function DailyIssued(props) {
             <p
               style={{
                 display: "inline",
-                fontSize: "11px",
+
                 fontWeight: "bold",
               }}
             >
@@ -101,10 +101,10 @@ function DailyIssued(props) {
             <p
               style={{
                 display: "inline",
-                fontSize: "11px",
+
                 fontWeight: "bold",
                 borderBottom: "1px solid black",
-                paddingBottom: "8px",
+                paddingBottom: "7px",
               }}
             >
               &nbsp; &nbsp;Regular Income &nbsp; &nbsp;
@@ -113,7 +113,7 @@ function DailyIssued(props) {
         </div>
         <div
           style={{
-            width: "30%",
+            width: "20%",
             float: "left",
             padding: "3px",
             // border: "2px solid red",
@@ -124,7 +124,7 @@ function DailyIssued(props) {
             <p
               style={{
                 display: "inline",
-                fontSize: "11px",
+
                 fontWeight: "bold",
               }}
             >
@@ -133,10 +133,10 @@ function DailyIssued(props) {
             <p
               style={{
                 display: "inline",
-                fontSize: "11px",
+
                 fontWeight: "bold",
                 borderBottom: "1px solid black",
-                paddingBottom: "8px",
+                paddingBottom: "7px",
               }}
             >
               &nbsp; &nbsp;23-01-006&nbsp; &nbsp;
@@ -146,7 +146,7 @@ function DailyIssued(props) {
             <p
               style={{
                 display: "inline",
-                fontSize: "11px",
+
                 fontWeight: "bold",
               }}
             >
@@ -155,10 +155,10 @@ function DailyIssued(props) {
             <p
               style={{
                 display: "inline",
-                fontSize: "11px",
+
                 fontWeight: "bold",
                 borderBottom: "1px solid black",
-                paddingBottom: "8px",
+                paddingBottom: "7px",
               }}
             >
               &nbsp; &nbsp;{moment().format("LL")}&nbsp; &nbsp;
@@ -170,21 +170,20 @@ function DailyIssued(props) {
       <table
         style={{
           width: "800px",
-
           margin: "auto",
           border: "1px solid black",
         }}
+        cellPadding="5px"
       >
         <tr>
           <td
             style={{
               borderRight: "1px solid black",
               borderBottom: "1px solid black",
-              fontSize: "11px",
+
               fontFamily: "Times New Roman",
               fontStyle: "italic",
               textAlign: "center",
-              padding: "5px",
             }}
             colSpan="6"
           >
@@ -193,11 +192,10 @@ function DailyIssued(props) {
           <td
             style={{
               borderBottom: "1px solid black",
-              fontSize: "11px",
+
               fontFamily: "Times New Roman",
               fontStyle: "italic",
               textAlign: "center",
-              padding: "5px",
             }}
             colSpan="2"
           >
@@ -211,7 +209,6 @@ function DailyIssued(props) {
             style={{
               borderRight: "1px solid black",
               borderBottom: "1px solid black",
-              padding: "5px",
             }}
           >
             RIS No.
@@ -221,7 +218,6 @@ function DailyIssued(props) {
               borderRight: "1px solid black",
               borderBottom: "1px solid black",
               width: "10%",
-              padding: "5px",
             }}
           >
             Responsibility Center Code
@@ -230,7 +226,6 @@ function DailyIssued(props) {
             style={{
               borderRight: "1px solid black",
               borderBottom: "1px solid black",
-              padding: "5px",
             }}
           >
             Stock No.
@@ -239,7 +234,6 @@ function DailyIssued(props) {
             style={{
               borderRight: "1px solid black",
               width: "30%",
-              padding: "5px",
             }}
           >
             Item
@@ -248,7 +242,6 @@ function DailyIssued(props) {
             style={{
               borderRight: "1px solid black",
               width: "5%",
-              padding: "5px",
             }}
           >
             Unit
@@ -257,7 +250,6 @@ function DailyIssued(props) {
             style={{
               borderRight: "1px solid black",
               width: "8%",
-              padding: "5px",
             }}
           >
             Quantity Issued
@@ -267,7 +259,6 @@ function DailyIssued(props) {
             style={{
               borderRight: "1px solid black",
               width: "15%",
-              padding: "5px",
             }}
           >
             Unit Cost
@@ -276,225 +267,80 @@ function DailyIssued(props) {
             style={{
               // border: "1px solid black",
               width: "15%",
-              padding: "5px",
             }}
           >
             Amount
           </td>
         </tr>
-        <tr style={{ textAlign: "center", fontSize: "11px" }}>
-          <td
-            style={{
-              borderRight: "1px solid black",
-              padding: "5px",
-            }}
-          >
-            23-01-040
-          </td>
-          <td
-            style={{
-              borderRight: "1px solid black",
-              padding: "5px",
-            }}
-          >
-            Ward 8
-          </td>
-          <td
-            style={{
-              borderRight: "1px solid black",
-              padding: "5px",
-            }}
-          >
-            OF-16-001
-          </td>
-          <td
-            style={{
-              borderTop: "1px solid black",
-              borderRight: "1px solid black",
-              textAlign: "left",
-              padding: "5px",
-            }}
-          >
-            Bond Paper, A4 Sub 20, 500's/ream
-          </td>
-          <td
-            style={{
-              borderTop: "1px solid black",
-              borderRight: "1px solid black",
-              padding: "5px",
-            }}
-          >
-            ream
-          </td>
-          <td
-            style={{
-              borderTop: "1px solid black",
-              borderRight: "1px solid black",
-              padding: "5px",
-            }}
-          >
-            5
-          </td>
-          <td
-            style={{
-              borderTop: "1px solid black",
-              borderRight: "1px solid black",
-              padding: "5px",
-            }}
-          >
-            00
-          </td>
-          <td
-            style={{
-              borderTop: "1px solid black",
-              padding: "5px",
-            }}
-          >
-            00
-          </td>
-        </tr>
-        <tr style={{ textAlign: "center", fontSize: "11px" }}>
-          <td
-            style={{
-              borderRight: "1px solid black",
-              padding: "5px",
-            }}
-          >
-            23-01-040
-          </td>
-          <td
-            style={{
-              borderRight: "1px solid black",
-              padding: "5px",
-            }}
-          >
-            Ward 8
-          </td>
-          <td
-            style={{
-              borderRight: "1px solid black",
-              padding: "5px",
-            }}
-          >
-            OF-16-001
-          </td>
-          <td
-            style={{
-              borderTop: "1px solid black",
-              borderRight: "1px solid black",
-              textAlign: "left",
-              padding: "5px",
-            }}
-          >
-            Bond Paper, A4 Sub 20, 500's/ream
-          </td>
-          <td
-            style={{
-              borderTop: "1px solid black",
-              borderRight: "1px solid black",
-              padding: "5px",
-            }}
-          >
-            ream
-          </td>
-          <td
-            style={{
-              borderTop: "1px solid black",
-              borderRight: "1px solid black",
-              padding: "5px",
-            }}
-          >
-            5
-          </td>
-          <td
-            style={{
-              borderTop: "1px solid black",
-              borderRight: "1px solid black",
-              padding: "5px",
-            }}
-          >
-            00
-          </td>
-          <td
-            style={{
-              borderTop: "1px solid black",
-              padding: "5px",
-            }}
-          >
-            00
-          </td>
-        </tr>
-        <tr style={{ textAlign: "center", fontSize: "11px" }}>
-          <td
-            style={{
-              borderRight: "1px solid black",
-              padding: "5px",
-            }}
-          >
-            23-01-040
-          </td>
-          <td
-            style={{
-              borderRight: "1px solid black",
-              padding: "5px",
-            }}
-          >
-            Ward 8
-          </td>
-          <td
-            style={{
-              borderRight: "1px solid black",
-              padding: "5px",
-            }}
-          >
-            OF-16-001
-          </td>
-          <td
-            style={{
-              borderTop: "1px solid black",
-              borderRight: "1px solid black",
-              textAlign: "left",
-              padding: "5px",
-            }}
-          >
-            Bond Paper, A4 Sub 20, 500's/ream
-          </td>
-          <td
-            style={{
-              borderTop: "1px solid black",
-              borderRight: "1px solid black",
-              padding: "5px",
-            }}
-          >
-            ream
-          </td>
-          <td
-            style={{
-              borderTop: "1px solid black",
-              borderRight: "1px solid black",
-              padding: "5px",
-            }}
-          >
-            5
-          </td>
-          <td
-            style={{
-              borderTop: "1px solid black",
-              borderRight: "1px solid black",
-              padding: "5px",
-            }}
-          >
-            00
-          </td>
-          <td
-            style={{
-              borderTop: "1px solid black",
-              padding: "5px",
-            }}
-          >
-            00
-          </td>
-        </tr>
+
+        {/* DATA */}
+        {[...Array(5)].map((x, i) => (
+          <>
+            <tr style={{ textAlign: "center", fontSize: "11px" }}>
+              <td
+                style={{
+                  borderRight: "1px solid black",
+                }}
+              >
+                23-01-040
+              </td>
+              <td
+                style={{
+                  borderRight: "1px solid black",
+                }}
+              >
+                Ward 8
+              </td>
+              <td
+                style={{
+                  borderRight: "1px solid black",
+                }}
+              >
+                OF-16-001
+              </td>
+              <td
+                style={{
+                  borderTop: "1px solid black",
+                  borderRight: "1px solid black",
+                  textAlign: "left",
+                }}
+              >
+                Bond Paper, A4 Sub 20, 500's/ream
+              </td>
+              <td
+                style={{
+                  borderTop: "1px solid black",
+                  borderRight: "1px solid black",
+                }}
+              >
+                ream
+              </td>
+              <td
+                style={{
+                  borderTop: "1px solid black",
+                  borderRight: "1px solid black",
+                }}
+              >
+                5
+              </td>
+              <td
+                style={{
+                  borderTop: "1px solid black",
+                  borderRight: "1px solid black",
+                }}
+              >
+                00
+              </td>
+              <td
+                style={{
+                  borderTop: "1px solid black",
+                }}
+              >
+                00
+              </td>
+            </tr>
+          </>
+        ))}
 
         <tr>
           <td
@@ -522,7 +368,7 @@ function DailyIssued(props) {
             }}
             colSpan="2"
           >
-            xxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxx
           </td>
 
           <td
@@ -547,23 +393,34 @@ function DailyIssued(props) {
         <tr
           style={{ textAlign: "center", fontWeight: "bold", fontSize: "11px" }}
         >
-          <td></td>
+          <td
+            style={{
+              borderRight: "1px solid black",
+            }}
+          ></td>
           <td
             colSpan="2"
             style={{
-              border: "2px solid black",
-              padding: "5px",
+              border: "1px solid black",
+              borderBottom: "0",
+              borderLeft: "0",
             }}
           >
             Recapitulation:
           </td>
-          <td></td>
-          <td></td>
+          <td
+            colSpan="2"
+            style={{
+              borderRight: "1px solid black",
+            }}
+          ></td>
+
           <td
             colSpan="3"
             style={{
-              border: "2px solid black",
-              padding: "5px",
+              border: "1px solid black",
+              borderBottom: "0",
+              borderLeft: "0",
             }}
           >
             {" "}
@@ -573,11 +430,16 @@ function DailyIssued(props) {
         <tr
           style={{ textAlign: "center", fontWeight: "bold", fontSize: "11px" }}
         >
-          <td></td>
           <td
             style={{
-              border: "1px solid black",
-              padding: "5px",
+              borderRight: "1px solid black",
+            }}
+          ></td>
+          <td
+            style={{
+              borderRight: "1px solid black",
+              borderTop: "1px solid black",
+              borderBottom: "1px solid black",
             }}
           >
             Stock No.
@@ -585,17 +447,23 @@ function DailyIssued(props) {
           <td
             style={{
               border: "1px solid black",
-              padding: "5px",
+              borderLeft: "0",
             }}
           >
             Quantity
           </td>
-          <td></td>
-          <td></td>
+          <td
+            colSpan="2"
+            style={{
+              borderRight: "1px solid black",
+            }}
+          ></td>
+
           <td
             style={{
               border: "1px solid black",
-              padding: "5px",
+              borderLeft: "0",
+              borderRight: "0",
             }}
           >
             Unit Cost
@@ -603,7 +471,6 @@ function DailyIssued(props) {
           <td
             style={{
               border: "1px solid black",
-              padding: "5px",
             }}
           >
             Total Cost
@@ -611,58 +478,67 @@ function DailyIssued(props) {
           <td
             style={{
               border: "1px solid black",
-              padding: "5px",
+              borderLeft: "0",
+              borderRight: "0",
             }}
           >
             UACS &nbsp; Object Code
           </td>
         </tr>
-        {/* DATA */}
-        <tr style={{ textAlign: "center", fontSize: "11px" }}>
-          <td></td>
-          <td
-            style={{
-              borderRight: "1px solid black",
-              borderLeft: "1px solid black",
-              padding: "5px",
-            }}
-          >
-            S-16-11
-          </td>
-          <td
-            style={{
-              borderRight: "1px solid black",
-              padding: "5px",
-            }}
-          >
-            1
-          </td>
-          <td colSpan="2"></td>
 
-          <td
-            style={{
-              borderLeft: "1px solid black",
-              borderRight: "1px solid black",
-            }}
-          ></td>
-          <td
-            style={{
-              borderRight: "1px solid black",
-            }}
-          ></td>
-          <td
-            style={{
-              borderRight: "1px solid black",
-            }}
-          ></td>
-        </tr>
+        {[...Array(5)].map((x, i) => (
+          <tr style={{ textAlign: "center", fontSize: "11px" }}>
+            <td
+              style={{
+                borderRight: "1px solid black",
+              }}
+            ></td>
+            <td
+              style={{
+                borderLeft: "0",
+                borderRight: "1px solid black",
+              }}
+            >
+              S-16-11
+            </td>
+            <td
+              style={{
+                borderRight: "1px solid black",
+              }}
+            >
+              1
+            </td>
+            <td
+              colSpan="2"
+              style={{
+                borderRight: "1px solid black",
+              }}
+            ></td>
+
+            <td></td>
+            <td
+              style={{
+                borderLeft: "1px solid black",
+                borderRight: "1px solid black",
+              }}
+            ></td>
+            <td
+              style={{
+                borderRight: "1px solid black",
+              }}
+            ></td>
+          </tr>
+        ))}
+
         <tr style={{ textAlign: "center", fontSize: "11px" }}>
-          <td></td>
           <td
             style={{
               borderRight: "1px solid black",
-              borderLeft: "1px solid black",
-              padding: "5px",
+            }}
+          ></td>
+          <td
+            style={{
+              borderRight: "1px solid black",
               textAlign: "center",
             }}
           >
@@ -671,14 +547,19 @@ function DailyIssued(props) {
           <td
             style={{
               borderRight: "1px solid black",
-              padding: "5px",
               textAlign: "center",
             }}
           >
             xxxxxx
           </td>
-          <td colSpan="2"></td>
+          <td
+            colSpan="2"
+            style={{
+              borderRight: "1px solid black",
+            }}
+          ></td>
 
+          <td></td>
           <td
             style={{
               borderLeft: "1px solid black",
@@ -690,23 +571,34 @@ function DailyIssued(props) {
               borderRight: "1px solid black",
             }}
           ></td>
-          <td
-            style={{
-              borderRight: "1px solid black",
-            }}
-          ></td>
         </tr>
 
-        <tr style={{ fontSize: "11px", fontFamily: "Times New Roman" }}>
+        <tr style={{ fontSize: "12px", fontFamily: "Times New Roman" }}>
           <td
-            colSpan="6"
+            colSpan="5"
             style={{
               borderRight: "1px solid black",
               borderTop: "1px solid black",
-              padding: "5px",
             }}
           >
             <p>I hereby certify to the correctness of the above information.</p>
+          </td>
+          <td
+            colSpan="3"
+            style={{
+              borderTop: "1px solid black",
+            }}
+          >
+            <p>Posted by:</p>
+          </td>
+        </tr>
+        <tr style={{ fontSize: "12px", fontFamily: "Times New Roman" }}>
+          <td
+            colSpan="5"
+            style={{
+              borderRight: "1px solid black",
+            }}
+          >
             <br />
             <p style={{ fontWeight: "bold", textAlign: "center" }}>
               JOHN MARY C. STA. TERESA
@@ -719,15 +611,7 @@ function DailyIssued(props) {
               Signature over Printed name of Supply and/or Property Custodian
             </p>
           </td>
-          <td
-            colSpan="2"
-            style={{
-              borderTop: "1px solid black",
-              padding: "5px",
-            }}
-          >
-            <p>Posted by:</p>
-            <br />
+          <td colSpan="3" style={{}}>
             <br />
             <div style={{ float: "left", width: "60%", textAlign: "center" }}>
               <p style={{ borderTop: "1px solid black" }}>
@@ -735,7 +619,14 @@ function DailyIssued(props) {
               </p>
             </div>
             <div style={{ float: "right", width: "40%", textAlign: "center" }}>
-              <p style={{ textDecoration: "overline" }}>
+              <hr
+                style={{
+                  width: "80px",
+                  marginLeft: "20px",
+                  borderTop: "1px solid black",
+                }}
+              />
+              <p>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               </p>
             </div>
@@ -749,7 +640,7 @@ function DailyIssued(props) {
           fontFamily: "Times New Roman",
         }}
       >
-        <p style={{ fontSize: "11px", fontStyle: "italic" }}>
+        <p style={{ fontSize: "10px", fontStyle: "italic" }}>
           (Adopted from Government Accounting Manual: Appendix 64)
         </p>
       </div>
