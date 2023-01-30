@@ -2,15 +2,29 @@ import { Box, Center, Flex, Image, Text } from "@chakra-ui/react";
 import { useEffect } from "react";
 import "../Style/Loading.css";
 import { Get } from "../API/Base_Http_Request";
-import { primaryPathToken } from "../API/Path_List";
+import { primaryPathToken, primaryPathUser } from "../API/Path_List";
+import useAuth from "../Hooks/useAuth";
 
 const Loading = () => {
-  const fetchCsrf = () => {
-    const res = Get({ url: primaryPathToken });
+  const { setUser } = useAuth();
+
+  const fetchCsrf = async () => {
+    await Get({ url: primaryPathToken });
+  };
+
+  const authorizationValidation = async () => {
+    Get({ url: primaryPathUser + "/init" })
+      .then((res) => {
+        if (res.data.status === 200) {
+          setUser(res.data.data);
+        }
+      })
+      .catch((e) => console.log(e));
   };
 
   useEffect(() => {
     fetchCsrf();
+    authorizationValidation();
   }, []);
 
   return (

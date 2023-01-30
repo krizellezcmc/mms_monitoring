@@ -2,10 +2,8 @@ import {
   Box,
   Button,
   Center,
-  Heading,
   Flex,
   Text,
-  Image,
   Grid,
   GridItem,
 } from "@chakra-ui/react";
@@ -24,13 +22,10 @@ import {
 } from "../Components/Auth_Header_Design";
 
 const Login = () => {
-  const { setUser } = useAuth();
+  const { setUser, username, setUsername, password, setPassword } = useAuth();
   const navigate = useNavigate();
 
   const [feedback, setFeedback] = useState("");
-
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
 
   const [emailExc, setEmailExc] = useState("");
   const [passExc, setPassExc] = useState("");
@@ -50,11 +45,15 @@ const Login = () => {
         if (response.data.status === 200) {
           setUser(response.data.data);
           setLoading(false);
+          navigate("/", { replace: true });
           return;
         }
 
         if (response.data.status === 404) {
           navigate(response.data.path, { replace: true });
+          setUsername("");
+          setLoading(false);
+          return;
         }
         setFeedback(response.data.message);
         setPassword("");

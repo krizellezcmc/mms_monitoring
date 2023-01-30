@@ -4,6 +4,8 @@ const DataContext = createContext({});
 
 export const DataProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const fetchUser = async () => {
     try {
@@ -22,7 +24,16 @@ export const DataProvider = ({ children }) => {
   }, []);
 
   return (
-    <DataContext.Provider value={{ user, setUser }}>
+    <DataContext.Provider
+      value={{
+        user,
+        setUser,
+        username,
+        setUsername,
+        password,
+        setPassword,
+      }}
+    >
       {children}
     </DataContext.Provider>
   );

@@ -14,7 +14,7 @@ const api = new axios.create({
   },
 });
 
-// ///ON REQUEST ATTACH AUTHORIZATION ON AXIOS INSTANCE
+///ON REQUEST ATTACH AUTHORIZATION ON AXIOS INSTANCE
 // api.interceptors.request.use(function (config) {
 //   const token = sessionStorage.getItem("token");
 //   config.headers.Authorization = `Bearer ${token}`;

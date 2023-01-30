@@ -1,17 +1,15 @@
 import {
   Box,
   Button,
-  Heading,
   Flex,
   Text,
-  Image,
   Grid,
   GridItem,
   useDisclosure,
 } from "@chakra-ui/react";
 import CustomInput from "../Components/CustomInput";
 import { useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { CustomSelection } from "../Components/Custom_Selection";
 import { Post } from "../API/Base_Http_Request";
 import { primaryPathAccountReg } from "../API/Path_List";
@@ -27,7 +25,7 @@ const AccountRegistration = () => {
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const { setUser } = useAuth();
+  const { user, setUser, password } = useAuth();
 
   const [feedbackTitle, setFeedBackTitle] = useState("");
   const [feedbackDescription, setFeedBackDescription] = useState("");
@@ -54,7 +52,12 @@ const AccountRegistration = () => {
     navigate("login", { replace: true });
   };
 
-  const handleUserInformation = (e) => {
+  const navigateAuthorize = (e) => {
+    e.preventDefault();
+    navigate("/", { replace: true });
+  };
+
+  const handleUserInformation = async (e) => {
     e.preventDefault();
     setLoading(true);
 
@@ -63,22 +66,29 @@ const AccountRegistration = () => {
     bodyForm.append("middlename", mname);
     bodyForm.append("lastname", lname);
     bodyForm.append("PK_department_ID", PK_department_ID);
+    bodyForm.append("password", password);
 
-    const res = Post({ url: primaryPathAccountReg }, bodyForm);
+    const response = await Post({ url: primaryPathAccountReg }, bodyForm);
 
-    if (res.data.status === 200) {
-      if (res.data.authorized) {
-        setLoading(false);
-        setUser(res.data.data);
+    if (response.data.status === 200) {
+      try {
+        if (response.data.data != null) {
+          setLoading(false);
+          setUser(response.data.data);
+          navigateAuthorize(e);
+          return;
+        }
+      } catch (e) {
+        console.log(e.message);
       }
       setFeedBackTitle("Registered successfully");
-      setFeedBackDescription(res.data);
+      setFeedBackDescription(response.data);
       resultFeedBack();
       return;
     }
 
     setFeedBackTitle("Something went wrong!.");
-    setFeedBackDescription(res.message);
+    setFeedBackDescription(response.message);
     resultFeedBack();
   };
 

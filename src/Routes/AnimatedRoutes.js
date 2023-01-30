@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import { Route, Routes, Navigate, Outlet } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import PurchaseOrder from "../Pages/PurchaseOrder";
