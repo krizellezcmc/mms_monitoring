@@ -3,7 +3,7 @@ import { createContext, useState, useEffect } from "react";
 const DataContext = createContext({});
 
 export const DataProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({ name: "Tristan Jay" });
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 

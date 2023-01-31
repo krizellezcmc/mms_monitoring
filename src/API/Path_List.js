@@ -6,9 +6,6 @@ export const primaryPathToken = "/sanctum/csrf-cookie";
 // Path for request in purchase request.
 export const primaryPathPR = "/api/purchaserequest";
 
-// Path for request in procurement request.
-export const primaryPathPr = "/api/procurement";
-
 // Path for request in department request.
 export const primaryPathDepartment = "/api/department";
 

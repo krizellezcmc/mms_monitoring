@@ -24,12 +24,9 @@ import {
 const Login = () => {
   const { setUser, username, setUsername, password, setPassword } = useAuth();
   const navigate = useNavigate();
-
   const [feedback, setFeedback] = useState("");
-
   const [emailExc, setEmailExc] = useState("");
   const [passExc, setPassExc] = useState("");
-
   const [loading, setLoading] = useState(false);
 
   const handleSignin = (e) => {

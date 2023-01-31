@@ -101,8 +101,14 @@ function AnimatedRoutes() {
               exact
               element={
                 <MainLayoutPage>
-                  {RoutesData.map((item) => {
-                    return <Route path={item.path} element={item.element} />;
+                  {RoutesData.map((item, index) => {
+                    return (
+                      <Route
+                        key={index}
+                        path={item.path}
+                        element={item.element}
+                      />
+                    );
                   })}
                 </MainLayoutPage>
               }
