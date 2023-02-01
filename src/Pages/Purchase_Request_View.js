@@ -8,7 +8,9 @@ import {
   Grid,
   GridItem,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { PR_Data } from "../Data/PR_DataSet";
+import { useLocation } from "react-router-dom";
 
 const PRViewHeader = () => {
   return (
@@ -174,6 +176,12 @@ const PRViewBody = () => {
 };
 
 const PurchaseRequestView = () => {
+  const location = useLocation();
+
+  const [pr, setPr] = useState(location.state);
+
+  console.log(location.state);
+
   return (
     <Box w={"100%"} h={"100vh"}>
       <Center>

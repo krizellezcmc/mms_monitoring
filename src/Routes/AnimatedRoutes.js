@@ -114,6 +114,7 @@ function AnimatedRoutes() {
               }
             />
           </Route>
+          <Route path="pr-view" element={<PurchaseRequestView />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<Register />} />
           <Route path="/account" element={<AccountRegistration />} />

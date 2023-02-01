@@ -9,6 +9,7 @@ import { useEffect } from "react";
 const Users = () => {
   const title = "Registered User";
   const [fetch, setFetch] = useState(false);
+  const [search, setSearch] = useState("");
   const [users, setUsers] = useState([]);
 
   const column = useMemo(
@@ -57,18 +58,26 @@ const Users = () => {
       .catch((e) => console.log(e.message));
   };
 
+  const UserData = users.filter(
+    (filter) =>
+      filter.first_name.toLowerCase().includes(search.toLowerCase()) ||
+      filter.middle_name.toLowerCase().includes(search.toLowerCase()) ||
+      filter.last_name.toLowerCase().includes(search.toLowerCase())
+  );
+
   useEffect(() => {
     handleRequest();
-  }, []);
+  }, [fetch]);
 
   return (
     <Box w={"100%"} h={"inherit"} verticalAlign={"center"} p={5}>
       <CustomTable
         title={title}
-        fetch={fetch}
-        setSearch={setFetch}
+        fetch={setFetch}
+        search={search}
+        setSearch={setSearch}
         columns={column}
-        data={users}
+        data={UserData}
       />
     </Box>
   );
