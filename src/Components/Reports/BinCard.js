@@ -1,9 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import doh from "../../Assets/logo/doh.png";
 import zcmc from "../../Assets/logo/zcmc.png";
 import moment from "moment";
+import localApi from "../../API/localAPI";
 
 function BinCard(props) {
+  const [deliveries, setDeliveries] = useState([]);
+  const [list, setList] = useState([]);
+  const [item, setItem] = useState();
+  const [unit, setUnit] = useState();
+
+  const getDeliveries = async () => {
+    let response = await localApi.get("/get_deliveries.php", {
+      params: {
+        itemId: props.itemId,
+      },
+    });
+
+    setDeliveries(response.data);
+    setItem(response.data[0].item);
+    setUnit(response.data[0].unit);
+  };
+
+  const getBinCard = async () => {
+    let response = await localApi.get("/get_binCard.php", {
+      params: {
+        itemId: props.itemId,
+      },
+    });
+
+    setList(response.data);
+  };
+
+  useEffect(() => {
+    getDeliveries();
+    getBinCard();
+  }, []);
+
   return (
     <div>
       <div
@@ -82,7 +115,7 @@ function BinCard(props) {
               }}
             >
               Item Name:
-            </p>{" "}
+            </p>
             &nbsp;
             <p
               style={{
@@ -93,10 +126,10 @@ function BinCard(props) {
                 paddingBottom: "8px",
               }}
             >
-              ZAMBOANGA CITY MEDICAL CENTER
+              {item}
             </p>
           </div>
-          <div>
+          {/* <div>
             <p
               style={{
                 display: "inline",
@@ -117,7 +150,7 @@ function BinCard(props) {
             >
               &nbsp; &nbsp;Regular Income &nbsp; &nbsp;
             </p>
-          </div>
+          </div> */}
           <div>
             <p
               style={{
@@ -137,7 +170,7 @@ function BinCard(props) {
                 paddingBottom: "8px",
               }}
             >
-              &nbsp; &nbsp;Regular Income &nbsp; &nbsp;
+              &nbsp; &nbsp;{unit} &nbsp; &nbsp;
             </p>
           </div>
         </div>
@@ -190,13 +223,10 @@ function BinCard(props) {
                 borderBottom: "1px solid black",
                 paddingBottom: "8px",
               }}
-            >
-              &nbsp; &nbsp;{moment().format("LL")}&nbsp; &nbsp;
-            </p>
+            ></p>
           </div>
         </div>
       </div>
-
       <table
         style={{
           width: "800px",
@@ -215,11 +245,9 @@ function BinCard(props) {
             REF(PO#, INV./DR#, RIS#)
           </td>
           <td style={{ borderRight: "1px solid black", padding: "5px" }}>
-            RECEIPT
-          </td>
-          <td style={{ borderRight: "1px solid black", padding: "5px" }}>
             ISSUED
           </td>
+
           <td>BALANCE</td>
         </tr>
         <tr>
@@ -228,83 +256,190 @@ function BinCard(props) {
             style={{
               borderTop: "1px solid black",
               borderBottom: "1px solid black",
-              padding: "5px",
             }}
           ></td>
         </tr>
-        <tr style={{ fontSize: "11px" }}>
-          <td
-            style={{
-              borderRight: "1px solid black",
-              borderBottom: "1px solid black",
-              padding: "5px",
-            }}
-          >
-            NAME
-          </td>
-          <td
-            style={{
-              borderRight: "1px solid black",
-              borderBottom: "1px solid black",
-              padding: "5px",
-            }}
-          >
-            NAME
-          </td>
-          <td
-            style={{
-              borderRight: "1px solid black",
-              borderBottom: "1px solid black",
-              padding: "5px",
-            }}
-          >
-            NAME
-          </td>
-          <td
-            style={{
-              borderRight: "1px solid black",
-              borderBottom: "1px solid black",
-              padding: "5px",
-            }}
-          >
-            NAME
-          </td>
-          <td
-            style={{
-              borderBottom: "1px solid black",
-              padding: "5px",
-            }}
-          >
-            NAME
-          </td>
-        </tr>
+
+        {list.map((b) => {
+          return (
+            <>
+              {" "}
+              <tr style={{ fontSize: "13px" }}>
+                <td
+                  style={{
+                    borderRight: "1px solid black",
+                    borderBottom: "1px solid black",
+                  }}
+                >
+                  {moment(b.STIDate.date).format("MM-DD-YYYY")}
+                </td>
+                <td
+                  style={{
+                    borderRight: "1px solid black",
+                    borderBottom: "1px solid black",
+                  }}
+                >
+                  {b.WarehouseSCR}
+                </td>
+                <td
+                  style={{
+                    borderRight: "1px solid black",
+                    borderBottom: "1px solid black",
+                    fontWeight: "bolder",
+                  }}
+                  align="center"
+                >
+                  {Math.floor(b.qty)}
+                  {/* {Math.floor(b.qty)} ({b.unit}/s) */}
+                </td>
+                <td
+                  style={{
+                    borderRight: "1px solid black",
+                    borderBottom: "1px solid black",
+                  }}
+                ></td>
+              </tr>
+            </>
+          );
+        })}
+
         <tr>
           <td
             colSpan="2"
             style={{
               borderRight: "1px solid black",
-              padding: "5px",
+
               fontSize: "11px",
               fontWeight: "bold",
               fontStyle: "italic",
             }}
           >
-            Balance Carried Forward >>>>>
+            Balance Carried Forward {">>>>>"}
+          </td>
+          <td
+            style={{
+              borderRight: "1px solid black",
+            }}
+          ></td>
+          <td
+            style={{
+              borderRight: "1px solid black",
+            }}
+          ></td>
+        </tr>
+      </table>
+      {/*DELIVERIES */}
+      <table
+        style={{
+          width: "800px",
+
+          border: "2px solid black",
+          margin: "auto",
+          marginTop: "10px",
+        }}
+      >
+        <tr style={{ fontWeight: "bold", fontSize: "12px" }}>
+          <td
+            style={{ borderRight: "1px solid black", padding: "5px" }}
+            align="center"
+          >
+            DATE
+          </td>
+          <td style={{ borderRight: "1px solid black", padding: "5px" }}>
+            SUPPLIER NAME
+          </td>
+          <td style={{ borderRight: "1px solid black", padding: "5px" }}>
+            REMARKS
           </td>
           <td
             style={{
               borderRight: "1px solid black",
               padding: "5px",
+              textAlign: "center",
+            }}
+          >
+            RECEIPT (QTY)
+          </td>
+        </tr>
+        <tr>
+          <td
+            colSpan="5"
+            style={{
+              borderTop: "1px solid black",
+              borderBottom: "1px solid black",
+            }}
+          ></td>
+        </tr>
+
+        {deliveries.map((e, i) => {
+          return (
+            <>
+              <tr style={{ fontSize: "13px" }}>
+                <td
+                  style={{
+                    borderRight: "1px solid black",
+                    borderBottom: "1px solid black",
+                  }}
+                  align="center"
+                >
+                  {moment(e.docdate.date).format("MM-DD-YYYY")}
+                  {/* {e.docdate} */}
+                </td>
+                <td
+                  style={{
+                    borderRight: "1px solid black",
+                    borderBottom: "1px solid black",
+                  }}
+                >
+                  {e.supplier}
+                </td>
+                <td
+                  style={{
+                    borderRight: "1px solid black",
+                    borderBottom: "1px solid black",
+                  }}
+                >
+                  {e.remarks}
+                </td>
+                <td
+                  style={{
+                    borderRight: "1px solid black",
+                    borderBottom: "1px solid black",
+                    width: "100px",
+                    textAlign: "center",
+                  }}
+                >
+                  {Math.floor(e.itemqty)}
+                </td>
+              </tr>
+            </>
+          );
+        })}
+
+        {/* <tr>
+          <td
+            colSpan="2"
+            style={{
+              borderRight: "1px solid black",
+
+              fontSize: "11px",
+              fontWeight: "bold",
+              fontStyle: "italic",
+            }}
+          >
+            Balance Carried Forward {">>>>>"}
+          </td>
+          <td
+            style={{
+              borderRight: "1px solid black",
             }}
           ></td>
           <td
             style={{
               borderRight: "1px solid black",
-              padding: "5px",
             }}
           ></td>
-          <td></td>
-        </tr>
+        </tr> */}
       </table>
     </div>
   );

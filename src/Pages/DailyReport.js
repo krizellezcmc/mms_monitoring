@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import doh from "../Assets/logo/doh.png";
 import zcmc from "../Assets/logo/zcmc.png";
 import moment from "moment";
-import { Button } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  FormControl,
+  FormLabel,
+  Input,
+  Spacer,
+} from "@chakra-ui/react";
 import jsPDF from "jspdf";
 import ReactDOMServer from "react-dom/server";
 import DailyIssued from "../Components/Reports/DailyIssued";
@@ -13,8 +20,25 @@ import {
   BiPlusCircle,
   BiSearch,
 } from "react-icons/bi";
+import localApi from "../API/localAPI";
+import axios from "axios";
 
 function DailyReport(props) {
+  const [date, setDate] = useState();
+  const [dept, setDept] = useState([]);
+
+  const getData = async () => {
+    let response = await localApi.get("/get_dailyReport.php");
+
+    if (response) {
+      setDept(response.data);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   const exportPDF = () => {
     let element = (
       <div>
@@ -64,14 +88,24 @@ function DailyReport(props) {
           padding: "20px",
         }}
       >
-        <Button
-          colorScheme="teal"
-          variant="outline"
-          onClick={exportPDF}
-          rightIcon={<BiDownload />}
-        >
-          Download
-        </Button>
+        <Flex>
+          <Button
+            colorScheme="teal"
+            variant="outline"
+            onClick={exportPDF}
+            rightIcon={<BiDownload />}
+          >
+            Download
+          </Button>
+          <Spacer />
+
+          <Input
+            type="date"
+            w={250}
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+          />
+        </Flex>
       </div>
       <div
         style={{
@@ -331,7 +365,7 @@ function DailyReport(props) {
             Amount
           </td>
         </tr>
-        {[...Array(5)].map((x, i) => (
+        {dept?.map((x, i) => (
           <>
             <tr style={{ textAlign: "center", fontSize: "11px" }}>
               <td
@@ -342,13 +376,14 @@ function DailyReport(props) {
               >
                 23-01-040
               </td>
+
               <td
                 style={{
                   borderRight: "1px solid black",
                   padding: "5px",
                 }}
               >
-                Ward 8
+                {x.ReqDept}
               </td>
               <td
                 style={{

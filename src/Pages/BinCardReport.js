@@ -1,10 +1,12 @@
-import { Box, Button } from "@chakra-ui/react";
-import React from "react";
+import { Text, Spacer, Flex, Button } from "@chakra-ui/react";
+import React, { useState } from "react";
 import BinCard from "../Components/Reports/BinCard";
 import jsPDF from "jspdf";
 import ReactDOMServer from "react-dom/server";
 
 function BinCardReport(props) {
+  const [itemId, setItemId] = useState("SUP000155");
+
   const exportPDF = () => {
     let element = (
       <div>
@@ -48,14 +50,18 @@ function BinCardReport(props) {
       },
     });
   };
+
   return (
     <div>
-      <Box p={5}>
+      <Flex p={5}>
         <Button colorScheme="blue" onClick={exportPDF}>
           Download Report
         </Button>
-      </Box>
-      <BinCard />
+        <Spacer />
+
+        <Text>SUP000155 (def)</Text>
+      </Flex>
+      <BinCard itemId={itemId} />
     </div>
   );
 }
