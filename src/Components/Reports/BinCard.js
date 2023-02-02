@@ -2,41 +2,9 @@ import React, { useEffect, useState } from "react";
 import doh from "../../Assets/logo/doh.png";
 import zcmc from "../../Assets/logo/zcmc.png";
 import moment from "moment";
-import localApi from "../../API/localAPI";
+// import localApi from "../../API/localAPI";
 
 function BinCard(props) {
-  const [deliveries, setDeliveries] = useState([]);
-  const [list, setList] = useState([]);
-  const [item, setItem] = useState();
-  const [unit, setUnit] = useState();
-
-  const getDeliveries = async () => {
-    let response = await localApi.get("/get_deliveries.php", {
-      params: {
-        itemId: props.itemId,
-      },
-    });
-
-    setDeliveries(response.data);
-    setItem(response.data[0].item);
-    setUnit(response.data[0].unit);
-  };
-
-  const getBinCard = async () => {
-    let response = await localApi.get("/get_binCard.php", {
-      params: {
-        itemId: props.itemId,
-      },
-    });
-
-    setList(response.data);
-  };
-
-  useEffect(() => {
-    getDeliveries();
-    getBinCard();
-  }, []);
-
   return (
     <div>
       <div
@@ -126,7 +94,7 @@ function BinCard(props) {
                 paddingBottom: "8px",
               }}
             >
-              {item}
+              {props.item}
             </p>
           </div>
           {/* <div>
@@ -170,7 +138,7 @@ function BinCard(props) {
                 paddingBottom: "8px",
               }}
             >
-              &nbsp; &nbsp;{unit} &nbsp; &nbsp;
+              &nbsp; &nbsp;{props.unit} &nbsp; &nbsp;
             </p>
           </div>
         </div>
@@ -191,7 +159,7 @@ function BinCard(props) {
                 fontWeight: "bold",
               }}
             >
-              S#.:{" "}
+              S#.:
             </p>
             <p
               style={{
@@ -201,9 +169,7 @@ function BinCard(props) {
                 borderBottom: "1px solid black",
                 paddingBottom: "8px",
               }}
-            >
-              &nbsp; &nbsp;23-01-006&nbsp; &nbsp;
-            </p>
+            ></p>
           </div>
           <div>
             <p
@@ -213,7 +179,7 @@ function BinCard(props) {
                 fontWeight: "bold",
               }}
             >
-              Re-order Point:{" "}
+              Re-order Point:
             </p>
             <p
               style={{
@@ -227,6 +193,11 @@ function BinCard(props) {
           </div>
         </div>
       </div>
+      <div
+        style={{
+          width: "800px",
+        }}
+      ></div>
       <table
         style={{
           width: "800px",
@@ -248,7 +219,7 @@ function BinCard(props) {
             ISSUED
           </td>
 
-          <td>BALANCE</td>
+          {/* <td>BALANCE</td> */}
         </tr>
         <tr>
           <td
@@ -260,18 +231,19 @@ function BinCard(props) {
           ></td>
         </tr>
 
-        {list.map((b) => {
+        {props.list.map((b) => {
           return (
             <>
-              {" "}
               <tr style={{ fontSize: "13px" }}>
                 <td
+                  align="center"
+                  width="100px"
                   style={{
                     borderRight: "1px solid black",
                     borderBottom: "1px solid black",
                   }}
                 >
-                  {moment(b.STIDate.date).format("MM-DD-YYYY")}
+                  {moment(b.STIDate.date).format("ll")}
                 </td>
                 <td
                   style={{
@@ -279,7 +251,14 @@ function BinCard(props) {
                     borderBottom: "1px solid black",
                   }}
                 >
-                  {b.WarehouseSCR}
+                  {b.WarehouseDST + " "}
+                  <i>
+                    {b.remarks === null || b.remarks == "" ? (
+                      ""
+                    ) : (
+                      <>({b.remarks})</>
+                    )}
+                  </i>
                 </td>
                 <td
                   style={{
@@ -288,22 +267,23 @@ function BinCard(props) {
                     fontWeight: "bolder",
                   }}
                   align="center"
+                  width="100px"
                 >
                   {Math.floor(b.qty)}
                   {/* {Math.floor(b.qty)} ({b.unit}/s) */}
                 </td>
-                <td
+                {/* <td
                   style={{
                     borderRight: "1px solid black",
                     borderBottom: "1px solid black",
                   }}
-                ></td>
+                ></td> */}
               </tr>
             </>
           );
         })}
 
-        <tr>
+        {/* <tr>
           <td
             colSpan="2"
             style={{
@@ -321,12 +301,12 @@ function BinCard(props) {
               borderRight: "1px solid black",
             }}
           ></td>
-          <td
+          {/* <td
             style={{
               borderRight: "1px solid black",
             }}
-          ></td>
-        </tr>
+          ></td> 
+        </tr> */}
       </table>
       {/*DELIVERIES */}
       <table
@@ -342,6 +322,7 @@ function BinCard(props) {
           <td
             style={{ borderRight: "1px solid black", padding: "5px" }}
             align="center"
+            width="100px"
           >
             DATE
           </td>
@@ -371,7 +352,7 @@ function BinCard(props) {
           ></td>
         </tr>
 
-        {deliveries.map((e, i) => {
+        {props.deliveries.map((e, i) => {
           return (
             <>
               <tr style={{ fontSize: "13px" }}>
@@ -382,7 +363,7 @@ function BinCard(props) {
                   }}
                   align="center"
                 >
-                  {moment(e.docdate.date).format("MM-DD-YYYY")}
+                  {moment(e.docdate.date).format("ll")}
                   {/* {e.docdate} */}
                 </td>
                 <td
