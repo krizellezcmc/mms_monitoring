@@ -1,12 +1,12 @@
-import React from "react";
 import {
   Alert,
   AlertDescription,
   AlertIcon,
   AlertTitle,
 } from "@chakra-ui/react";
+import React from "react";
 
-function NoDeptData(props) {
+function NoSelectedItem(props) {
   return (
     <div>
       <Alert
@@ -21,14 +21,14 @@ function NoDeptData(props) {
       >
         <AlertIcon boxSize="40px" mr={0} />
         <AlertTitle mt={4} mb={1} fontSize="lg">
-          Please select a Department
+          No selected item
         </AlertTitle>
         <AlertDescription maxWidth="sm">
-          Stocks issued to the department will be displayed.
+          Kindly select item to view list of departments.
         </AlertDescription>
       </Alert>
     </div>
   );
 }
 
-export default NoDeptData;
+export default NoSelectedItem;

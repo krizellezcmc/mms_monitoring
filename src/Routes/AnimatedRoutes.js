@@ -14,6 +14,7 @@ import MonthlyDistribution from "../Components/Reports/MontlyDistribution";
 import ReportMonthly from "../Pages/ReportMonthly";
 import BinCardReport from "../Pages/BinCardReport";
 import DirectPurchaseReport from "../Pages/DirectPurchaseReport";
+import IssuancePerItem from "../Pages/IssuancePerItem";
 
 function AnimatedRoutes(props) {
   return (
@@ -36,11 +37,16 @@ function AnimatedRoutes(props) {
           path="/report/daily-distribution"
           element={<DailyReport />}
         ></Route>
+        <Route
+          path="/report/daily-distribution"
+          element={<DailyReport />}
+        ></Route>
         <Route path="/report/bin-card" element={<BinCardReport />}></Route>
         <Route
           path="/report/direct-purchase"
           element={<DirectPurchaseReport />}
         ></Route>
+        <Route path="/issuanceitem/:id" element={<IssuancePerItem />}></Route>
         {/* DELETE AFTER */}
         <Route path="/sample" element={<Table />}></Route>
         <Route path="/category" element={<Category />}></Route>
