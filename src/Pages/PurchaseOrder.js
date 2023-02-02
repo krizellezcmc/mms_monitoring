@@ -38,6 +38,8 @@ function PurchaseOrder(props) {
   const [totalYear, setTotalYear] = useState("");
   const [totalMonth, setTotalMonth] = useState("");
   const [totalNS, setTotalNS] = useState("");
+  const [category, setCategory] = useState([]);
+  const [selected, setSelected] = useState("");
   // const [supplier, setSupplier] = useState([]);
 
   const fetchTotal = async () => {
@@ -51,9 +53,17 @@ function PurchaseOrder(props) {
     setTotalNS(responseNS.data);
   };
 
+  const getCategory = async () => {
+    let response = await localApi.get("/get_IssueCategoryList.php");
+    setCategory(response.data);
+  };
+
   useEffect(() => {
     fetchTotal();
-  }, []);
+    getCategory();
+
+    console.log(selected);
+  }, [selected]);
 
   return (
     <div>
@@ -115,6 +125,41 @@ function PurchaseOrder(props) {
               </MenuItem>
             </MenuGroup>
             <MenuDivider />
+          </MenuList>
+        </Menu>
+        <Menu>
+          <MenuButton
+            as={Button}
+            rightIcon={<ChevronDownIcon />}
+            mr={2}
+            variant="solid"
+            colorScheme="teal"
+          >
+            Items Issued
+          </MenuButton>
+
+          <MenuList>
+            <MenuGroup title="Choose Category">
+              {category.map((j, k) => {
+                return (
+                  <>
+                    <MenuItem
+                      as={Link}
+                      href={`/issuanceitem/${selected}`}
+                      _hover={{ textDecoration: "none" }}
+                      fontSize="13px"
+                      target="_blank"
+                      onClick={() => {
+                        setSelected(j.value);
+                        // console.log(j.value);
+                      }}
+                    >
+                      {j.label}
+                    </MenuItem>
+                  </>
+                );
+              })}
+            </MenuGroup>
           </MenuList>
         </Menu>
         <Button
