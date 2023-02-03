@@ -23,6 +23,7 @@ import localApi from "../API/localAPI";
 import NoSelectedItem from "./NoSelectedItem";
 import { BiSearch } from "react-icons/bi";
 import { BsArrowDown, BsArrowDownShort, BsArrowUpShort } from "react-icons/bs";
+import moment from "moment";
 
 function IssuanceItem(props) {
   const [options, setOptions] = useState([]);
@@ -176,10 +177,14 @@ function IssuanceItem(props) {
                 <Spacer />
               </Flex>
               <TableContainer mt={50}>
-                <Table variant="striped" colorScheme="green">
+                <Table
+                  variant="striped"
+                  colorScheme={balance <= limit ? "red" : "green"}
+                >
                   <Thead>
                     <Tr>
                       <Th textAlign="center">Department</Th>
+                      <Th textAlign="center">Date Issued</Th>
                       <Th textAlign="center">Stocks Issued</Th>
                       <Th textAlign="center">Unit</Th>
                     </Tr>
@@ -199,7 +204,13 @@ function IssuanceItem(props) {
                         return (
                           <>
                             <Tr>
-                              <Td>{j.Dept}</Td>
+                              <Td fontWeight={500}>{j.Dept}</Td>
+                              <Td textAlign="center">
+                                {" "}
+                                {moment(j.Date).format(
+                                  "MMMM DD, YYYY, hh:mm A"
+                                )}
+                              </Td>
                               <Td textAlign="center">
                                 {" "}
                                 {(Math.round(j.Total * 100) / 100).toFixed(1)}

@@ -180,7 +180,7 @@ function Department(props) {
                       padding: "5px",
                     }}
                   >
-                    RIS/Issue No
+                    RIS # / Issue No
                   </td>
                   {/* <td style={{ fontWeight: "bolder", padding: "5px" }}>
                   Item Code
