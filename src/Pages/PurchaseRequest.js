@@ -87,7 +87,7 @@ const PurchaseRequest = () => {
 
   const handleRedirectEdit = (e, value) => {
     e.preventDefault();
-    console.log(value);
+    navigate("/pr-procurement", { state: value });
   };
 
   const handleRedirectDelete = (e, value) => {

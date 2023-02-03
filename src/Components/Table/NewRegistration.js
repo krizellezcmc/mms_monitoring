@@ -6,7 +6,7 @@ const NewRegistration = (props) => {
   return (
     <Button
       size={"sm"}
-      fontSize={14}
+      fontSize={[11, 11, 14, 14]}
       bg={"teal"}
       colorScheme={"green"}
       color={"white"}

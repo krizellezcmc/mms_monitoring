@@ -21,6 +21,7 @@ import PurchaseRequestView from "../Pages/Purchase_Request_View";
 import Loading from "../Pages/Loading";
 import Register from "../Pages/Register";
 import AccountRegistration from "../Pages/Account_Registration";
+import PurchaseRequestProcurement from "../Pages/Purchase_Request_Procurement";
 
 const LoginPage = React.lazy(() => import("../Pages/Login"));
 const MainLayoutPage = React.lazy(() => import("../Pages/Main_Layout"));
@@ -78,10 +79,6 @@ const RoutesData = [
     path: "/po/category",
     element: <Category />,
   },
-  {
-    path: "/pr/pr-view",
-    element: <PurchaseRequestView />,
-  },
 ];
 
 const ProtectedRoute = ({ user }) => {
@@ -114,6 +111,10 @@ function AnimatedRoutes() {
               }
             />
           </Route>
+          <Route
+            path="pr-procurement"
+            element={<PurchaseRequestProcurement />}
+          />
           <Route path="pr-view" element={<PurchaseRequestView />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<Register />} />

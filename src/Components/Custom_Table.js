@@ -30,6 +30,8 @@ const CustomTable = ({
   handleEdit,
   handleDelete,
   child,
+  height,
+  setID,
 }) => {
   const {
     getTableProps,
@@ -55,31 +57,56 @@ const CustomTable = ({
     usePagination
   );
 
+  const handleSelectedRow = (e, row) => {
+    console.log("Hello");
+    e.preventDefault();
+    console.log(row);
+    if (setID === null) {
+      return;
+    }
+  };
+
   return (
-    <Box h="91vh">
+    <Box h={height === null ? "91vh" : height}>
       <Box w={"100%"}>
         <Flex
           justifyContent={"space-between"}
           flexDirection={["column", "column", "row", "row"]}
         >
-          <Flex alignItems={"center"} columnGap={5}>
-            <Heading size="lg" color={"teal"}>
-              {title}
-            </Heading>
-            <Search
-              search={search}
-              placeholder={`Search ${title}`}
-              currsearch={setSearch}
-            />
+          <Flex
+            w={title.toLowerCase().includes("#") ? "100%" : null}
+            alignItems={"center"}
+            columnGap={[2, 2, 5, 5]}
+            justifyContent={
+              title.toLowerCase().includes("#") ? "space-between" : "start"
+            }
+          >
+            {title.toLowerCase().includes("#") ? null : (
+              <Heading size={["md", "md", "lg", "lg"]} color={"teal"}>
+                {title}
+              </Heading>
+            )}
+
+            {title.toLowerCase().includes("#") ? null : (
+              <Search
+                search={search}
+                placeholder={`Search ${title}`}
+                currsearch={setSearch}
+              />
+            )}
           </Flex>
           <Box>
             <Flex columnGap={3} justifyContent={"end"}>
-              <NewRegistration title={title} handleClick={handleClick} />
+              {title.toLowerCase().includes("#") ? null : (
+                <NewRegistration title={title} handleClick={handleClick} />
+              )}
               {child !== null ? child : null}
-              <TableSelectionFilter
-                setPageSize={setPageSize}
-                pageSize={pageSize}
-              />
+              {title.toLowerCase().includes("#") ? null : (
+                <TableSelectionFilter
+                  setPageSize={setPageSize}
+                  pageSize={pageSize}
+                />
+              )}
             </Flex>
           </Box>
         </Flex>
@@ -92,7 +119,7 @@ const CustomTable = ({
           maxWidth={"100%"}
           className={"table"}
           variant="unstyled"
-          boxShadow={"2xl"}
+          boxShadow={"md"}
           overflow="hidden"
           size={"sm"}
           {...getTableProps()}
@@ -124,12 +151,13 @@ const CustomTable = ({
                 prepareRow(row);
                 return (
                   <TableRow
+                    onClick={(e) => handleSelectedRow(e, row)}
                     row={row}
                     pageIndex={pageIndex}
                     index={++index}
-                    handleView={handleView}
-                    handleEdit={handleEdit}
-                    handleDelete={handleDelete}
+                    handleView={handleView === null ? null : handleView}
+                    handleEdit={handleEdit === null ? null : handleEdit}
+                    handleDelete={handleDelete === null ? null : handleDelete}
                   />
                 );
               })
@@ -139,7 +167,7 @@ const CustomTable = ({
           </Tbody>
         </Table>
       </TableContainer>
-      {page.length >= 1 ? (
+      {page.length >= 1 && !title.toLowerCase().includes("#") ? (
         <TableFooter
           canPreviousPage={canPreviousPage}
           canNextPage={canNextPage}

@@ -1,3 +1,8 @@
+:root{
+  --border-color: black;
+}
+
+
 .btn-message{
   transition: all ease-in-out 0.4s;
   padding: 2px;
@@ -38,6 +43,22 @@
 .table-responsive {
   width: 100%;
   overflow-x: auto;
+}
+
+.grid-cell-currency{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 0.5;
+  column-span: 2;
+  border-left: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  text-align: end; 
+}
+
+.grid-cell-currency > .grid-cell-label{
+  font-family: "Open Sans",sans-serif;
+  font-size: 12;
 }
 
 #pagination {

@@ -15,20 +15,24 @@ import SidebarNavigation from "../Components/Sidebar_Component";
 const HeaderComponent = (props) => {
   return (
     <Box w={"100%"} bg={"white"} boxShadow={"md"} zIndex={"59"}>
-      <Flex pl={2} pr={10} pt={2} pb={2} columnGap={5} alignItems={"center"}>
+      <Flex
+        pl={2}
+        pr={[5, 5, 10, 10]}
+        pt={2}
+        pb={2}
+        columnGap={5}
+        alignItems={"center"}
+      >
         <Button
           bgColor="#fafafa"
           onClick={props.action}
           _hover={{ bgColor: "none" }}
         >
           <BiMenu color="teal" fontSize={22} />
-          <Text ml={2} color="teal">
-            Menu
-          </Text>
         </Button>
         <Spacer />
-        <Heading size={"md"}>Tristan Jay Amit</Heading>
-        <Avatar size={"md"} src="" name="Tristan" />
+        <Heading size={["sm", "sm", "md", "md"]}>Tristan Jay Amit</Heading>
+        <Avatar size={["sm", "sm", "md", "md"]} src="" name="Tristan" />
       </Flex>
     </Box>
   );

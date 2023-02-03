@@ -7,32 +7,48 @@ import {
   ChevronLeftIcon,
 } from "@chakra-ui/icons";
 
-const CustomBtnTheme = {
-  backgroundColor: "#9AE6B4",
-  borderRadius: "52px",
-  fontSize: "20px",
+const PaginateButton = (props) => {
+  return (
+    <IconButton
+      backgroundColor={"white"}
+      rounded={100}
+      boxShadow={"lg"}
+      border="1px solid gray"
+      onClick={() => props.gotoPage()}
+      isDisabled={props.handleDissable()}
+      icon={props.children}
+      mr={4}
+      _hover={{
+        bg: "#9AE6B4",
+      }}
+    />
+  );
 };
 
 const TableFooter = (props) => {
+  const handleDissabledDecrementPaginate = () => !props.canPreviousPage;
+  const handleResetPaginate = () => props.gotoPage(0);
+  const handleDecrementPaginate = () => props.previousPage;
+
+  const handleDissabledIncrementPaginate = () => !props.canNextPage;
+  const handleIncrementPaginate = () => props.nextPage;
+  const handleMaxPaginate = () => props.gotoPage(props.pageCount - 1);
+
   return (
-    <Flex justifyContent={"end"} bg={"rgba(0,0,0,0.05)"} mt={5}>
+    <Flex justifyContent={"end"} mt={5}>
       <div id="btnleft">
         <Tooltip label="First Page">
-          <IconButton
-            style={CustomBtnTheme}
-            onClick={() => props.gotoPage(0)}
-            isDisabled={!props.canPreviousPage}
-            icon={<ArrowLeftIcon h={3} w={3} />}
-            mr={4}
+          <PaginateButton
+            gotoPage={handleResetPaginate}
+            children={<ArrowLeftIcon h={3} w={3} />}
+            handleDissable={handleDissabledDecrementPaginate}
           />
         </Tooltip>
         <Tooltip label="Previous Page">
-          <IconButton
-            style={CustomBtnTheme}
-            className="paginationbtn"
-            onClick={props.previousPage}
-            isDisabled={!props.canPreviousPage}
-            icon={<ChevronLeftIcon h={6} w={6} />}
+          <PaginateButton
+            gotoPage={handleDecrementPaginate}
+            children={<ChevronLeftIcon h={6} w={6} />}
+            handleDissable={handleDissabledDecrementPaginate}
           />
         </Tooltip>
       </div>
@@ -55,22 +71,17 @@ const TableFooter = (props) => {
 
       <div id="btnright">
         <Tooltip label="Next Page">
-          <IconButton
-            style={CustomBtnTheme}
-            className="paginationbtn"
-            onClick={props.nextPage}
-            isDisabled={!props.canNextPage}
-            icon={<ChevronRightIcon h={6} w={6} />}
+          <PaginateButton
+            gotoPage={handleIncrementPaginate}
+            children={<ChevronRightIcon h={6} w={6} />}
+            handleDissable={handleDissabledIncrementPaginate}
           />
         </Tooltip>
         <Tooltip label="Last Page">
-          <IconButton
-            style={CustomBtnTheme}
-            className="paginationbtn"
-            onClick={() => props.gotoPage(props.pageCount - 1)}
-            isDisabled={!props.canNextPage}
-            icon={<ArrowRightIcon h={3} w={3} />}
-            ml={4}
+          <PaginateButton
+            gotoPage={handleMaxPaginate}
+            children={<ArrowRightIcon h={3} w={3} />}
+            handleDissable={handleDissabledIncrementPaginate}
           />
         </Tooltip>
       </div>

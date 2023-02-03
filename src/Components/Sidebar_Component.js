@@ -135,7 +135,7 @@ const SidebarNavigation = (props) => {
 
   return (
     <Box>
-      <Sidebar breakPoint="lg">
+      <Sidebar breakPoint="lg" backgroundColor="white">
         <SidebarHeader collapsed={props.collapsed} />
         <Box h={20}></Box>
         <Menu menuItemStyles={menuItemStyles}>
