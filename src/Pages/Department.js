@@ -180,7 +180,7 @@ function Department(props) {
                       padding: "5px",
                     }}
                   >
-                    Issue No
+                    RIS/Issue No
                   </td>
                   {/* <td style={{ fontWeight: "bolder", padding: "5px" }}>
                   Item Code
@@ -216,7 +216,9 @@ function Department(props) {
                     return (
                       <>
                         <tr>
-                          <td style={{ padding: "5px" }}>{j.IssueNo}</td>
+                          <td style={{ padding: "5px" }}>
+                            {j.RIS === null ? j.IssueNo : j.RIS}
+                          </td>
 
                           <td style={{ padding: "5px" }}>
                             <Accordion allowMultiple>
