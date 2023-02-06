@@ -164,6 +164,21 @@ function PurchaseOrder(props) {
         </Menu>
         <Button
           as={Link}
+          href="category-issued"
+          colorScheme="teal"
+          variant="outline"
+          mr={2}
+          _hover={{
+            textDecoration: "none",
+            backgroundColor: "teal",
+            color: "white",
+          }}
+        >
+          Issued &nbsp;
+          <BsBox fontSize={15} />
+        </Button>
+        <Button
+          as={Link}
           href="po/items"
           colorScheme="teal"
           variant="outline"

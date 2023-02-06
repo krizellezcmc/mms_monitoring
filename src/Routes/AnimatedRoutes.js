@@ -16,6 +16,7 @@ import BinCardReport from "../Pages/BinCardReport";
 import DirectPurchaseReport from "../Pages/DirectPurchaseReport";
 import IssuancePerItem from "../Pages/IssuancePerItem";
 import AllItems from "../Pages/AllItems";
+import ByCategory from "../Pages/ByCategory";
 
 function AnimatedRoutes(props) {
   return (
@@ -52,6 +53,7 @@ function AnimatedRoutes(props) {
         {/* DELETE AFTER */}
         <Route path="/sample" element={<Table />}></Route>
         <Route path="/category" element={<Category />}></Route>
+        <Route path="/category-issued" element={<ByCategory />}></Route>
       </Routes>
     </AnimatePresence>
   );

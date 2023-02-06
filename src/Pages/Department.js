@@ -180,9 +180,7 @@ function Department(props) {
                       padding: "5px",
                     }}
                   >
-
                     RIS # / Issue No
-
                   </td>
                   {/* <td style={{ fontWeight: "bolder", padding: "5px" }}>
                   Item Code
@@ -223,7 +221,7 @@ function Department(props) {
                           </td>
 
                           <td style={{ padding: "5px" }}>
-                            <Accordion allowMultiple>
+                            <Accordion allowMultiple defaultIndex={[0]}>
                               <AccordionItem>
                                 {({ isExpanded }) => (
                                   <>

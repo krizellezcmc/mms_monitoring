@@ -206,6 +206,8 @@ function Table({ columns, data }) {
 function ItemsTable() {
   const [data, setData] = useState([]);
   const [options, setOptions] = useState([]);
+  // const [totalQty, setTotalQty] = useState([]);
+
   const columns = React.useMemo(
     () => [
       {
@@ -251,14 +253,30 @@ function ItemsTable() {
     });
 
     setData(res.data);
+
+    // let resp = await localApi.get("/get_TotalbyCat.php", {
+    //   params: { itemCat: e },
+    // });
+    // setTotalQty(resp.data);
   };
+
   useEffect(() => {
     getList();
   }, []);
 
   return (
     <>
-      <Box align="right" mt={20}>
+      <Flex align="right" mt={20}>
+        {/* <Box>
+          <Text>
+            Total Stocks: <b>{Math.round(totalQty)}</b>
+          </Text>
+          <Text>
+            Balance: <b>{Math.round(totalQty)}</b>
+          </Text>
+        </Box> */}
+
+        <Spacer />
         <Box w={500}>
           <Select
             id="category"
@@ -270,7 +288,7 @@ function ItemsTable() {
             }}
           />
         </Box>
-      </Box>
+      </Flex>
       <Styles>
         <Table columns={columns} data={data} />
       </Styles>
