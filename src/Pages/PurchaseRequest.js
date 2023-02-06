@@ -1,10 +1,8 @@
-import { Box, Center, Heading } from "@chakra-ui/react";
-import { PR_DataSet } from "../Data/PR_DataSet";
+import { Box } from "@chakra-ui/react";
 import { useMemo, useState, useEffect } from "react";
 import CustomTable from "../Components/Custom_Table";
 import { primaryPathPR } from "../API/Path_List";
 import { Get, Post } from "../API/Base_Http_Request";
-import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 
 const PurchaseRequest = () => {
@@ -48,16 +46,31 @@ const PurchaseRequest = () => {
     []
   );
 
-  const migrateBizzboxPRtoDB = () => {
-    Post({ url: primaryPathPR + "/bb" })
-      .then((response) => {
-        if (response.data.status === 200) {
-          console.log(response.data.data);
-          return;
-        }
-        console.log(response.data.message);
-      })
-      .catch((e) => console.log(e.message));
+  const migrateBizzboxPRtoDB = async () => {
+    try {
+      await Post({ url: primaryPathPR + "/bb" })
+        .then((response) => {
+          if (response.data.status === 200) {
+            console.log(response.data.data);
+            return;
+          }
+          console.log(response.data.message);
+        })
+        .catch((e) => console.log(e.message));
+
+      const result = {
+        status: "Ok",
+        message: "success",
+      };
+
+      return result;
+    } catch (e) {
+      const result = {
+        status: "failed",
+        message: e.message,
+      };
+      return result;
+    }
   };
 
   const handleFetch = () => {

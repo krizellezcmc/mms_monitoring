@@ -27,11 +27,11 @@ const PaginateButton = (props) => {
 
 const TableFooter = (props) => {
   const handleDissabledDecrementPaginate = () => !props.canPreviousPage;
+  const handleDecrementPaginate = () => props.previousPage();
   const handleResetPaginate = () => props.gotoPage(0);
-  const handleDecrementPaginate = () => props.previousPage;
 
   const handleDissabledIncrementPaginate = () => !props.canNextPage;
-  const handleIncrementPaginate = () => props.nextPage;
+  const handleIncrementPaginate = () => props.nextPage();
   const handleMaxPaginate = () => props.gotoPage(props.pageCount - 1);
 
   return (

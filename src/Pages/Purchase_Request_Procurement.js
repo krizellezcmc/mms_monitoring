@@ -114,7 +114,7 @@ const ProcurementPRForm = () => {
   const [remarks, setRemarks] = useState("");
 
   return (
-    <Box w={"100%"} h={["12rem", "12rem", "20rem", "20rem"]} p={5}>
+    <Box w={"100%"} h={["12rem", "12rem", "16rem", "16rem"]} p={5}>
       <FormControl>
         <FormLabel
           fontSize={["14px", "14px", "16px", "18px"]}
@@ -153,7 +153,7 @@ const ProcurementProductForm = () => {
   const [remarks, setRemarks] = useState("");
 
   return (
-    <Box w={"100%"} h={["12rem", "12rem", "20rem", "20rem"]} p={5}>
+    <Box w={"100%"} h={["12rem", "12rem", "16rem", "16rem"]} p={5}>
       <FormControl>
         <FormLabel
           fontSize={["14px", "14px", "16px", "18px"]}
@@ -202,43 +202,45 @@ const PurchaseRequestProcurement = () => {
     () => [
       {
         Header: "ID",
-        accessor: "PK_TRXNO",
+        accessor: "PK_item_ID",
       },
       {
-        Header: "Item ID",
-        accessor: "Item_ID",
-      },
-      {
-        Header: "Date",
-        accessor: "PRDate",
-      },
-      {
-        Header: "Remarks",
-        accessor: "remarks",
+        Header: "BizzBox ID",
+        accessor: "PK_iwItems",
       },
       {
         Header: "Description",
-        accessor: "itemdesc",
+        accessor: "description",
+      },
+      {
+        Header: "QTY",
+        accessor: "quantity",
       },
       {
         Header: "Unit",
         accessor: "unit",
       },
       {
-        Header: "QTY",
-        accessor: "qty",
+        Header: "Price",
+        accessor: "price",
       },
       {
-        Header: "Price",
-        accessor: "Price",
+        Header: "Remarks",
+        accessor: "remarks",
       },
       {
         Header: "Total Price",
-        accessor: "actualPrice",
+        accessor: "total",
       },
     ],
     []
   );
+
+  const handleSelectedProduct = (data) => {
+    setProductID(data);
+  };
+
+  const handleSubmitProductRemarks = () => {};
 
   const hanldeReturn = (e) => {
     e.preventDefault();
@@ -246,7 +248,7 @@ const PurchaseRequestProcurement = () => {
   };
 
   const handleFetchOnLoad = () => {
-    Get({ url: primaryPathPR + "/" + pr.pr_Prxno })
+    Get({ url: primaryPathPR + "/" + pr.PK_pr_ID })
       .then((res) => {
         if (res.data.status === 200) {
           setData(res.data.data);
@@ -258,8 +260,9 @@ const PurchaseRequestProcurement = () => {
 
   const filteredData = data.filter(
     (filter) =>
-      filter.itemdesc.toLowerCase().includes(search.toLowerCase()) ||
-      filter.Item_ID.toLowerCase().includes(search.toLocaleLowerCase())
+      filter.description.toLowerCase().includes(search.toLowerCase()) ||
+      filter.PK_iwItems.toLowerCase().includes(search.toLowerCase()) ||
+      filter.unit.toLocaleLowerCase().includes(search.toLowerCase())
   );
 
   useEffect(() => {
@@ -276,6 +279,7 @@ const PurchaseRequestProcurement = () => {
       <Flex flexDirection={["column", "column", "row", "row"]}>
         <Box
           w={["100%", "100%", "75%", "75%"]}
+          h={"100vh"}
           bg={"rgba(0,0,0,0.05)"}
           p={5}
           overflow="auto"
@@ -327,9 +331,12 @@ const PurchaseRequestProcurement = () => {
               data={filteredData}
               h={"inherit"}
               setID={setProductID}
+              handleClick={handleSelectedProduct}
             />
           </Box>
-          <ProcurementProductForm />
+          {productID === null || productID === "" ? null : (
+            <ProcurementProductForm />
+          )}
           <ProcurementPRForm />
         </Box>
         <PRDetailedModule

@@ -1,10 +1,15 @@
 import { Tr, Td, Text } from "@chakra-ui/react";
 import ActionButtons from "./ActionButtons";
 import moment from "moment/moment";
+import { getDateToFormatDate } from "../../Utils/DateFormat";
 
 const TableRow = (props) => {
   return (
-    <Tr className="td" {...props.row.getRowProps()}>
+    <Tr
+      onClick={(e) => props.handleClick(e, props.row)}
+      className="td"
+      {...props.row.getRowProps()}
+    >
       {props.row.cells.map((cell) => {
         return (
           <Td {...cell.getCellProps()}>
@@ -35,6 +40,8 @@ const TableRow = (props) => {
               <>{cell.row.values.user}</>
             ) : cell.column.id === "total" ? (
               <Text fontWeight={"bold"}>₱ {cell.row.values.total}</Text>
+            ) : cell.column.id === "pr_date" ? (
+              getDateToFormatDate(new Date(cell.row.values.pr_date))
             ) : (
               cell.render("Cell")
             )}

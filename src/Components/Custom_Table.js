@@ -58,11 +58,9 @@ const CustomTable = ({
   );
 
   const handleSelectedRow = (e, row) => {
-    console.log("Hello");
     e.preventDefault();
-    console.log(row);
-    if (setID === null) {
-      return;
+    if (title.includes("#")) {
+      handleClick(row);
     }
   };
 
@@ -151,7 +149,7 @@ const CustomTable = ({
                 prepareRow(row);
                 return (
                   <TableRow
-                    onClick={(e) => handleSelectedRow(e, row)}
+                    handleClick={handleSelectedRow}
                     row={row}
                     pageIndex={pageIndex}
                     index={++index}

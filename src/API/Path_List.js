@@ -26,3 +26,6 @@ export const primaryPathUser = "/api/user";
 
 //Path for request role
 export const primaryPathRole = "/api/role";
+
+//Path for request item
+export const primaryPathItem = "/api/item";
