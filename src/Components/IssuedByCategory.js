@@ -120,7 +120,7 @@ function IssuedByCategory(props) {
                 <>
                   <Tr>
                     <Td fontWeight={500}>{j.desc}</Td>
-                    <Td textAlign="center" width="200px">
+                    {/* <Td textAlign="center" width="200px">
                       {Math.round(j.total)}
                     </Td>
                     <Td textAlign="center" width="200px">
@@ -128,7 +128,7 @@ function IssuedByCategory(props) {
                     </Td>
                     <Td textAlign="center" width="200px">
                       {Math.round(j.balance)}
-                    </Td>
+                    </Td> */}
                   </Tr>
                 </>
               );
