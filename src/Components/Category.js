@@ -38,7 +38,6 @@ function Category(props) {
     let res = await localApi.get("/get_byCategory.php", {
       params: { category: e },
     });
-
     setList(res.data);
   };
 

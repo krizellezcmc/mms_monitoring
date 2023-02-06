@@ -74,8 +74,7 @@ function AllIssued(props) {
                 if (search === "") {
                   return val;
                 } else if (
-                  val.Dept.toLowerCase().includes(search.toLowerCase()) ||
-                  val.RIS.includes(search)
+                  val.Dept.toLowerCase().includes(search.toLowerCase())
                 ) {
                   return val;
                 }
@@ -87,7 +86,9 @@ function AllIssued(props) {
                       {j.RIS === null ? (
                         <Td fontSize={11}>{j.IssueNo}</Td>
                       ) : (
-                        <Td fontSize={11}>{j.RIS}</Td>
+                        <Td fontSize={11} width="100px">
+                          {j.RIS}
+                        </Td>
                       )}
                       <Td fontSize={11}>{j.Dept}</Td>
                       <Td fontSize={11}>{j.Item}</Td>
