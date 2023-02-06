@@ -15,6 +15,7 @@ import ReportMonthly from "../Pages/ReportMonthly";
 import BinCardReport from "../Pages/BinCardReport";
 import DirectPurchaseReport from "../Pages/DirectPurchaseReport";
 import IssuancePerItem from "../Pages/IssuancePerItem";
+import AllItems from "../Pages/AllItems";
 
 function AnimatedRoutes(props) {
   return (
@@ -47,6 +48,7 @@ function AnimatedRoutes(props) {
           element={<DirectPurchaseReport />}
         ></Route>
         <Route path="/issuanceitem/:id" element={<IssuancePerItem />}></Route>
+        <Route path="/all-issued-items" element={<AllItems />}></Route>
         {/* DELETE AFTER */}
         <Route path="/sample" element={<Table />}></Route>
         <Route path="/category" element={<Category />}></Route>
