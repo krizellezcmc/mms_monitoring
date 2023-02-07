@@ -31,6 +31,7 @@ import localApi from "../API/localAPI";
 function IssuedByCategory(props) {
   const [depts, setDepts] = useState([]);
   const [issued, setIssued] = useState([]);
+
   const [items, setItems] = useState([]);
   const [itemsIssued, setItemsIssued] = useState([]);
   const [label, setLabel] = useState("");
@@ -74,6 +75,7 @@ function IssuedByCategory(props) {
 
     console.log(res.data);
   };
+
   useEffect(() => {
     getList();
     getIssued();
