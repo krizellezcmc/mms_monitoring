@@ -17,19 +17,10 @@ import {
   ModalCloseButton,
   useDisclosure,
   Text,
-  Spacer,
-  HStack,
   Input,
-  InputGroup,
-  InputLeftElement,
-  Flex,
   Center,
-  Box,
 } from "@chakra-ui/react";
 import localApi from "../API/localAPI";
-import { BiSearch } from "react-icons/bi";
-import localApi from "../API/localAPI";
-
 
 function IssuedByCategory(props) {
   const [depts, setDepts] = useState([]);
@@ -49,10 +40,6 @@ function IssuedByCategory(props) {
     onClose: onIssuedClose,
   } = useDisclosure();
   const [search, setSearch] = useState("");
-  // const getItemList = async () => {
-  //   let response = await localApi.get("/get_itemList.php", {
-  //     params: { category: props.id },
-
 
   const getList = async () => {
     let response = await localApi.get("/get_TotalbyCat.php");
@@ -64,17 +51,6 @@ function IssuedByCategory(props) {
     setIssued(response.data);
   };
 
-  // const loop = () => {
-  //   let totals = [];
-  //   depts.forEach((el, index) => {
-  //     totals = parseInt(el.total) - parseInt(issued[index]["total"]);
-  //     // setTotal((prevArray) => [...prevArray, totals]);
-  //   });
-  // };
-
-
-  // let balance = total - issued;
-  // let limit = total * 0.25;
   const getItems = async (cat) => {
     let response = await localApi.get("/get_ItemsbyCategory.php", {
       params: { itemCat: cat },
@@ -94,20 +70,6 @@ function IssuedByCategory(props) {
   useEffect(() => {
     getList();
     getIssued();
-
-    // getTotal();
-
-    //   depts.forEach((el, index) => {
-    //     // console.log(parseInt(el.total));
-    //     console.log(parseInt(el.total) - parseInt(issued[index]["total"]));
-    //   });
-    //   // for (let i = 0; i <= depts.length; i++) {
-    //   //   let totals = depts[i]["total"] - issued[i]["total"];
-    //   //   // console.log(totals);
-    //   //   setTotal((current) => [...current, totals]);
-    //   // }
-
-    // loop();
   }, []);
   return (
     <div>
@@ -236,11 +198,11 @@ function IssuedByCategory(props) {
               />
             </Center>
 
-            <TableContainer w={1000} margin="auto" display="flex">
+            <TableContainer w="80%" margin="auto" display="flex">
               <Table variant="striped" colorScheme="cyan" size="sm" mt={10}>
                 <Thead>
                   <Tr fontSize={11} fontWeight={500}>
-                    <Th width="200px" textAlign="center">
+                    <Th width="70%" textAlign="center">
                       ITEM DESCRIPTION
                     </Th>
                     <Th textAlign="center">UNIT</Th>
@@ -265,7 +227,9 @@ function IssuedByCategory(props) {
                           <Tr fontSize={11}>
                             <Td>{j.desc}</Td>
                             <Td textAlign="center">{j.unit}</Td>
-                            <Td textAlign="center">{j.total}</Td>
+                            <Td textAlign="center">
+                              {Math.round(j.total).toLocaleString()}
+                            </Td>
                           </Tr>
                         </>
                       );
@@ -296,25 +260,26 @@ function IssuedByCategory(props) {
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Input
-              fontSize="13px"
-              type="text"
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search item/unit..."
-              width="400px"
-              _hover={{ borderColor: "green" }}
-              _focus={{
-                boxShadow: "none",
-                outline: "none",
-                borderColor: "green",
-              }}
-            />
-
-            <TableContainer w={1000} margin="auto" display="flex">
+            <Center>
+              <Input
+                fontSize="13px"
+                type="text"
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search item/unit..."
+                width="400px"
+                _hover={{ borderColor: "green" }}
+                _focus={{
+                  boxShadow: "none",
+                  outline: "none",
+                  borderColor: "green",
+                }}
+              />
+            </Center>
+            <TableContainer w="80%" margin="auto" display="flex">
               <Table variant="striped" colorScheme="cyan" size="sm" mt={10}>
                 <Thead>
                   <Tr fontSize={11} fontWeight={500}>
-                    <Th width="200px" textAlign="center">
+                    <Th width="70%" textAlign="center">
                       ITEM DESCRIPTION
                     </Th>
                     <Th textAlign="center">UNIT</Th>
@@ -339,7 +304,9 @@ function IssuedByCategory(props) {
                           <Tr fontSize={11}>
                             <Td>{j.desc}</Td>
                             <Td textAlign="center">{j.unit}</Td>
-                            <Td textAlign="center">{j.total}</Td>
+                            <Td textAlign="center">
+                              {Math.round(j.total).toLocaleString()}
+                            </Td>
                           </Tr>
                         </>
                       );
