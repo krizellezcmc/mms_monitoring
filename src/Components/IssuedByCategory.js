@@ -27,16 +27,9 @@ import {
   Box,
 } from "@chakra-ui/react";
 import localApi from "../API/localAPI";
-import { BiSearch } from "react-icons/bi";
 
 function IssuedByCategory(props) {
-  // const [options, setOptions] = useState([]);
   const [depts, setDepts] = useState([]);
-  // const [selected, setSelected] = useState("");
-  // const [label, setLabel] = useState("");
-  // // const [total, setTotal] = useState([]);
-  // const [category, setCategory] = useState("");
-  // const [search, setSearch] = useState("");
   const [issued, setIssued] = useState([]);
   const [items, setItems] = useState([]);
   const [itemsIssued, setItemsIssued] = useState([]);
@@ -55,36 +48,17 @@ function IssuedByCategory(props) {
   // const getItemList = async () => {
   //   let response = await localApi.get("/get_itemList.php", {
   //     params: { category: props.id },
-  //   });
-  //   setOptions(response.data);
-  //   setCategory(response.data[0].descrip);
-  // };
-  // const getTotalStocks = async (e) => {
-  //   let response = await localApi.get("/get_TotalStocks.php", {
-  //     params: { itemid: selected },
-  //   });
-  //   setTotal(response.data);
 
-  //   let deptList = await localApi.get("/get_IssuedDeptList.php", {
-  //     params: { itemid: selected },
-  //   });
-  //   setDepts(deptList.data);
+  const getList = async () => {
+    let response = await localApi.get("/get_TotalbyCat.php");
+    setDepts(response.data);
+  };
 
-  //   let issued = await localApi.get("/get_TotalIssued.php", {
-  //     params: { itemid: selected },
-  //   });
-  //   setIssued(issued.data);
+  const getIssued = async () => {
+    let response = await localApi.get("/get_TotalIssuedbyCat.php");
+    setIssued(response.data);
+  };
 
-  //   console.log(issued.data);
-  // };
-
-  // const getTotal = async () => {
-  //   let response = await localApi.get("/get_CatTotal.php");
-  //   console.log(response.data);
-  // };
-
-  // let balance = total - issued;
-  // let limit = total * 0.25;
   const getItems = async (cat) => {
     let response = await localApi.get("/get_ItemsbyCategory.php", {
       params: { itemCat: cat },
@@ -101,35 +75,8 @@ function IssuedByCategory(props) {
     console.log(res.data);
   };
   useEffect(() => {
-    const getList = async () => {
-      let response = await localApi.get("/get_TotalbyCat.php");
-      setDepts(response.data);
-    };
-
-    const getIssued = async () => {
-      let response = await localApi.get("/get_TotalIssuedbyCat.php");
-      setIssued(response.data);
-    };
-
     getList();
     getIssued();
-
-    // getTotal();
-
-    // const loop = () => {
-    //   let totals = 0;
-    //   for (let i = 0; i < depts.length; i++) {
-    //     totals = depts[i]["total"] - issued[i]["total"];
-
-    //     console.log(totals);
-
-    //     // setTotal((current) => [...current, totals]);
-    //   }
-
-    //   // console.log(totals);
-    // };
-
-    // loop();
   }, []);
   return (
     <div>
@@ -210,15 +157,16 @@ function IssuedByCategory(props) {
             </Tr>
           </Thead>
           <Tbody>
-            {depts.map((j, k) => {
+            {issued.map((el, index) => {
+              let totals = [];
+
+              totals = parseInt(depts[index]["total"]) - parseInt(el.total);
               return (
-                <>
-                  <Tr>
-                    <Td fontWeight={500} textAlign="center">
-                      {issued.total}
-                    </Td>
-                  </Tr>
-                </>
+                <Tr>
+                  <Td fontWeight={500} textAlign="center">
+                    {totals < 0 ? 0 : totals.toLocaleString()}
+                  </Td>
+                </Tr>
               );
             })}
           </Tbody>

@@ -57,8 +57,6 @@ function IssuanceItem(props) {
       params: { itemid: selected },
     });
     setIssued(issued.data);
-
-    console.log(issued.data);
   };
 
   let balance = total - issued;
@@ -176,7 +174,7 @@ function IssuanceItem(props) {
                 </InputGroup>
                 <Spacer />
               </Flex>
-              <TableContainer mt={50}>
+              <TableContainer mt={30}>
                 <Table
                   variant="striped"
                   colorScheme={balance <= limit ? "red" : "green"}
