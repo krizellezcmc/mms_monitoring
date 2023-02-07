@@ -162,21 +162,33 @@ function PurchaseOrder(props) {
             </MenuGroup>
           </MenuList>
         </Menu>
-        <Button
-          as={Link}
-          href="category-issued"
-          colorScheme="teal"
-          variant="outline"
-          mr={2}
-          _hover={{
-            textDecoration: "none",
-            backgroundColor: "teal",
-            color: "white",
-          }}
-        >
-          Issued &nbsp;
-          <BsBox fontSize={15} />
-        </Button>
+        <Menu>
+          <MenuButton
+            as={Button}
+            rightIcon={<ChevronDownIcon />}
+            mr={2}
+            variant="solid"
+            colorScheme="teal"
+          >
+            Issuance Monitoring
+          </MenuButton>
+          <MenuList>
+            <MenuItem
+              as={Link}
+              href="/category-issued"
+              _hover={{ textDecoration: "none" }}
+            >
+              Category &nbsp;
+            </MenuItem>
+            <MenuItem
+              as={Link}
+              href="/dept"
+              _hover={{ textDecoration: "none" }}
+            >
+              Per Department &nbsp;
+            </MenuItem>
+          </MenuList>
+        </Menu>
         <Button
           as={Link}
           href="po/items"
@@ -190,21 +202,6 @@ function PurchaseOrder(props) {
           }}
         >
           Item Category &nbsp;
-          <BsBox fontSize={15} />
-        </Button>
-        <Button
-          as={Link}
-          href="dept"
-          colorScheme="teal"
-          variant="outline"
-          mr={2}
-          _hover={{
-            textDecoration: "none",
-            backgroundColor: "teal",
-            color: "white",
-          }}
-        >
-          Stocks Issuance &nbsp;
           <BsBox fontSize={15} />
         </Button>
       </Flex>
