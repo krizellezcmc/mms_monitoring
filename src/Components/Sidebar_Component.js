@@ -23,7 +23,7 @@ const SidebarHeader = (props) => {
           </Box>
           {!props.collapsed ? (
             <Text fontSize={"1rem"} fontWeight={600}>
-              PR | PO MONITORING
+              PR | PO ISSUANCE
             </Text>
           ) : null}
         </Flex>

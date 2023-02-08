@@ -15,9 +15,9 @@ const TableRow = (props) => {
           <Td {...cell.getCellProps()}>
             {cell.column.id === "action" ? (
               <ActionButtons
-                handleRedirectView={props.handleView}
-                handleRedirectEdit={props.handleEdit}
-                handleRedirectDelete={props.handleDelete}
+                viewTask={props.viewTask}
+                editTask={props.editTask}
+                deleteTask={props.deleteTask}
                 value={props.row}
               />
             ) : cell.column.id === "created_at" ? (

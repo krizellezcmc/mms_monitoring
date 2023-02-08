@@ -153,9 +153,9 @@ const CustomTable = ({
                     row={row}
                     pageIndex={pageIndex}
                     index={++index}
-                    handleView={handleView === null ? null : handleView}
-                    handleEdit={handleEdit === null ? null : handleEdit}
-                    handleDelete={handleDelete === null ? null : handleDelete}
+                    viewTask={handleView === null ? null : handleView}
+                    editTask={handleEdit === null ? null : handleEdit}
+                    deleteTask={handleDelete === null ? null : handleDelete}
                   />
                 );
               })
