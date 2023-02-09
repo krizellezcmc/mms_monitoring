@@ -22,6 +22,7 @@ import Loading from "../Pages/Loading";
 import Register from "../Pages/Register";
 import AccountRegistration from "../Pages/Account_Registration";
 import PurchaseRequestProcurement from "../Pages/Purchase_Request_Procurement";
+import RequestLogs from "../Pages/Request_Logs";
 
 const LoginPage = React.lazy(() => import("../Pages/Login"));
 const MainLayoutPage = React.lazy(() => import("../Pages/Main_Layout"));
@@ -78,6 +79,10 @@ const RoutesData = [
   {
     path: "/po/category",
     element: <Category />,
+  },
+  {
+    path: "/logs",
+    element: <RequestLogs />,
   },
 ];
 

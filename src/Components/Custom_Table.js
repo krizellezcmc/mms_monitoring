@@ -95,7 +95,8 @@ const CustomTable = ({
           </Flex>
           <Box>
             <Flex columnGap={3} justifyContent={"end"}>
-              {title.toLowerCase().includes("#") ? null : (
+              {title.toLowerCase().includes("#") ||
+              handleClick === null ? null : (
                 <NewRegistration title={title} handleClick={handleClick} />
               )}
               {child !== null ? child : null}
@@ -149,6 +150,7 @@ const CustomTable = ({
                 prepareRow(row);
                 return (
                   <TableRow
+                    table={title}
                     handleClick={handleSelectedRow}
                     row={row}
                     pageIndex={pageIndex}

@@ -1,4 +1,4 @@
-import { Flex, Button, Text } from "@chakra-ui/react";
+import { Flex, Button, Text, Avatar, Box, Center } from "@chakra-ui/react";
 import { AiOutlineFolderView, AiFillEdit } from "react-icons/ai";
 import { HiTrash } from "react-icons/hi";
 import { useRef, useState } from "react";
@@ -16,6 +16,8 @@ import {
   Input,
 } from "@chakra-ui/react";
 import useAuth from "../../Hooks/useAuth";
+import { HiOutlineOfficeBuilding } from "react-icons/hi";
+import { getDateToFormatDate } from "../../Utils/DateFormat";
 
 const DeleteModal = (props) => {
   const { user } = useAuth();
@@ -127,17 +129,128 @@ const DeleteModule = (props) => {
 };
 
 const ViewModalUser = (props) => {
-  const handleViewTask = () => {};
-
   return (
-    <Modal>
+    <Modal
+      closeOnOverlayClick={false}
+      isOpen={props.isOpen}
+      onClose={props.onClose}
+      isCentered
+    >
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Update User</ModalHeader>
-        <ModalBody></ModalBody>
+        <ModalCloseButton />
+        <ModalBody p={10}>
+          <Box w="inherit" display="flex" justifyContent={"center"}>
+            <Avatar name="" src={props.data.profile} size="2xl" />
+          </Box>
+          <Box
+            w="inherit"
+            h="5rem"
+            mt={10}
+            display="flex"
+            justifyContent="space-between"
+            flexDirection="column"
+            color="rgba(0,0,0,0.8)"
+          >
+            <Box display="flex" columnGap={3}>
+              <Text fonstSize={14}>Full name:</Text>
+              <Text fontSize={16} fontWeight={600}>
+                {`${props.data.first_name} ${props.data.middle_name} ${props.data.last_name}`}
+              </Text>
+            </Box>
+            <Box display="flex" columnGap={3}>
+              <Text fonstSize={14}>Department:</Text>
+              <Text fontSize={16} fontWeight={600}>
+                {`${props.data.department}`}
+              </Text>
+            </Box>
+            <Box display="flex" columnGap={3}>
+              <Text fonstSize={14}>Account status:</Text>
+              <Text fontSize={16} fontWeight={600}>
+                {`${props.data.status}`}
+              </Text>
+            </Box>
+          </Box>
+        </ModalBody>
         <ModalFooter>
-          <Button float="right" onClick={handleViewTask}>
-            Save
+          <Button
+            bg="teal"
+            color="white"
+            float="right"
+            _hover={{ bg: "teal", color: "white" }}
+            _active={{ bg: "teal", color: "white" }}
+            onClick={props.onClose}
+          >
+            Okay
+          </Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
+  );
+};
+
+const ViewModalDepartment = (props) => {
+  return (
+    <Modal
+      closeOnOverlayClick={false}
+      isOpen={props.isOpen}
+      onClose={props.onClose}
+      isCentered
+    >
+      <ModalOverlay />
+      <ModalContent>
+        <ModalCloseButton />
+        <ModalBody p={10}>
+          <Box w="inherit" display="flex" justifyContent="center">
+            <Box
+              w="5rem"
+              h="5rem"
+              bg={"gray"}
+              rounded={100}
+              overflow="hidden"
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <HiOutlineOfficeBuilding fontSize={40} color="white" />
+            </Box>
+          </Box>
+          <Box
+            h="5rem"
+            display="flex"
+            justifyContent="space-between"
+            flexDirection="column"
+            mt={5}
+          >
+            <Box display="flex" columnGap={3}>
+              <Text fonstSize={14}>Department name:</Text>
+              <Text fontSize={16} fontWeight={600}>
+                {props.data.dept_name}
+              </Text>
+            </Box>
+            <Box display="flex" columnGap={3}>
+              <Text fonstSize={14}>Short name:</Text>
+              <Text fontSize={16} fontWeight={600}>
+                {props.data.dept_shortname}
+              </Text>
+            </Box>
+            <Box display="flex" columnGap={3}>
+              <Text fonstSize={14}>Date registered:</Text>
+              <Text fontSize={16} fontWeight={600}>
+                {getDateToFormatDate(new Date(props.data.date))}
+              </Text>
+            </Box>
+          </Box>
+        </ModalBody>
+        <ModalFooter>
+          <Button
+            bg="teal"
+            color="white"
+            _hover={{ bg: "teal", color: "white" }}
+            _active={{ bg: "teal", color: "white" }}
+            onClick={props.onClose}
+          >
+            Okay
           </Button>
         </ModalFooter>
       </ModalContent>
@@ -148,21 +261,29 @@ const ViewModalUser = (props) => {
 const ViewModule = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const handleViewTask = () => {
+  const handleTask = (e) => {
     if (props.handleViewTask === null) {
-      props.handleViewTask();
+      onOpen();
       return;
     }
 
-    onOpen();
+    props.handleViewTask(e);
   };
 
   return (
     <>
-      <Btn color="#BEEFDA" handleClick={handleViewTask}>
+      <Btn color="#BEEFDA" handleClick={(e) => handleTask(e)}>
         <AiOutlineFolderView color="teal" />
       </Btn>
-      <ViewModalUser isOpen={props.isOpen} onClose={props.onClose} />
+      {props.table === "Department" ? (
+        <ViewModalDepartment
+          isOpen={isOpen}
+          onClose={onClose}
+          data={props.data}
+        />
+      ) : (
+        <ViewModalUser isOpen={isOpen} onClose={onClose} data={props.data} />
+      )}
     </>
   );
 };
@@ -185,12 +306,16 @@ const Btn = (props) => {
 
 const ActionButtons = (props) => {
   const handleViewTask = (e) => props.viewTask(e, props.value.original);
-  const handleEditTask = () => props.editTask(props.value.original);
+  const handleEditTask = (e) => props.editTask(e, props.value.original);
   const handleDeleteTask = () => props.deleteTask(props.value.original);
 
   return (
     <Flex columnGap={1}>
-      <ViewModule handleViewTask={handleViewTask} />
+      <ViewModule
+        table={props.table}
+        handleViewTask={props.viewTask === null ? null : handleViewTask}
+        data={props.value.original}
+      />
       <Btn color="lightgray" handleClick={handleEditTask}>
         <AiFillEdit color="grey" />
       </Btn>

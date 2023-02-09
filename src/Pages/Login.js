@@ -38,26 +38,37 @@ const Login = () => {
     formData.append("password", password);
 
     Post({ url: primaryPathSignin }, formData)
-      .then((response) => {
-        if (response.data.status === 200) {
-          setUser(response.data.data);
-          setLoading(false);
-          navigate("/", { replace: true });
-          return;
+      .then((res) => {
+        if (!res.statusText === "OK") {
+          throw new Error("Bad response", { cause: res });
         }
 
-        if (response.data.status === 404) {
-          navigate(response.data.path, { replace: true });
-          setUsername("");
-          setLoading(false);
-          return;
-        }
-        setFeedback(response.data.message);
-        setPassword("");
+        setUser(res.data.data);
         setLoading(false);
+        navigate("/", { replace: true });
       })
-      .catch((e) => {
-        console.log(e.message);
+      .catch((err) => {
+        switch (err) {
+          case 400:
+            setFeedback(err.data.message);
+            setPassword("");
+            break;
+          case 401:
+            setFeedback(err.data.message);
+            setPassword("");
+            break;
+          case 404:
+            navigate(err.data.path, { replace: true });
+            setUsername("");
+            setLoading(false);
+            return;
+            break;
+          case 500:
+            setFeedback(err.data.message);
+            setPassword("");
+            break;
+        }
+        setLoading(false);
       });
   };
 

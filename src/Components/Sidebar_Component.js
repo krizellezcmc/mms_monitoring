@@ -1,15 +1,9 @@
 import { Box, Flex, Text } from "@chakra-ui/layout";
 import { Image } from "@chakra-ui/react";
-import {
-  Sidebar,
-  Menu,
-  MenuItem,
-  menuClasses,
-  MenuItemStyles,
-} from "react-pro-sidebar";
+import { Sidebar, Menu, MenuItem, menuClasses } from "react-pro-sidebar";
 import { BsFillBagCheckFill, BsFillBagPlusFill } from "react-icons/bs";
 import { FaUsers, FaBuilding } from "react-icons/fa";
-import { MdSpaceDashboard } from "react-icons/md";
+import { MdHistory, MdSpaceDashboard } from "react-icons/md";
 import { useNavigate } from "react-router";
 import { useState } from "react";
 
@@ -167,6 +161,12 @@ const SidebarNavigation = (props) => {
             title={"Departments"}
             path={"departments"}
             child={<FaBuilding color="teal" fontSize={25} />}
+            click={handleClick}
+          />
+          <MenuItemComponent
+            title={"Request Logs"}
+            path={"logs"}
+            child={<MdHistory color="teal" fontSize={25} />}
             click={handleClick}
           />
         </Menu>

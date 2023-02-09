@@ -29,3 +29,6 @@ export const primaryPathRole = "/api/role";
 
 //Path for request item
 export const primaryPathItem = "/api/item";
+
+//Path for request logs
+export const primaryPathLogs = "/api/logs";

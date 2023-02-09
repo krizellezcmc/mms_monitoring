@@ -1,4 +1,4 @@
-import { Tr, Td, Text } from "@chakra-ui/react";
+import { Tr, Td, Text, Avatar } from "@chakra-ui/react";
 import ActionButtons from "./ActionButtons";
 import moment from "moment/moment";
 import { getDateToFormatDate } from "../../Utils/DateFormat";
@@ -15,11 +15,14 @@ const TableRow = (props) => {
           <Td {...cell.getCellProps()}>
             {cell.column.id === "action" ? (
               <ActionButtons
+                table={props.table}
                 viewTask={props.viewTask}
                 editTask={props.editTask}
                 deleteTask={props.deleteTask}
                 value={props.row}
               />
+            ) : cell.column.Header === "PROFILE" ? (
+              <Avatar name="" src={cell.row.values.profile} />
             ) : cell.column.id === "created_at" ? (
               moment(cell.row.values.created_at).format("hh:mm a MM-DD-YYYY")
             ) : cell.column.id === "updated_at" ? (
@@ -40,8 +43,10 @@ const TableRow = (props) => {
               <>{cell.row.values.user}</>
             ) : cell.column.id === "total" ? (
               <Text fontWeight={"bold"}>₱ {cell.row.values.total}</Text>
-            ) : cell.column.id === "pr_date" ? (
-              getDateToFormatDate(new Date(cell.row.values.pr_date))
+            ) : cell.column.id === "date" ? (
+              getDateToFormatDate(new Date(cell.row.values.date))
+            ) : cell.column.id === "updated_at" ? (
+              getDateToFormatDate(new Date(cell.row.values.updated_at))
             ) : (
               cell.render("Cell")
             )}

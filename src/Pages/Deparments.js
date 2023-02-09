@@ -17,8 +17,8 @@ import { useMemo, useState, useEffect, useRef } from "react";
 import CustomTable from "../Components/Custom_Table";
 import { primaryPathDepartment } from "../API/Path_List";
 import { Get, Post, Put, Delete } from "../API/Base_Http_Request";
-import useAuth from "../Hooks/useAuth";
 import { AiFillEdit } from "react-icons/ai";
+import useAuth from "../Hooks/useAuth";
 
 const UpdateModal = (props) => {
   const { setUser } = useAuth();
@@ -124,6 +124,7 @@ const Departments = () => {
   const [search, setSearch] = useState("");
   const [departments, setDepartments] = useState([]);
   const [selectedDept, setSelectedDept] = useState([]);
+  const [msg, setMsg] = useState("");
 
   const column = useMemo(
     () => [
@@ -149,7 +150,7 @@ const Departments = () => {
       },
       {
         Header: "Date",
-        accessor: "created_at",
+        accessor: "date",
       },
       {
         Header: "ACTION",
@@ -162,25 +163,55 @@ const Departments = () => {
   const handleMigrateFromBizzBox = () => {
     Post({ url: primaryPathDepartment + "/bb" })
       .then((res) => {
-        if (res.data.status === 200) {
-          console.log("Successfully migrated Department list from BizzBox");
-          return;
+        if (!res.statusText === "OK") {
+          throw new Error("Bad response.", { cause: res });
         }
 
-        console.log("Failed to migrat department list from BizzBox");
+        console.log("Successfully migrated Department list from BizzBox");
       })
-      .catch((e) => console.log(e.message));
+      .catch((err) => {
+        switch (err) {
+          case 400:
+            setMsg("Can't proceed request. please try again later.");
+            break;
+          case 401:
+            setUser(null);
+            break;
+          case 404:
+            setMsg("No record");
+            break;
+          case 500:
+            setMsg("Can't complete request. please try again later.");
+            break;
+        }
+      });
   };
 
   const handleFetch = () => {
     Get({ url: primaryPathDepartment })
       .then((res) => {
-        if (res.data.status === 200) {
-          setDepartments(res.data.data);
-          return;
+        if (!res.statusText === "OK") {
+          throw new Error("Bad response.", { cause: res });
         }
+
+        setDepartments(res.data.data);
       })
-      .catch((e) => console.log(e.message));
+      .catch((err) => {
+        switch (err) {
+          case 400:
+            setMsg("Can't proceed request. try again later.");
+            break;
+          case 401:
+            setUser(null);
+            break;
+          case 404:
+            setMsg("No record.");
+            break;
+          case 500:
+            setMsg("Can't complete request. try again later.");
+            break;
+        }
+      });
   };
 
   const DepartmentData = departments.filter(
@@ -245,6 +276,7 @@ const Departments = () => {
         columns={column}
         data={DepartmentData}
         handleClick={handleMigrateFromBizzBox}
+        handleView={null}
         handleEdit={handleEdit}
         handleDelete={handleDeleteTask}
       />

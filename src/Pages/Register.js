@@ -49,6 +49,7 @@ const Register = () => {
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const defaultProfileURL = `${window.location.origin}/default_profile.png`;
   const [feedbackTitle, setFeedBackTitle] = useState("");
   const [feedbackDescription, setFeedBackDescription] = useState("");
 
@@ -80,6 +81,7 @@ const Register = () => {
       bodyForm.append("username", username);
       bodyForm.append("email", email);
       bodyForm.append("password", password);
+      bodyForm.append("url", defaultProfileURL);
 
       Post({ url: primaryPathSignup }, bodyForm)
         .then((response) => {

@@ -15,11 +15,28 @@ const Loading = () => {
   const authorizationValidation = async () => {
     Get({ url: primaryPathUser + "/init" })
       .then((res) => {
-        if (res.data.status === 200) {
-          setUser(res.data.data);
+        if (!res.statusText === "Ok") {
+          throw new Error("Bad response", { cause: res });
         }
+
+        setUser(res.data.data);
       })
-      .catch((e) => console.log(e));
+      .catch((err) => {
+        switch (err) {
+          case 400:
+            console.log("Problem encounter. try again later");
+            break;
+          case 401:
+            console.log("Un-Authorized user.");
+            break;
+          case 404:
+            console.log("No account found.");
+            break;
+          case 500:
+            console.log("Can't complete request. try again later");
+            break;
+        }
+      });
   };
 
   useEffect(() => {

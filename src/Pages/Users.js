@@ -162,6 +162,10 @@ const Users = () => {
         accessor: "id",
       },
       {
+        Header: "PROFILE",
+        accessor: "profile",
+      },
+      {
         Header: "First Name",
         accessor: "first_name",
       },
@@ -240,6 +244,7 @@ const Users = () => {
         setSearch={setSearch}
         columns={column}
         data={UserData}
+        handleView={null}
         handleEdit={handleEdit}
         handleDelete={handleDeleteTask}
       />

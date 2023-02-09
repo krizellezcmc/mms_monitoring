@@ -4,13 +4,17 @@ import CustomTable from "../Components/Custom_Table";
 import { primaryPathPR } from "../API/Path_List";
 import { Get, Post } from "../API/Base_Http_Request";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../Hooks/useAuth";
 
 const PurchaseRequest = () => {
+  const { setUser } = useAuth();
   const title = "Purchase Request";
   const navigate = useNavigate();
   const [fetch, setFetch] = useState(false);
   const [search, setSearch] = useState("");
   const [pr, setPR] = useState([]);
+  const [status, setStatus] = useState("");
+  const [tblStatus, setTblStatus] = useState("");
 
   const column = useMemo(
     () => [
@@ -32,7 +36,7 @@ const PurchaseRequest = () => {
       },
       {
         Header: "DATE",
-        accessor: "pr_date",
+        accessor: "date",
       },
       {
         Header: "UPDATED",
@@ -49,14 +53,28 @@ const PurchaseRequest = () => {
   const migrateBizzboxPRtoDB = async () => {
     try {
       await Post({ url: primaryPathPR + "/bb" })
-        .then((response) => {
-          if (response.data.status === 200) {
-            console.log(response.data.data);
-            return;
+        .then((res) => {
+          if (!res.statusText === "OK") {
+            throw new Error("Bad response.", { cause: res });
           }
-          console.log(response.data.message);
+          setStatus(res.data.message);
         })
-        .catch((e) => console.log(e.message));
+        .catch((err) => {
+          switch (err) {
+            case 400:
+              setStatus("Encounter a problem. try again later.");
+              break;
+            case 401:
+              setUser(null);
+              break;
+            case 404:
+              setStatus("No record.");
+              break;
+            case 500:
+              setStatus("Can't complete task, encounter a problem.");
+              break;
+          }
+        });
 
       const result = {
         status: "Ok",
@@ -76,12 +94,27 @@ const PurchaseRequest = () => {
   const handleFetch = () => {
     Get({ url: primaryPathPR })
       .then((res) => {
-        if (res.data.status === 200) {
-          setPR(res.data.data);
-          return;
+        if (!res.statusText) {
+          throw new Error("Bad response.", { cause: res });
         }
+        setPR(res.data.data);
       })
-      .catch((e) => console.log(e.message));
+      .catch((err) => {
+        switch (err) {
+          case 400:
+            setTblStatus("Encounter a problem. try again later.");
+            break;
+          case 401:
+            setUser(null);
+            break;
+          case 404:
+            setTblStatus("No record.");
+            break;
+          case 500:
+            setTblStatus("Can't complete the request. try again later.");
+            break;
+        }
+      });
   };
 
   const PurchaseRequestData = pr.filter(
