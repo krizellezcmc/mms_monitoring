@@ -162,7 +162,7 @@ function IssuanceItem(props) {
                     fontSize="13px"
                     type="text"
                     onChange={(e) => setSearch(e.target.value)}
-                    placeholder="Search Issue No."
+                    placeholder="Search Department..."
                     width="400px"
                     _hover={{ borderColor: "green" }}
                     _focus={{
