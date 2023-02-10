@@ -20,7 +20,8 @@ import {
   Box,
   Spinner,
   Input,
-  InputGroup,
+  Center,
+    InputGroup,
   InputLeftElement,
 } from "@chakra-ui/react";
 import localApi from "../API/localAPI";
@@ -40,10 +41,16 @@ function IssuedByCategory(props) {
   const [select, setSelect] = useState("2022");
   const [loading, setLoading] = useState(false);
 
+   const [categories, setCategories] = useState([]);
+  const [year, setYear] = useState([]);
+  const [search, setSearch] = useState("2022");
+  const [loading, setLoading] = useState(false);
+
   const getList = async () => {
-    let response = await localApi.get("/get_TotalbyCat.php");
-    setDepts(response.data);
-  };
+    let response = await localApi.get("/get_IssTotalperCat.php");
+    setCategories(response.data);
+    setLoading(false);
+    };
 
   const getIssued = async () => {
     let response = await localApi.get("/get_TotalIssuedbyCat.php");
@@ -60,6 +67,7 @@ function IssuedByCategory(props) {
     setItems(response.data);
     setLoading(false);
 
+
     let year = await localApi.get("/get_year.php");
     setYear(year.data);
   };
@@ -68,26 +76,60 @@ function IssuedByCategory(props) {
 
   useEffect(() => {
     getList();
+
     getIssued();
+
   }, [search]);
   return (
     <div>
+      <Box align="right">
+        <Box w={200}>
+          <Select
+            defaultValue={search}
+            options={year}
+            selectedOptionStyle="check"
+            onChange={(e) => {
+              setSearch(e.value);
+            }}
+          />
+        </Box>
+      </Box>
       <TableContainer mt={50} display="flex" w={1200}>
-        <Table variant="simple">
+        <Table variant="striped" colorScheme="teal">
           <Thead>
             <Tr>
               <Th textAlign="left" w={600}>
                 Category
               </Th>
               <Th textAlign="center">Total</Th>
+              <Th textAlign="center">Issued</Th>
+              <Th textAlign="center">Balance</Th>
+              <Th>Year</Th>
             </Tr>
           </Thead>
           <Tbody>
-            {depts.map((j, k) => {
-              return (
-                <>
-                  <Tr key={k}>
-                    <Td fontWeight={500}>
+            {loading ? (
+              <Tr>
+                <Td colSpan="4" textAlign="center" py={5}>
+                  <Spinner size="lg" colorScheme="teal" />
+                </Td>
+              </Tr>
+            ) : categories.length === 0 ? (
+              ""
+            ) : (
+              categories
+                .filter((val) => {
+                  if (search === "") {
+                    return val;
+                  } else if (search === val.year) {
+                    return val;
+                  }
+                })
+                .map((j, k) => {
+                  return (
+                    <>
+                      <Tr key={k}>
+                        <Td fontWeight={500}>
                       <Button
                         variant="link"
                         colorScheme="teal"
@@ -96,44 +138,28 @@ function IssuedByCategory(props) {
                           getItems(j.value);
                           onOpen();
                         }}
-                      >
-                        {j.desc}
-                      </Button>{" "}
+                      > {j.desc} </Button>
                     </Td>
-                    <Td
-                      textAlign="center"
-                      width="200px"
-                      _hover={{ background: "gray.100" }}
-                    >
-                      {Math.round(j.total).toLocaleString()}
-                    </Td>
-                  </Tr>
-                </>
-              );
-            })}
+                        <Td textAlign="center" width="200px">
+                          {Math.round(j.total).toLocaleString()}
+                        </Td>
+                        <Td textAlign="center" width="200px">
+                          {Math.round(j.issued).toLocaleString()}
+                        </Td>
+                        <Td textAlign="center" width="200px">
+                          {j.balance < 0
+                            ? "0"
+                            : Math.round(j.balance).toLocaleString()}
+                        </Td>
+                        <Td>{j.year}</Td>
+                      </Tr>
+                    </>
+                  );
+                })
+            )}
           </Tbody>
         </Table>
-
-        <Table variant="simple" w={200}>
-          <Thead>
-            <Tr>
-              <Th textAlign="center">Stocks Issued</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {issued.map((j, k) => {
-              return (
-                <>
-                  <Tr _hover={{ background: "gray.100" }}>
-                    <Td fontWeight={500} textAlign="center">
-                      {Math.round(j.total).toLocaleString()}
-                    </Td>
-                  </Tr>
-                </>
-              );
-            })}
-          </Tbody>
-        </Table>
+   
       </TableContainer>
 
       <Modal
