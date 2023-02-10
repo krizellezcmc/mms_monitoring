@@ -17,29 +17,28 @@ import {
   ModalCloseButton,
   useDisclosure,
   Text,
+  Box,
+  Spinner,
   Input,
-  Center,
+  InputGroup,
+  InputLeftElement,
 } from "@chakra-ui/react";
 import localApi from "../API/localAPI";
+import { Select } from "chakra-react-select";
+import { SearchIcon } from "@chakra-ui/icons";
+import { act } from "react-dom/test-utils";
 
 function IssuedByCategory(props) {
   const [depts, setDepts] = useState([]);
   const [issued, setIssued] = useState([]);
 
   const [items, setItems] = useState([]);
-  const [itemsIssued, setItemsIssued] = useState([]);
+  const [year, setYear] = useState([]);
   const [label, setLabel] = useState("");
-  const {
-    isOpen: isTotalOpen,
-    onOpen: onTotalOpen,
-    onClose: onTotalClose,
-  } = useDisclosure();
-  const {
-    isOpen: isIssuedOpen,
-    onOpen: onIssuedOpen,
-    onClose: onIssuedClose,
-  } = useDisclosure();
+  const { isOpen: isOpen, onOpen: onOpen, onClose: onClose } = useDisclosure();
   const [search, setSearch] = useState("");
+  const [select, setSelect] = useState("2022");
+  const [loading, setLoading] = useState(false);
 
   const getList = async () => {
     let response = await localApi.get("/get_TotalbyCat.php");
@@ -52,25 +51,25 @@ function IssuedByCategory(props) {
   };
 
   const getItems = async (cat) => {
-    let response = await localApi.get("/get_ItemsbyCategory.php", {
+    setLoading(true);
+
+    let response = await localApi.get("/get_stocksIssued.php", {
       params: { itemCat: cat },
     });
+
     setItems(response.data);
+    setLoading(false);
+
+    let year = await localApi.get("/get_year.php");
+    setYear(year.data);
   };
 
-  const getIssuedItems = async (cat) => {
-    let res = await localApi.get("/get_ItemsIssuedbyCat.php", {
-      params: { itemCat: cat },
-    });
-    setItemsIssued(res.data);
-
-    console.log(res.data);
-  };
+  let sum = 0;
 
   useEffect(() => {
     getList();
     getIssued();
-  }, []);
+  }, [search]);
   return (
     <div>
       <TableContainer mt={50} display="flex" w={1200}>
@@ -88,23 +87,25 @@ function IssuedByCategory(props) {
               return (
                 <>
                   <Tr key={k}>
-                    <Td fontWeight={500}> {j.desc}</Td>
-                    <Td
-                      textAlign="center"
-                      width="200px"
-                      _hover={{ background: "gray.100" }}
-                    >
+                    <Td fontWeight={500}>
                       <Button
                         variant="link"
                         colorScheme="teal"
                         onClick={() => {
                           setLabel(j.desc);
                           getItems(j.value);
-                          onTotalOpen();
+                          onOpen();
                         }}
                       >
-                        {Math.round(j.total).toLocaleString()}
-                      </Button>
+                        {j.desc}
+                      </Button>{" "}
+                    </Td>
+                    <Td
+                      textAlign="center"
+                      width="200px"
+                      _hover={{ background: "gray.100" }}
+                    >
+                      {Math.round(j.total).toLocaleString()}
                     </Td>
                   </Tr>
                 </>
@@ -125,17 +126,7 @@ function IssuedByCategory(props) {
                 <>
                   <Tr _hover={{ background: "gray.100" }}>
                     <Td fontWeight={500} textAlign="center">
-                      <Button
-                        variant="link"
-                        colorScheme="teal"
-                        onClick={() => {
-                          setLabel(j.desc);
-                          getIssuedItems(j.value);
-                          onIssuedOpen();
-                        }}
-                      >
-                        {Math.round(j.total).toLocaleString()}
-                      </Button>
+                      {Math.round(j.total).toLocaleString()}
                     </Td>
                   </Tr>
                 </>
@@ -143,180 +134,145 @@ function IssuedByCategory(props) {
             })}
           </Tbody>
         </Table>
-        <Table variant="simple" w={200}>
-          <Thead>
-            <Tr>
-              <Th textAlign="center">Balance</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {issued.map((el, index) => {
-              let totals = [];
-
-              totals = parseInt(depts[index]["total"]) - parseInt(el.total);
-              return (
-                <Tr>
-                  <Td fontWeight={500} textAlign="center">
-                    {totals < 0 ? 0 : totals.toLocaleString()}
-                  </Td>
-                </Tr>
-              );
-            })}
-          </Tbody>
-        </Table>
       </TableContainer>
 
       <Modal
-        onClose={onTotalClose}
-        isOpen={isTotalOpen}
+        onClose={onClose}
+        isOpen={isOpen}
         scrollBehavior="outside"
         size="full"
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader textAlign="center">
-            {label}
-            <Text fontSize={16} mt={10}>
-              Total Stocks
+          <ModalHeader>
+            <Text fontSize={25} textTransform="uppercase">
+              {label}
+            </Text>
+            <Text fontSize={16} textTransform="uppercase" fontWeight={400}>
+              Issued Items
             </Text>
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Center>
-              <Input
-                fontSize="13px"
-                type="text"
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search item/unit..."
-                width="400px"
-                _hover={{ borderColor: "green" }}
-                _focus={{
-                  boxShadow: "none",
-                  outline: "none",
-                  borderColor: "green",
-                }}
-              />
-            </Center>
+            <Box align="left" display="flex">
+              <Box mr={2} w={400}>
+                <InputGroup>
+                  <InputLeftElement
+                    pointerEvents="none"
+                    children={<SearchIcon color="gray.300" />}
+                  />
+                  <Input
+                    type="text"
+                    placeholder="Search item"
+                    onChange={(e) => {
+                      setSearch(e.target.value);
+                    }}
+                  />
+                </InputGroup>
+              </Box>
+              <Box w={300}>
+                <Select
+                  variant="simple"
+                  defaultValue={search}
+                  options={year}
+                  selectedOptionStyle="check"
+                  onChange={(e) => {
+                    setSelect(e.value);
+                  }}
+                />
+              </Box>
+            </Box>
 
-            <TableContainer w="80%" margin="auto" display="flex">
-              <Table variant="striped" colorScheme="cyan" size="sm" mt={10}>
+            <TableContainer w="100%" margin="auto" display="flex">
+              <Table variant="striped" mt={5} w="100%">
                 <Thead>
-                  <Tr fontSize={11} fontWeight={500}>
-                    <Th width="70%" textAlign="center">
+                  <Tr fontWeight={500}>
+                    <Th width="20px"></Th>
+                    <Th width="70%" textAlign="left">
                       ITEM DESCRIPTION
                     </Th>
-                    <Th textAlign="center">UNIT</Th>
-                    <Th textAlign="center">QUANTITY</Th>
+                    <Th>Unit</Th>
+                    <Th textAlign="center">TOTAL STOCKS</Th>
+                    <Th textAlign="center">ISSUED</Th>
+                    {/* <Th textAlign="center">DATE ISSUED</Th> */}
                   </Tr>
                 </Thead>
                 <Tbody>
+                  {loading ? (
+                    <Tr>
+                      <Td colSpan="4" textAlign="center" py={5}>
+                        <Spinner size="lg" colorScheme="teal" />
+                      </Td>
+                    </Tr>
+                  ) : items.length === 0 ? (
+                    ""
+                  ) : (
+                    items
+                      .filter((val) => {
+                        if (select === "") {
+                          return val;
+                        } else if (
+                          select === val.date &&
+                          val.desc.toLowerCase().includes(search.toLowerCase())
+                        ) {
+                          return val;
+                        }
+                      })
+
+                      .map((j, k) => {
+                        return (
+                          <>
+                            <Tr fontSize={13.5}>
+                              <Td>{k + 1}</Td>
+                              <Td>{j.desc}</Td>
+                              <Td>{j.unit}</Td>
+                              <Td textAlign="center">
+                                {Math.round(j.stocks).toLocaleString()}
+                              </Td>
+                              <Td textAlign="center">
+                                {Math.round(j.issued).toLocaleString()}
+                              </Td>{" "}
+                              {/* <Td textAlign="center">
+                                {j.date === null ? "--" : j.date}
+                              </Td> */}
+                            </Tr>
+                          </>
+                        );
+                      })
+                  )}
+
                   {items
                     .filter((val) => {
-                      if (search === "") {
+                      if (select === "") {
                         return val;
                       } else if (
-                        val.desc.toLowerCase().includes(search.toLowerCase()) ||
-                        val.unit.toLowerCase().includes(search.toLowerCase())
+                        select === val.date &&
+                        val.desc.toLowerCase().includes(search.toLowerCase())
                       ) {
                         return val;
                       }
                     })
-                    .map((j, k) => {
-                      return (
-                        <>
-                          <Tr fontSize={11}>
-                            <Td>{j.desc}</Td>
-                            <Td textAlign="center">{j.unit}</Td>
-                            <Td textAlign="center">
-                              {Math.round(j.total).toLocaleString()}
-                            </Td>
-                          </Tr>
-                        </>
-                      );
-                    })}
+                    .reduce(
+                      (a, v) => (
+                        <Tr>
+                          <Td colSpan={5} textAlign="right">
+                            <Box display="flex" justifyContent="right">
+                              TOTAL ISSUED:{" "}
+                              <Text mx={7} fontWeight={600} fontSize={16}>
+                                {(sum += parseInt(v.issued)).toLocaleString()}
+                              </Text>
+                            </Box>
+                          </Td>
+                        </Tr>
+                      ),
+                      0
+                    )}
                 </Tbody>
               </Table>
             </TableContainer>
           </ModalBody>
           <ModalFooter>
-            <Button onClick={onTotalClose}>Close</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-
-      <Modal
-        onClose={onIssuedClose}
-        isOpen={isIssuedOpen}
-        scrollBehavior="outside"
-        size="full"
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader textAlign="center">
-            {label}{" "}
-            <Text fontSize={16} mt={10}>
-              Issued Stocks
-            </Text>
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Center>
-              <Input
-                fontSize="13px"
-                type="text"
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search item/unit..."
-                width="400px"
-                _hover={{ borderColor: "green" }}
-                _focus={{
-                  boxShadow: "none",
-                  outline: "none",
-                  borderColor: "green",
-                }}
-              />
-            </Center>
-            <TableContainer w="80%" margin="auto" display="flex">
-              <Table variant="striped" colorScheme="cyan" size="sm" mt={10}>
-                <Thead>
-                  <Tr fontSize={11} fontWeight={500}>
-                    <Th width="70%" textAlign="center">
-                      ITEM DESCRIPTION
-                    </Th>
-                    <Th textAlign="center">UNIT</Th>
-                    <Th textAlign="center">QUANTITY</Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  {itemsIssued
-                    .filter((val) => {
-                      if (search === "") {
-                        return val;
-                      } else if (
-                        val.desc.toLowerCase().includes(search.toLowerCase()) ||
-                        val.unit.toLowerCase().includes(search.toLowerCase())
-                      ) {
-                        return val;
-                      }
-                    })
-                    .map((j, k) => {
-                      return (
-                        <>
-                          <Tr fontSize={11}>
-                            <Td>{j.desc}</Td>
-                            <Td textAlign="center">{j.unit}</Td>
-                            <Td textAlign="center">
-                              {Math.round(j.total).toLocaleString()}
-                            </Td>
-                          </Tr>
-                        </>
-                      );
-                    })}
-                </Tbody>
-              </Table>
-            </TableContainer>
-          </ModalBody>
-          <ModalFooter>
-            <Button onClick={onIssuedClose}>Close</Button>
+            <Button onClick={onClose}>Close</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
