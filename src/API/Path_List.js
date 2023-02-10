@@ -32,3 +32,6 @@ export const primaryPathItem = "/api/item";
 
 //Path for request logs
 export const primaryPathLogs = "/api/logs";
+
+//Path for request logs
+export const primaryPathProcurement = "/api/procurement";
