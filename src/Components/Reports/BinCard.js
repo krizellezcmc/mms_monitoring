@@ -234,13 +234,14 @@ function BinCard(props) {
         {props.list.map((b) => {
           return (
             <>
-              <tr style={{ fontSize: "13px" }}>
+              <tr style={{ fontSize: "11px" }}>
                 <td
                   align="center"
                   width="100px"
                   style={{
                     borderRight: "1px solid black",
                     borderBottom: "1px solid black",
+                    paddingBottom: "6px",
                   }}
                 >
                   {moment(b.STIDate.date).format("ll")}
@@ -249,9 +250,10 @@ function BinCard(props) {
                   style={{
                     borderRight: "1px solid black",
                     borderBottom: "1px solid black",
+                    paddingBottom: "6px",
                   }}
                 >
-                  {b.WarehouseDST + " "}
+                  {b.WarehouseDST + " "} &nbsp;&nbsp;
                   <i>
                     {b.remarks === null || b.remarks == "" ? (
                       ""
@@ -264,18 +266,20 @@ function BinCard(props) {
                   style={{
                     borderRight: "1px solid black",
                     borderBottom: "1px solid black",
+                    paddingBottom: "6px",
                     fontWeight: "bolder",
                   }}
                   align="center"
                   width="100px"
                 >
-                  {Math.floor(b.qty)}
+                  {Math.floor(b.qty).toLocaleString()}
                   {/* {Math.floor(b.qty)} ({b.unit}/s) */}
                 </td>
                 {/* <td
                   style={{
                     borderRight: "1px solid black",
                     borderBottom: "1px solid black",
+                    paddingBottom: "10px"
                   }}
                 ></td> */}
               </tr>
@@ -355,11 +359,12 @@ function BinCard(props) {
         {props.deliveries.map((e, i) => {
           return (
             <>
-              <tr style={{ fontSize: "13px" }}>
+              <tr style={{ fontSize: "11px" }}>
                 <td
                   style={{
                     borderRight: "1px solid black",
                     borderBottom: "1px solid black",
+                    paddingBottom: "6px",
                   }}
                   align="center"
                 >
@@ -370,6 +375,7 @@ function BinCard(props) {
                   style={{
                     borderRight: "1px solid black",
                     borderBottom: "1px solid black",
+                    paddingBottom: "6px",
                   }}
                 >
                   {e.supplier}
@@ -378,6 +384,7 @@ function BinCard(props) {
                   style={{
                     borderRight: "1px solid black",
                     borderBottom: "1px solid black",
+                    paddingBottom: "6px",
                   }}
                 >
                   {e.remarks}
@@ -386,11 +393,13 @@ function BinCard(props) {
                   style={{
                     borderRight: "1px solid black",
                     borderBottom: "1px solid black",
+                    paddingBottom: "6px",
                     width: "100px",
                     textAlign: "center",
+                    fontWeight: "bold",
                   }}
                 >
-                  {Math.floor(e.itemqty)}
+                  {Math.floor(e.itemqty).toLocaleString()}
                 </td>
               </tr>
             </>
