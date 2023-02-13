@@ -21,7 +21,7 @@ import {
   Spinner,
   Input,
   Center,
-    InputGroup,
+  InputGroup,
   InputLeftElement,
 } from "@chakra-ui/react";
 import localApi from "../API/localAPI";
@@ -30,9 +30,6 @@ import { SearchIcon } from "@chakra-ui/icons";
 import { act } from "react-dom/test-utils";
 
 function IssuedByCategory(props) {
-  const [depts, setDepts] = useState([]);
-  const [issued, setIssued] = useState([]);
-
   const [items, setItems] = useState([]);
   const [year, setYear] = useState([]);
   const [label, setLabel] = useState("");
@@ -41,20 +38,19 @@ function IssuedByCategory(props) {
   const [select, setSelect] = useState("2022");
   const [loading, setLoading] = useState(false);
 
-   const [categories, setCategories] = useState([]);
-  const [year, setYear] = useState([]);
-  const [search, setSearch] = useState("2022");
-  const [loading, setLoading] = useState(false);
+  const [categories, setCategories] = useState([]);
 
   const getList = async () => {
-    let response = await localApi.get("/get_IssTotalperCat.php");
-    setCategories(response.data);
-    setLoading(false);
-    };
+    setLoading(true);
 
-  const getIssued = async () => {
-    let response = await localApi.get("/get_TotalIssuedbyCat.php");
-    setIssued(response.data);
+    let response = await localApi.get("/get_IssTotalperCat.php");
+
+    setCategories(response.data);
+
+    setLoading(false);
+
+    let year = await localApi.get("/get_year.php");
+    setYear(year.data);
   };
 
   const getItems = async (cat) => {
@@ -65,8 +61,9 @@ function IssuedByCategory(props) {
     });
 
     setItems(response.data);
-    setLoading(false);
 
+    console.log(response.data);
+    setLoading(false);
 
     let year = await localApi.get("/get_year.php");
     setYear(year.data);
@@ -76,20 +73,18 @@ function IssuedByCategory(props) {
 
   useEffect(() => {
     getList();
-
-    getIssued();
-
   }, [search]);
   return (
     <div>
       <Box align="right">
         <Box w={200}>
           <Select
-            defaultValue={search}
+            variant="simple"
+            defaultValue={select}
             options={year}
             selectedOptionStyle="check"
             onChange={(e) => {
-              setSearch(e.value);
+              setSelect(e.value);
             }}
           />
         </Box>
@@ -104,7 +99,6 @@ function IssuedByCategory(props) {
               <Th textAlign="center">Total</Th>
               <Th textAlign="center">Issued</Th>
               <Th textAlign="center">Balance</Th>
-              <Th>Year</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -119,9 +113,9 @@ function IssuedByCategory(props) {
             ) : (
               categories
                 .filter((val) => {
-                  if (search === "") {
+                  if (select === "") {
                     return val;
-                  } else if (search === val.year) {
+                  } else if (select === val.year) {
                     return val;
                   }
                 })
@@ -130,16 +124,18 @@ function IssuedByCategory(props) {
                     <>
                       <Tr key={k}>
                         <Td fontWeight={500}>
-                      <Button
-                        variant="link"
-                        colorScheme="teal"
-                        onClick={() => {
-                          setLabel(j.desc);
-                          getItems(j.value);
-                          onOpen();
-                        }}
-                      > {j.desc} </Button>
-                    </Td>
+                          <Button
+                            variant="link"
+                            colorScheme="teal"
+                            onClick={() => {
+                              setLabel(j.desc);
+                              getItems(j.value);
+                              onOpen();
+                            }}
+                          >
+                            {j.desc}
+                          </Button>
+                        </Td>
                         <Td textAlign="center" width="200px">
                           {Math.round(j.total).toLocaleString()}
                         </Td>
@@ -151,7 +147,6 @@ function IssuedByCategory(props) {
                             ? "0"
                             : Math.round(j.balance).toLocaleString()}
                         </Td>
-                        <Td>{j.year}</Td>
                       </Tr>
                     </>
                   );
@@ -159,7 +154,6 @@ function IssuedByCategory(props) {
             )}
           </Tbody>
         </Table>
-   
       </TableContainer>
 
       <Modal
@@ -199,7 +193,7 @@ function IssuedByCategory(props) {
               <Box w={300}>
                 <Select
                   variant="simple"
-                  defaultValue={search}
+                  defaultValue={select}
                   options={year}
                   selectedOptionStyle="check"
                   onChange={(e) => {
@@ -244,7 +238,6 @@ function IssuedByCategory(props) {
                           return val;
                         }
                       })
-
                       .map((j, k) => {
                         return (
                           <>
@@ -291,7 +284,7 @@ function IssuedByCategory(props) {
                           </Td>
                         </Tr>
                       ),
-                      0
+                      ""
                     )}
                 </Tbody>
               </Table>

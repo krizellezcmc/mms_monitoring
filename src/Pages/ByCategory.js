@@ -1,5 +1,4 @@
 import React from "react";
-// import AllIssued from "../Components/AllIssued";
 import {
   Container,
   Flex,
@@ -7,7 +6,6 @@ import {
   Spacer,
   Heading,
   Link,
-  Box,
 } from "@chakra-ui/react";
 import { BiChevronLeft } from "react-icons/bi";
 import IssuedByCategory from "../Components/IssuedByCategory";
