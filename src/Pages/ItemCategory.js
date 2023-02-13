@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Box,
-  Button,
-  Container,
-  Flex,
-  Heading,
-  Link,
-  Spacer,
-} from "@chakra-ui/react";
+import { Button, Container, Flex, Heading, Spacer } from "@chakra-ui/react";
 import Category from "../Components/Category";
 import { BiChevronLeft } from "react-icons/bi";
 import ItemsTable from "../Components/ItemsTable";

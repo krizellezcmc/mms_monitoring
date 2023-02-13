@@ -1,8 +1,1 @@
-
-SELECT DISTINCT c.itemdesc, c.unit, SUM(b.qty) as stocks, sum(iss.qty) as issued
-from iwApinv a JOIN dbo.iwApitem b ON b.FK_TRXNO = a.PK_TRXNO
-LEFT OUTER JOIN dbo.iwIssitem iss ON b.FK_iwItems = iss.FK_iwItems
-LEFT JOIN dbo.iwItems AS c ON c.PK_iwItems = b.FK_iwItems
-WHERE YEAR(a.docdate)='2022' AND c.FK_mscItemCategory = '2038'
-AND c.isactive='1' AND a.postflag='1' AND a.cancelflag='0' AND a.deleteflag='0'
-GROUP BY c.itemdesc, c.unit ORDER BY c.itemdesc ASC
+Hello World!

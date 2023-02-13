@@ -12,7 +12,9 @@ const ExceptionHandler = (err) => {
     navigate("/", { replace: true });
   };
 
-  switch (err) {
+  const status = (err.response && err.response.status) || 500;
+
+  switch (status) {
     case 400:
       msg = "Request cannot be process. try again later.";
       break;
