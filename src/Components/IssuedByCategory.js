@@ -27,7 +27,6 @@ import {
 import localApi from "../API/localAPI";
 import { Select } from "chakra-react-select";
 import { SearchIcon } from "@chakra-ui/icons";
-import { act } from "react-dom/test-utils";
 
 function IssuedByCategory(props) {
   const [items, setItems] = useState([]);
