@@ -31,7 +31,8 @@ const MenuItemComponent = (props) => {
     <MenuItem icon={props.child} _hover={{ bgColor: "teal.200" }}>
       <Text
         width="full"
-        fontWeight={600}
+        fontWeight={400}
+        fontSize={15}
         onClick={(e) => props.click(e, props.path)}
       >
         {props.title}

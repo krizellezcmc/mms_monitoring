@@ -19,6 +19,7 @@ import { primaryPathDepartment } from "../API/Path_List";
 import { Get, Post, Put, Delete } from "../API/Base_Http_Request";
 import { AiFillEdit } from "react-icons/ai";
 import useAuth from "../Hooks/useAuth";
+import ExceptionHandler from "../Utils/ExceptionHandler";
 
 const UpdateModal = (props) => {
   const { setUser } = useAuth();
@@ -119,6 +120,7 @@ const UpdateModal = (props) => {
 const Departments = () => {
   const { setUser } = useAuth();
   const title = "Department";
+  const [isFetching, setIsFetching] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [fetch, setFetch] = useState(false);
   const [search, setSearch] = useState("");
@@ -170,20 +172,7 @@ const Departments = () => {
         console.log("Successfully migrated Department list from BizzBox");
       })
       .catch((err) => {
-        switch (err) {
-          case 400:
-            setMsg("Can't proceed request. please try again later.");
-            break;
-          case 401:
-            setUser(null);
-            break;
-          case 404:
-            setMsg("No record");
-            break;
-          case 500:
-            setMsg("Can't complete request. please try again later.");
-            break;
-        }
+        setMsg(ExceptionHandler(err));
       });
   };
 
@@ -195,22 +184,11 @@ const Departments = () => {
         }
 
         setDepartments(res.data.data);
+        setTimeout(() => setIsFetching(false), [800]);
       })
       .catch((err) => {
-        switch (err) {
-          case 400:
-            setMsg("Can't proceed request. try again later.");
-            break;
-          case 401:
-            setUser(null);
-            break;
-          case 404:
-            setMsg("No record.");
-            break;
-          case 500:
-            setMsg("Can't complete request. try again later.");
-            break;
-        }
+        setMsg(ExceptionHandler(err));
+        setTimeout(() => setIsFetching(false), [800]);
       });
   };
 
@@ -238,24 +216,7 @@ const Departments = () => {
         }
       })
       .catch((err) => {
-        switch (err) {
-          case 400:
-            msg = "Problem encounter please try again later.";
-            break;
-          case 401:
-            // un-authorized user
-            setUser(null);
-            msg = "Un-Authorized user.";
-            break;
-          case 404:
-            // not found base on request
-            msg = "Department not found";
-            break;
-          case 500:
-            // Server encounter problem cause it not to complete the request
-            msg = "Failed to complete request. Try again later.";
-            break;
-        }
+        msg = ExceptionHandler(err);
       });
 
     return msg;
@@ -279,6 +240,7 @@ const Departments = () => {
         handleView={null}
         handleEdit={handleEdit}
         handleDelete={handleDeleteTask}
+        isFetching={isFetching}
       />
     </Box>
   );

@@ -46,7 +46,7 @@ const PRDetailedModule = (props) => {
         rowGap={[0, 0, 2, 2]}
         columnGap={[5, 5, 0, 0]}
         display="flex"
-        flexDirection={["row", "row", "column", "column"]}
+        flexDirection={["column", "column", "column", "column"]}
       >
         <HeaderComponent
           data={getDateToFormatDate(new Date(props.date))}
@@ -71,7 +71,7 @@ const PRDetailedModule = (props) => {
         />
       </Box>
       <Box h={"20%"}>
-        <Heading mb={10} mt={[5, 5, 0, 0]} size="sm" color="rgba(0,0,0,0.7)">
+        <Heading mb={10} mt={[16, 12, 0, 0]} size="sm" color="rgba(0,0,0,0.7)">
           Procurement Timeline
         </Heading>
         <Timeline fetch={props.fetch} id={props.id} />

@@ -1,15 +1,18 @@
 import { useTable, usePagination } from "react-table";
 import {
+  Center,
   Table,
   Thead,
   Tbody,
   Tr,
+  Td,
   Th,
   Flex,
-  Text,
   Box,
   TableContainer,
   Heading,
+  Image,
+  Skeleton,
 } from "@chakra-ui/react";
 import Search from "./Search";
 import "../Style/Table.css";
@@ -32,6 +35,7 @@ const CustomTable = ({
   child,
   height,
   setID,
+  isFetching,
 }) => {
   const {
     getTableProps,
@@ -110,63 +114,124 @@ const CustomTable = ({
           </Box>
         </Flex>
       </Box>
-      <TableContainer w={"100%"}>
-        <Table
-          mt={5}
-          mb={5}
-          bg={"white"}
-          maxWidth={"100%"}
-          className={"table"}
-          variant="unstyled"
-          boxShadow={"md"}
-          overflow="hidden"
-          size={"sm"}
-          {...getTableProps()}
-        >
-          <Thead>
-            {headerGroups.map((headerGroup) => (
-              <Tr
-                h={"4rem"}
-                fontSize={15}
-                {...headerGroup.getHeaderGroupProps()}
-              >
-                {headerGroup.headers.map((column) => (
-                  <Th
-                    bg={"white"}
-                    color={"gray.600"}
+      {page.length >= 1 && !isFetching ? (
+        <TableContainer w={"100%"}>
+          <Box bg="white">
+            <Table
+              mt={5}
+              mb={5}
+              bg={"white"}
+              maxWidth={"100%"}
+              className={"table"}
+              variant="unstyled"
+              boxShadow={"md"}
+              overflow="hidden"
+              size={"sm"}
+              {...getTableProps()}
+            >
+              <Thead>
+                {headerGroups.map((headerGroup) => (
+                  <Tr
+                    h={"4rem"}
                     fontSize={15}
-                    border={"white"}
-                    {...column.getHeaderProps()}
+                    {...headerGroup.getHeaderGroupProps()}
                   >
-                    {column.render("Header")}
-                  </Th>
+                    {headerGroup.headers.map((column) => (
+                      <Th
+                        bg={"white"}
+                        color={"gray.600"}
+                        fontSize={15}
+                        border={"white"}
+                        {...column.getHeaderProps()}
+                      >
+                        {column.render("Header")}
+                      </Th>
+                    ))}
+                  </Tr>
                 ))}
-              </Tr>
-            ))}
-          </Thead>
-          <Tbody {...getTableBodyProps()}>
-            {page.length >= 1 ? (
-              page.map((row, index) => {
-                prepareRow(row);
-                return (
-                  <TableRow
-                    table={title}
-                    handleClick={handleSelectedRow}
-                    row={row}
-                    pageIndex={pageIndex}
-                    index={++index}
-                    viewTask={handleView === null ? null : handleView}
-                    editTask={handleEdit === null ? null : handleEdit}
-                    deleteTask={handleDelete === null ? null : handleDelete}
-                  />
-                );
-              })
-            ) : (
-              <Text>NO RECORD</Text>
-            )}
-          </Tbody>
-        </Table>
-      </TableContainer>
+              </Thead>
+              <Tbody {...getTableBodyProps()}>
+                {page.map((row, index) => {
+                  prepareRow(row);
+                  return (
+                    <TableRow
+                      table={title}
+                      handleClick={handleSelectedRow}
+                      row={row}
+                      pageIndex={pageIndex}
+                      index={++index}
+                      viewTask={handleView === null ? null : handleView}
+                      editTask={handleEdit === null ? null : handleEdit}
+                      deleteTask={handleDelete === null ? null : handleDelete}
+                    />
+                  );
+                })}
+              </Tbody>
+            </Table>
+          </Box>
+        </TableContainer>
+      ) : isFetching ? (
+        <TableContainer w={"100%"}>
+          <Box bg="white">
+            <Table
+              mt={5}
+              mb={5}
+              bg={"white"}
+              maxWidth={"100%"}
+              className={"table"}
+              variant="unstyled"
+              boxShadow={"md"}
+              overflow="hidden"
+              size={"sm"}
+              {...getTableProps()}
+            >
+              <Thead>
+                {headerGroups.map((headerGroup) => (
+                  <Tr
+                    h={"4rem"}
+                    fontSize={15}
+                    {...headerGroup.getHeaderGroupProps()}
+                  >
+                    {headerGroup.headers.map((column) => (
+                      <Th
+                        bg={"white"}
+                        color={"gray.600"}
+                        fontSize={15}
+                        border={"white"}
+                        {...column.getHeaderProps()}
+                      >
+                        {column.render("Header")}
+                      </Th>
+                    ))}
+                  </Tr>
+                ))}
+              </Thead>
+              <Tbody {...getTableBodyProps()}>
+                <Tr>
+                  {columns.map((_) => {
+                    return (
+                      <Td>
+                        <Skeleton height={8} rounded={14} />
+                      </Td>
+                    );
+                  })}
+                </Tr>
+              </Tbody>
+            </Table>
+          </Box>
+        </TableContainer>
+      ) : (
+        <Box w={"100%"} mt={"6rem"}>
+          <Box w="100%" display="flex" justifyContent={"center"}>
+            <Image src={require("../assets/logo/notfound.png")} />
+          </Box>
+          <Box w="100%" textAlign={"center"} p={2}>
+            <Heading size="lg" color="gray">
+              NO RECORD
+            </Heading>
+          </Box>
+        </Box>
+      )}
       {page.length >= 1 && !title.toLowerCase().includes("#") ? (
         <TableFooter
           canPreviousPage={canPreviousPage}

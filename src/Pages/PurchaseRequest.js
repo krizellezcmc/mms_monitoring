@@ -5,13 +5,15 @@ import { primaryPathPR } from "../API/Path_List";
 import { Get, Post } from "../API/Base_Http_Request";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
+import ExceptionHandler from "../Utils/ExceptionHandler";
 
 const PurchaseRequest = () => {
   const { setUser } = useAuth();
   const title = "Purchase Request";
   const navigate = useNavigate();
-  const [fetch, setFetch] = useState(false);
+  const [fetch, setFetch] = useState(true);
   const [search, setSearch] = useState("");
+  const [isFetching, setIsFetching] = useState(true);
   const [pr, setPR] = useState([]);
   const [status, setStatus] = useState("");
   const [tblStatus, setTblStatus] = useState("");
@@ -58,22 +60,10 @@ const PurchaseRequest = () => {
             throw new Error("Bad response.", { cause: res });
           }
           setStatus(res.data.message);
+          setFetch(true);
         })
         .catch((err) => {
-          switch (err) {
-            case 400:
-              setStatus("Encounter a problem. try again later.");
-              break;
-            case 401:
-              setUser(null);
-              break;
-            case 404:
-              setStatus("No record.");
-              break;
-            case 500:
-              setStatus("Can't complete task, encounter a problem.");
-              break;
-          }
+          setStatus(ExceptionHandler(err));
         });
 
       const result = {
@@ -98,22 +88,11 @@ const PurchaseRequest = () => {
           throw new Error("Bad response.", { cause: res });
         }
         setPR(res.data.data);
+        setTimeout(() => setIsFetching(false), [800]);
       })
       .catch((err) => {
-        switch (err) {
-          case 400:
-            setTblStatus("Encounter a problem. try again later.");
-            break;
-          case 401:
-            setUser(null);
-            break;
-          case 404:
-            setTblStatus("No record.");
-            break;
-          case 500:
-            setTblStatus("Can't complete the request. try again later.");
-            break;
-        }
+        setTblStatus(ExceptionHandler(err));
+        setTimeout(() => setIsFetching(false), [800]);
       });
   };
 
@@ -142,7 +121,10 @@ const PurchaseRequest = () => {
   };
 
   useEffect(() => {
-    handleFetch();
+    if (fetch) {
+      setFetch(false);
+      handleFetch();
+    }
   }, [fetch]);
 
   return (
@@ -159,6 +141,7 @@ const PurchaseRequest = () => {
           handleView={handleRedirectView}
           handleEdit={handleRedirectEdit}
           handleDelete={handleRedirectDelete}
+          isFetching={isFetching}
         />
       </Box>
     </>

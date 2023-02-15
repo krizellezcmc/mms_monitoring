@@ -4,9 +4,13 @@ const DataContext = createContext({});
 
 export const DataProvider = ({ children }) => {
   const [user, setUser] = useState({
-    name: "Tristan Jay",
+    name: "Tristan Jay Amit",
     username: "tristan23",
+    url: "../assets/logo/default_profile.png",
+    address: "San roque, Zamboanga City",
+    department: "Procurement",
   });
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 

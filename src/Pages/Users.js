@@ -20,6 +20,7 @@ import { useEffect } from "react";
 import { primaryPathUser } from "../API/Path_List";
 import { Put } from "../API/Base_Http_Request";
 import useAuth from "../Hooks/useAuth";
+import ExceptionHandler from "../Utils/ExceptionHandler";
 
 const UpdateModal = (props) => {
   const { setUser } = useAuth();
@@ -39,21 +40,7 @@ const UpdateModal = (props) => {
         handleClose();
       })
       .catch((err) => {
-        switch (err) {
-          case 400:
-            msg = "Problem encounter. Please try again later.";
-            break;
-          case 401:
-            setUser(null);
-            msg = "Un-Authorized user.";
-            break;
-          case 404:
-            msg = "User account not found";
-            break;
-          case 500:
-            msg = "Failed to complete request. Please try again later.";
-            break;
-        }
+        msg = ExceptionHandler(err);
       });
   };
 
@@ -149,6 +136,8 @@ const UpdateModal = (props) => {
 const Users = () => {
   const title = "Registered User";
   const { setUser } = useAuth();
+  const [isFetching, setIsFetching] = useState(true);
+  const [msg, setMsg] = useState("");
   const [fetch, setFetch] = useState(false);
   const [search, setSearch] = useState("");
   const [users, setUsers] = useState([]);
@@ -201,19 +190,11 @@ const Users = () => {
           throw new Error("Bad response", { cause: res });
         }
         setUsers(res.data.data);
+        setTimeout(() => setIsFetching(false), [800]);
       })
       .catch((err) => {
-        switch (err) {
-          case 400:
-            break;
-          case 401:
-            setUser(null);
-            break;
-          case 404:
-            break;
-          case 500:
-            break;
-        }
+        setMsg(ExceptionHandler(err));
+        setTimeout(() => setIsFetching(false), [800]);
       });
   };
 
@@ -247,6 +228,7 @@ const Users = () => {
         handleView={null}
         handleEdit={handleEdit}
         handleDelete={handleDeleteTask}
+        isFetching={isFetching}
       />
       <UpdateModal isOpen={isOpen} onClose={onClose} data={selectedUser} />
     </Box>

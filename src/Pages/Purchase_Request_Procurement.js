@@ -21,6 +21,7 @@ const PurchaseRequestProcurement = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isFetching, setIsFetching] = useState(true);
   const [pr, setPr] = useState(location.state);
   const [prDetails, setPRDetails] = useState([]);
   const title = "Purchase " + " #" + pr.pr_Prxno;
@@ -88,9 +89,11 @@ const PurchaseRequestProcurement = () => {
         }
         setTotal(data.reduce((acc, cur) => acc + cur.total, 0));
         setData(res.data.data);
+        setTimeout(() => setIsFetching(false), [800]);
       })
       .catch((err) => {
         setMsg(ExceptionHandler(err));
+        setTimeout(() => setIsFetching(false), [800]);
       });
   };
 
@@ -128,7 +131,7 @@ const PurchaseRequestProcurement = () => {
         <Box
           w={["100%", "100%", "75%", "75%"]}
           h={"100vh"}
-          bg={"rgba(0,0,0,0.05)"}
+          bg={["white", "white", "rgba(0,0,0,0.05)", "rgba(0,0,0,0.05)"]}
           p={5}
           overflow="auto"
         >
@@ -180,6 +183,7 @@ const PurchaseRequestProcurement = () => {
               h={"inherit"}
               setID={setProductID}
               handleClick={handleSelectedProduct}
+              isFetching={isFetching}
             />
           </Box>
           {productID === null || productID === "" ? null : (

@@ -23,6 +23,7 @@ import Register from "../Pages/Register";
 import AccountRegistration from "../Pages/Account_Registration";
 import PurchaseRequestProcurement from "../Pages/Purchase_Request_Procurement";
 import RequestLogs from "../Pages/Request_Logs";
+import Profile from "../Pages/Profile";
 
 const LoginPage = React.lazy(() => import("../Pages/Login"));
 const MainLayoutPage = React.lazy(() => import("../Pages/Main_Layout"));
@@ -112,6 +113,7 @@ function AnimatedRoutes() {
                       />
                     );
                   })}
+                  <Route path="profile" element={<Profile />} />
                 </MainLayoutPage>
               }
             />

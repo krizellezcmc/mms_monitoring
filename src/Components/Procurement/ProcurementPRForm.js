@@ -9,10 +9,8 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import { Post } from "../../API/Base_Http_Request";
-import { primaryPathProcurement, primaryPathPR } from "../../API/Path_List";
+import { primaryPathProcurement } from "../../API/Path_List";
 import ExceptionHandler from "../../Utils/ExceptionHandler";
-import { Get } from "../../API/Base_Http_Request";
-import { useDataApi } from "../../API/API";
 
 const DatePicker = (props) => {
   const [errorMsg, setErrorMsg] = useState("Lol");
@@ -39,7 +37,7 @@ const DatePicker = (props) => {
         boxShadow={"lg"}
         placeholder={props.placeholder}
         size="md"
-        type="datetime-local"
+        type="date"
         focusBorderColor={"#008080"}
         value={props.value}
         onChange={(e) => handleChange(e)}
@@ -52,34 +50,23 @@ const DatePicker = (props) => {
 const ProcurementPRForm = (props) => {
   const title = "Purchase Request";
   const [loading, setLoading] = useState(false);
+  let data = props.data;
   const [msg, setMsg] = useState("");
-  const data = props.data;
   const currentDate = new Date();
-  const [prNo, setPRNo] = useState(data.pr_no);
-  const [rCC, setRCC] = useState(data.rcc);
-  const [fundClaster, setFundClaster] = useState(data.fund_cluster);
-  const [procurementMode, setProcurementMode] = useState(
-    data.procurement_description
-  );
-
-  const [solNo, setSolNo] = useState(data.sol_no);
-  const [procurementDate, setProcurementDate] = useState(
-    data.procurement_date === null ? currentDate : data.procurement_date
-  );
-
-  const [postingDate, setPostingDate] = useState(
-    data.posting_date === null ? currentDate : data.posting_date
-  );
-
-  const [openingDate, setOpeningDate] = useState(
-    data.opening_date === null ? currentDate : data.opening_date
-  );
+  const [prNo, setPRNo] = useState("");
+  const [rCC, setRCC] = useState("");
+  const [fundClaster, setFundClaster] = useState("");
+  const [procurementMode, setProcurementMode] = useState("");
+  const [solNo, setSolNo] = useState("");
+  const [procurementDate, setProcurementDate] = useState("");
+  const [postingDate, setPostingDate] = useState("");
+  const [openingDate, setOpeningDate] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
     let form = new FormData();
-    form.append("id", props.data.PK_pr_ID);
+    form.append("id", data.PK_pr_ID);
     form.append("message", procurementMode);
     form.append("prNo", prNo);
     form.append("rcc", rCC);
@@ -100,10 +87,31 @@ const ProcurementPRForm = (props) => {
         props.setFetch(true);
       })
       .catch((err) => {
-        setMsg(ExceptionHandler(err));
         setLoading(false);
+        setMsg(ExceptionHandler(err));
       });
   };
+
+  const initState = () => {
+    setPRNo(data.pr_no);
+    setRCC(data.rcc);
+    setFundClaster(data.fund_cluster);
+    setProcurementMode(data.procurement_description);
+    setSolNo(data.sol_no);
+    setProcurementDate(data.procurement_date);
+    setPostingDate(data.posting_date);
+    setOpeningDate(data.opening_date);
+  };
+
+  useEffect(() => {
+    if (data != null) {
+      initState();
+    }
+
+    return () => {
+      data = null;
+    };
+  }, [data]);
 
   return (
     <Box w={"100%"} h={["13rem", "13rem", "16rem", "16rem"]} pt={5} pb={5}>
@@ -139,15 +147,15 @@ const ProcurementPRForm = (props) => {
             value={rCC}
             onChange={(e) => setRCC(e.target.value)}
             placeholder="Fund claster"
-            focusBorderColor={"#008080"}
-            boxShadow={"lg"}
+            focusBorderColor="#008080"
+            boxShadow="lg"
             rounded={10}
           />
         </FormControl>
         <FormControl>
           <FormLabel
             fontSize={["13px", "13px", "14px", "14px"]}
-            fontWeight={"600"}
+            fontWeight="600"
           >
             Fund Cluster
           </FormLabel>
@@ -155,25 +163,22 @@ const ProcurementPRForm = (props) => {
             value={fundClaster}
             onChange={(e) => setFundClaster(e.target.value)}
             placeholder="Fund claster"
-            focusBorderColor={"#008080"}
-            boxShadow={"lg"}
+            focusBorderColor="#008080"
+            boxShadow="lg"
             rounded={10}
           />
         </FormControl>
       </Box>
       <FormControl mt={5}>
-        <FormLabel
-          fontSize={["13px", "13px", "14px", "14px"]}
-          fontWeight={"600"}
-        >
+        <FormLabel fontSize={["13px", "13px", "14px", "14px"]} fontWeight="600">
           Purchase Request
         </FormLabel>
         <Textarea
           value={procurementMode}
           onChange={(e) => setProcurementMode(e.target.value)}
           placeholder="Remarks description"
-          focusBorderColor={"#008080"}
-          boxShadow={"lg"}
+          focusBorderColor="#008080"
+          boxShadow="lg"
           rounded={10}
         />
       </FormControl>
@@ -211,8 +216,8 @@ const ProcurementPRForm = (props) => {
       <Button
         isLoading={loading}
         loadingText="Submitting..."
-        type={"Submit"}
-        value={"Submit"}
+        type="Submit"
+        value="Submit"
         bg="teal"
         color="white"
         _hover={{ bg: "teal" }}

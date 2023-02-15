@@ -4,10 +4,12 @@ import CustomTable from "../Components/Custom_Table";
 import { primaryPathLogs } from "../API/Path_List";
 import { Get } from "../API/Base_Http_Request";
 import useAuth from "../Hooks/useAuth";
+import ExceptionHandler from "../Utils/ExceptionHandler";
 
 const RequestLogs = () => {
   const { setUser } = useAuth();
   const title = "Request Logs";
+  const [isFetching, setIsFetching] = useState(true);
   const [fetch, setFetch] = useState(false);
   const [search, setSearch] = useState("");
   const [logs, setLogs] = useState([]);
@@ -43,22 +45,11 @@ const RequestLogs = () => {
           throw new Error("Bad response", { cause: res });
         }
         setLogs(res.data.data);
+        setTimeout(() => setIsFetching(false), [800]);
       })
       .catch((err) => {
-        switch (err) {
-          case 400:
-            setFStatus("Can't process request. try again later.");
-            break;
-          case 401:
-            setUser(null);
-            break;
-          case 404:
-            setFStatus("No record");
-            break;
-          case 500:
-            setFStatus("Can't complete request. try again later.");
-            break;
-        }
+        setFStatus(ExceptionHandler);
+        setTimeout(() => setIsFetching(false), [800]);
       });
   };
 
@@ -80,6 +71,7 @@ const RequestLogs = () => {
           handleView={hanldeView}
           handleEdit={handleEdit}
           handleDelete={handleDelete}
+          isFetching={isFetching}
         />
       </Box>
     </>
