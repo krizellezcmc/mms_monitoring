@@ -6,6 +6,12 @@ import {
   Grid,
   GridItem,
   useDisclosure,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  ModalOverlay,
 } from "@chakra-ui/react";
 import CustomInput from "../Components/CustomInput";
 import { useState } from "react";
@@ -13,15 +19,56 @@ import { useNavigate } from "react-router-dom";
 import { CustomSelection } from "../Components/Custom_Selection";
 import { Post } from "../API/Base_Http_Request";
 import { primaryPathAccountReg } from "../API/Path_List";
-import Feedback from "../Components/Feedback";
 import {
   AuthHeader,
   AuthFooter,
   AuthBackground,
 } from "../Components/Auth_Header_Design";
 import useAuth from "../Hooks/useAuth";
+import { useLocation } from "react-router-dom";
+import HandleStatus from "../Utils/ExceptionHandler";
+import { IoMdSad, IoMdClose } from "react-icons/io";
+import { MdNoAccounts } from "react-icons/md";
+
+const Feedback = (props) => {
+  return (
+    <Modal
+      closeOnOverlayClick={false}
+      isOpen={props.isOpen}
+      onClose={props.onClose}
+    >
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader color={props.success ? "green" : "red"}>
+          {props.title}
+        </ModalHeader>
+        <ModalBody>
+          <Text>{props.description}</Text>
+        </ModalBody>
+        <ModalFooter>
+          <Button
+            bg={props.success ? "teal" : "grey"}
+            color={props.success ? "white" : "orange"}
+            _hover={{
+              bg: props.success ? "teal" : "grey",
+              color: props.success ? "white" : "orange",
+            }}
+            _active={{
+              bg: props.success ? "teal" : "grey",
+              color: props.success ? "white" : "orange",
+            }}
+            onClick={props.handleClose}
+          >
+            <Text>{props.success ? "Go to Login" : "Close"}</Text>
+          </Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
+  );
+};
 
 const AccountRegistration = () => {
+  const { state } = useLocation();
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -30,15 +77,22 @@ const AccountRegistration = () => {
   const [feedbackTitle, setFeedBackTitle] = useState("");
   const [feedbackDescription, setFeedBackDescription] = useState("");
 
+  const [message, setMessage] = useState(state.message);
+  console.log(state);
+
   const [fname, setFname] = useState("");
   const [mname, setMname] = useState("");
   const [lname, setLname] = useState("");
+  const [address, setAddress] = useState("");
   const [PK_department_ID, setPK_department_ID] = useState("");
 
   const [emailExc, setEmailExc] = useState("");
   const [passExc, setPassExc] = useState("");
 
+  const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  console.log(state);
 
   const resultFeedBack = () => {
     setTimeout(() => {
@@ -49,7 +103,9 @@ const AccountRegistration = () => {
 
   const closeModal = () => {
     onClose();
-    navigate("login", { replace: true });
+    if (success) {
+      navigate("login", { replace: true });
+    }
   };
 
   const navigateAuthorize = (e) => {
@@ -57,39 +113,58 @@ const AccountRegistration = () => {
     navigate("/", { replace: true });
   };
 
+  const resetState = () => {
+    setFname("");
+    setMname("");
+    setLname("");
+    setAddress("");
+  };
   const handleUserInformation = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     let bodyForm = new FormData();
+    bodyForm.append("id", state.id);
     bodyForm.append("firstname", fname);
     bodyForm.append("middlename", mname);
     bodyForm.append("lastname", lname);
+    bodyForm.append("address", address);
     bodyForm.append("PK_department_ID", PK_department_ID);
-    bodyForm.append("password", password);
+    bodyForm.append("password", state.password);
+    bodyForm.append("status", message !== "" ? 0 : 1);
 
-    const response = await Post({ url: primaryPathAccountReg }, bodyForm);
-
-    if (response.data.status === 200) {
-      try {
-        if (response.data.data != null) {
+    Post({ url: primaryPathAccountReg }, bodyForm)
+      .then((res) => {
+        if (!res.statusText === "OK") {
+          throw new Error("Bad response.", { cause: res });
+        }
+        resetState();
+        setSuccess(true);
+        if (res.data.json.exist) {
+          setFeedBackTitle("Account Already Exist.");
+          setFeedBackDescription(res.data.json.message);
+          resultFeedBack();
+          return;
+        }
+        if (res.data.data != null) {
           setLoading(false);
-          setUser(response.data.data);
+          setUser(res.data.data);
+          sessionStorage.setItem("Token", res.data.Token);
           navigateAuthorize(e);
           return;
         }
-      } catch (e) {
-        console.log(e.message);
-      }
-      setFeedBackTitle("Registered successfully");
-      setFeedBackDescription(response.data);
-      resultFeedBack();
-      return;
-    }
+        setFeedBackTitle("Registered successfully");
+        setFeedBackDescription("Please wait for account approval.");
+        resultFeedBack();
+      })
+      .catch((err) => {
+        let msg = HandleStatus(err);
 
-    setFeedBackTitle("Something went wrong!.");
-    setFeedBackDescription(response.message);
-    resultFeedBack();
+        setSuccess(false);
+        setFeedBackTitle("Something went wrong!.");
+        setFeedBackDescription(msg);
+        resultFeedBack();
+      });
   };
 
   return (
@@ -100,6 +175,7 @@ const AccountRegistration = () => {
         onClose={onClose}
         handleClose={closeModal}
         isOpen={isOpen}
+        success={success}
       />
       <Box
         w={"100%"}
@@ -138,12 +214,46 @@ const AccountRegistration = () => {
                   h={"70vh"}
                 >
                   <AuthHeader header={"User information"} />
+                  {message === "" ? null : (
+                    <Box w={"100%"}>
+                      <Box
+                        float="right"
+                        maxWidth={"200px"}
+                        color="white"
+                        display="flex"
+                        columnGap={2}
+                        bg="red"
+                        opacity={0.8}
+                        p={2}
+                        borderRadius={15}
+                        alignItems="center"
+                        mt={5}
+                      >
+                        <MdNoAccounts fontSize={20} />
+                        <Box maxWidth={"200px"} textAlign="start">
+                          <Text fontWeight={700}>{message}</Text>
+                        </Box>
+                        <Box w="green" zIndex={99}>
+                          <Text
+                            bg="transparent"
+                            fontSize={20}
+                            _hover={{ cursor: "pointer" }}
+                            onClick={() => {
+                              setFeedBackDescription("");
+                            }}
+                          >
+                            <IoMdClose color={"white"} />
+                          </Text>
+                        </Box>
+                      </Box>
+                    </Box>
+                  )}
                   <Box
                     w={"inherit"}
                     h={"inherit"}
                     display={"flex"}
                     flexDirection={"column"}
-                    mt={"2rem"}
+                    mt={message === "" ? "2rem" : "0"}
                   >
                     <CustomInput
                       isSignup={true}
@@ -174,6 +284,17 @@ const AccountRegistration = () => {
                       value={lname}
                       setValue={setLname}
                       placeholder={"last name"}
+                      errorMessage={emailExc}
+                      isError={false}
+                      mt={3}
+                    />
+                    <CustomInput
+                      isSignup={true}
+                      type={"address"}
+                      title={"Address name"}
+                      value={address}
+                      setValue={setAddress}
+                      placeholder={"Address"}
                       errorMessage={emailExc}
                       isError={false}
                       mt={3}

@@ -8,10 +8,6 @@ import useAuth from "../Hooks/useAuth";
 const Loading = () => {
   const { setUser } = useAuth();
 
-  const fetchCsrf = async () => {
-    await Get({ url: primaryPathToken });
-  };
-
   const authorizationValidation = async () => {
     Get({ url: primaryPathUser + "/init" })
       .then((res) => {
@@ -40,8 +36,7 @@ const Loading = () => {
   };
 
   useEffect(() => {
-    fetchCsrf();
-    authorizationValidation();
+    setTimeout(() => authorizationValidation(), [5000]);
   }, []);
 
   return (

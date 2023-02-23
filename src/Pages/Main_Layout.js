@@ -29,6 +29,9 @@ import { RiLockPasswordFill } from "react-icons/ri";
 import { IoMdLogOut } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
+import { Delete } from "../API/Base_Http_Request";
+import { primaryPathUser } from "../API/Path_List";
+import StatusHandler from "../Utils/ExceptionHandler";
 
 const LogoutPrompt = () => {
   const { setUser } = useAuth();
@@ -36,8 +39,19 @@ const LogoutPrompt = () => {
 
   const handleLogout = (e) => {
     e.preventDefault();
-    onClose();
-    setUser(null);
+    Delete({ url: `${primaryPathUser}/logout` })
+      .then((res) => {
+        if (!res.statusText === "OK") {
+          throw new Error("Bad response", { cause: res });
+        }
+        console.log(res.data.data);
+        sessionStorage.removeItem("Token");
+        onClose();
+        setUser(null);
+      })
+      .catch((err) => {
+        console.log(StatusHandler(err));
+      });
   };
 
   return (
@@ -55,7 +69,13 @@ const LogoutPrompt = () => {
           </ModalBody>
           <ModalFooter>
             <Flex columnGap={5} justifyContent="space-around">
-              <Button bg="teal" color="white" onClick={onClose}>
+              <Button
+                bg="teal"
+                color="white"
+                _hover={{ bg: "teal", color: "white" }}
+                _active={{ bg: "teal", color: "white" }}
+                onClick={onClose}
+              >
                 Naah, Just Kidding.
               </Button>
               <Button

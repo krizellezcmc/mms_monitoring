@@ -56,6 +56,7 @@ const PurchaseRequest = () => {
     try {
       await Post({ url: primaryPathPR + "/bb" })
         .then((res) => {
+          console.log(!res.statusText === "OK");
           if (!res.statusText === "OK") {
             throw new Error("Bad response.", { cause: res });
           }
@@ -64,6 +65,12 @@ const PurchaseRequest = () => {
         })
         .catch((err) => {
           setStatus(ExceptionHandler(err));
+          console.log(status);
+          if (status === 401) {
+            setUser(null);
+            navigate("/", { replace: true });
+            console.log("navigating");
+          }
         });
 
       const result = {

@@ -14,20 +14,25 @@ import { useNavigate } from "react-router-dom";
 import { Post } from "../API/Base_Http_Request";
 import { primaryPathSignin } from "../API/Path_List";
 import useAuth from "../Hooks/useAuth";
-import { AiOutlineWarning } from "react-icons/ai";
 import {
   AuthHeader,
   AuthBackground,
   AuthFooter,
 } from "../Components/Auth_Header_Design";
+import { IoMdSad, IoMdClose } from "react-icons/io";
 
 const Login = () => {
   const { setUser, username, setUsername, password, setPassword } = useAuth();
   const navigate = useNavigate();
-  const [feedback, setFeedback] = useState("");
+  const [feedbackDescription, setFeedBackDescription] = useState("");
   const [emailExc, setEmailExc] = useState("");
   const [passExc, setPassExc] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const handleReset = () => {
+    setUsername("");
+    setPassword("");
+  };
 
   const handleSignin = (e) => {
     e.preventDefault();
@@ -43,32 +48,36 @@ const Login = () => {
           throw new Error("Bad response", { cause: res });
         }
 
+        if (res.data.data.message === "Email or password incorrect") {
+          setFeedBackDescription(res.data.message);
+          return;
+        }
+
         setUser(res.data.data);
+        sessionStorage.setItem("Token", res.data.Token);
         setLoading(false);
         navigate("/", { replace: true });
+        handleReset();
       })
       .catch((err) => {
-        switch (err) {
-          case 400:
-            setFeedback(err.data.message);
-            setPassword("");
-            break;
-          case 401:
-            setFeedback(err.data.message);
-            setPassword("");
-            break;
-          case 404:
-            navigate(err.data.path, { replace: true });
-            setUsername("");
-            setLoading(false);
-            return;
-            break;
-          case 500:
-            setFeedback(err.data.message);
-            setPassword("");
-            break;
+        const {
+          response: {
+            status,
+            data: { json },
+          },
+        } = err;
+        if (status === 302) {
+          navigate(json.path, {
+            state: {
+              id: json.data,
+              password: password,
+              message: "missing profile.",
+            },
+          });
+          handleReset();
+          return;
         }
-        setLoading(false);
+        setFeedBackDescription("Something went wrong.");
       });
   };
 
@@ -132,17 +141,42 @@ const Login = () => {
                     alignItems="center"
                     columnGap={3}
                   >
-                    {feedback === "" ? null : (
-                      <AiOutlineWarning fontSize={20} />
+                    {feedbackDescription === "" ? null : (
+                      <Box
+                        color="white"
+                        display="flex"
+                        columnGap={2}
+                        bg="red"
+                        opacity={0.8}
+                        p={2}
+                        borderRadius={15}
+                        alignItems="center"
+                      >
+                        <IoMdSad fontSize={20} />
+                        <Box maxWidth={"200px"} textAlign="start">
+                          <Text fontWeight={700}>Email or password.</Text>
+                        </Box>
+                        <Box w="green" zIndex={99}>
+                          <Text
+                            bg="transparent"
+                            fontSize={20}
+                            _hover={{ cursor: "pointer" }}
+                            onClick={() => {
+                              setFeedBackDescription("");
+                            }}
+                          >
+                            <IoMdClose color={"white"} />
+                          </Text>
+                        </Box>
+                      </Box>
                     )}
-                    {feedback}
                   </Text>
                   <Box
                     w={"inherit"}
                     h={"inherit"}
                     display={"flex"}
                     flexDirection={"column"}
-                    mt={"2rem"}
+                    mt={feedbackDescription === "" ? "2rem" : "1.1rem"}
                   >
                     <CustomInput
                       isSignup={false}

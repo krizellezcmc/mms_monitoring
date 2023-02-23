@@ -20,30 +20,7 @@ import {
   AuthFooter,
   AuthBackground,
 } from "../Components/Auth_Header_Design";
-
-const LoginBackground = () => {
-  return (
-    <Box
-      w={"100%"}
-      h={"80vh"}
-      backgroundImage={require("./../assets/other/zcmc-bg1.png")}
-      backgroundPosition={"center"}
-      backgroundSize={"cover"}
-    >
-      <Box w={"100%"} h={"100vh"} bg={"rgba(0,0,0,0.2)"}>
-        <Box p={5} color={"white"} textAlign={"center"}>
-          <Heading
-            mt={10}
-            size={["sm", "md", "md", "lg"]}
-            letterSpacing={"0.34rem"}
-          >
-            ZCMC PR | PO MONITORING
-          </Heading>
-        </Box>
-      </Box>
-    </Box>
-  );
-};
+import StatusHandling from "../Utils/ExceptionHandler";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -57,6 +34,8 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [feedback, setFeedback] = useState("");
 
   const [emailExc, setEmailExc] = useState("");
   const [passExc, setPassExc] = useState("");
@@ -84,21 +63,25 @@ const Register = () => {
       bodyForm.append("url", defaultProfileURL);
 
       Post({ url: primaryPathSignup }, bodyForm)
-        .then((response) => {
-          if (response.data.status === 200) {
-            setFeedBackTitle("Account created.");
-            setFeedBackDescription(response.data);
-            navigate("/account", { replace: true });
-            setLoading(false);
-            return;
+        .then((res) => {
+          if (!res.statusText === "OK") {
+            throw new Error("Bad response", { cause: res });
           }
 
-          setFeedBackTitle("Something went wrong!");
-          setFeedBackDescription(response.message);
-          resultFeedBack();
-          setLoading(false);
+          setFeedBackTitle("Account created.");
+          navigate("/account", {
+            replace: true,
+            state: { id: res.data.data, password: password, message: "" },
+          });
         })
-        .catch((e) => console.log(e.message));
+        .catch((err) => {
+          setFeedback(StatusHandling(err));
+          console.log(feedback);
+          setFeedBackTitle("Something went wrong!");
+          setFeedBackDescription(err.response.data.message);
+          resultFeedBack();
+        });
+      setLoading(false);
     }
   };
 

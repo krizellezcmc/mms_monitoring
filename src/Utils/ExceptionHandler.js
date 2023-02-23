@@ -1,16 +1,5 @@
-import { useNavigate } from "react-router-dom";
-import useAuth from "../Hooks/useAuth";
-
 const ExceptionHandler = (err) => {
-  const navigate = useNavigate();
-  const { setUser } = useAuth();
   let msg = "";
-
-  const redirect = () => {
-    // Redirect to Root path, since user state is null it will be redirect to login page.
-    setUser(null);
-    navigate("/", { replace: true });
-  };
 
   const status = (err.response && err.response.status) || 500;
 
@@ -19,8 +8,7 @@ const ExceptionHandler = (err) => {
       msg = "Request cannot be process. try again later.";
       break;
     case 401:
-      // redirect();
-      msg = "Un-Authorized.";
+      msg = 401;
       break;
     case 404:
       msg = "No record found.";

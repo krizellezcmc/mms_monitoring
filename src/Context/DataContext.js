@@ -1,16 +1,18 @@
 import { createContext, useState, useEffect } from "react";
+import { primaryPathToken } from "../API/Path_List";
+import { Get } from "../API/Base_Http_Request";
 
 const DataContext = createContext({});
 
 export const DataProvider = ({ children }) => {
-  const [user, setUser] = useState({
-    name: "Tristan Jay Amit",
-    username: "tristan23",
-    url: "../assets/logo/default_profile.png",
-    address: "San roque, Zamboanga City",
-    department: "Procurement",
-  });
-
+  //  {
+  //   name: "Tristan Jay Amit",
+  //   username: "tristan23",
+  //   url: "../assets/logo/default_profile.png",
+  //   address: "San roque, Zamboanga City",
+  //   department: "Procurement",
+  // }
+  const [user, setUser] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -26,8 +28,13 @@ export const DataProvider = ({ children }) => {
     }
   };
 
+  const fetchCsrf = async () => {
+    await Get({ url: primaryPathToken });
+  };
+
   useEffect(() => {
-    fetchUser();
+    fetchCsrf();
+    setTimeout(() => fetchUser(), [300]);
   }, []);
 
   return (

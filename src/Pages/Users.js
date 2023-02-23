@@ -1,4 +1,4 @@
-import { Box, Text, Flex } from "@chakra-ui/layout";
+import { Box, Flex } from "@chakra-ui/layout";
 import {
   Modal,
   ModalContent,
@@ -6,17 +6,13 @@ import {
   ModalHeader,
   ModalFooter,
   ModalOverlay,
-  ModalCloseButton,
   useDisclosure,
   Input,
-  FormControl,
-  FormLabel,
   Button,
 } from "@chakra-ui/react";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import CustomTable from "../Components/Custom_Table";
 import { Get } from "../API/Base_Http_Request";
-import { useEffect } from "react";
 import { primaryPathUser } from "../API/Path_List";
 import { Put } from "../API/Base_Http_Request";
 import useAuth from "../Hooks/useAuth";
@@ -24,10 +20,11 @@ import ExceptionHandler from "../Utils/ExceptionHandler";
 
 const UpdateModal = (props) => {
   const { setUser } = useAuth();
-  const [fname, setFname] = useState(props.data.first_name);
-  const [mname, setMname] = useState(props.data.middle_name);
-  const [lname, setLname] = useState(props.data.last_name);
-  const [department, setDepartment] = useState(props.data.department);
+  const json = props.data;
+  const [fname, setFname] = useState(json.first_name);
+  const [mname, setMname] = useState(json.middle_name);
+  const [lname, setLname] = useState(json.last_name);
+  const [department, setDepartment] = useState(json.department);
   const msg = "";
 
   const handleUpdateTask = () => {
@@ -37,19 +34,11 @@ const UpdateModal = (props) => {
           throw new Error("Bad response", { cause: res });
         }
 
-        handleClose();
+        props.onClose();
       })
       .catch((err) => {
         msg = ExceptionHandler(err);
       });
-  };
-
-  const handleClose = () => {
-    props.onClose();
-    setFname("");
-    setMname("");
-    setLname("");
-    setDepartment("");
   };
 
   return (
@@ -103,7 +92,7 @@ const UpdateModal = (props) => {
                 bg: "gray",
                 color: "white",
               }}
-              onClick={handleClose}
+              onClick={() => props.onClose()}
             >
               Cancel
             </Button>
@@ -185,7 +174,6 @@ const Users = () => {
   const handleRequest = () => {
     Get({ url: primaryPathUser })
       .then((res) => {
-        console.log(res);
         if (!res.statusText === "OK") {
           throw new Error("Bad response", { cause: res });
         }
@@ -205,7 +193,8 @@ const Users = () => {
       filter.last_name.toLowerCase().includes(search.toLowerCase())
   );
 
-  const handleEdit = (props) => {
+  const handleEdit = (e, props) => {
+    e.preventDefault();
     setSelectedUser(props);
     onOpen();
   };
