@@ -114,7 +114,7 @@ const HeaderComponent = (props) => {
           onClick={props.action}
           _hover={{ bgColor: "none" }}
         >
-          <BiMenu color="teal" fontSize={22} />
+          <BiMenu color="#113c44" fontSize={30} />
         </Button>
         <Spacer />
         <Heading size={["sm", "sm", "md", "md"]}>Tristan Jay Amit</Heading>
@@ -168,7 +168,7 @@ const MainLayout = ({ children }) => {
       <Spacer />
       <Box w={"100%"} h={"100vh"} bg={"rgba(0,0,0,0.05)"}>
         <HeaderComponent action={actionHandle} />
-        <Box w={"100%"} h={"93.4vh"}>
+        <Box w={"100%"} h={"93.2vh"}>
           <Routes>{children}</Routes>
         </Box>
       </Box>

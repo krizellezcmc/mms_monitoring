@@ -1,4 +1,4 @@
-import { Box, Flex } from "@chakra-ui/layout";
+import { Box, Flex, Text } from "@chakra-ui/layout";
 import {
   Modal,
   ModalContent,
@@ -17,40 +17,99 @@ import { primaryPathUser } from "../API/Path_List";
 import { Put } from "../API/Base_Http_Request";
 import useAuth from "../Hooks/useAuth";
 import ExceptionHandler from "../Utils/ExceptionHandler";
+import { IoMdClose } from "react-icons/io";
 
 const UpdateModal = (props) => {
-  const { setUser } = useAuth();
+  const { user } = useAuth();
   const json = props.data;
-  const [fname, setFname] = useState(json.first_name);
-  const [mname, setMname] = useState(json.middle_name);
-  const [lname, setLname] = useState(json.last_name);
-  const [department, setDepartment] = useState(json.department);
-  const msg = "";
+
+  const [loading, setLoading] = useState(false);
+  const [fname, setFname] = useState("");
+  const [mname, setMname] = useState("");
+  const [lname, setLname] = useState("");
+  const [department, setDepartment] = useState("");
+
+  const [msg, setMsg] = useState("");
 
   const handleUpdateTask = () => {
-    Put({ url: primaryPathUser })
+    setLoading(true);
+
+    Put(
+      { url: `${primaryPathUser}/${json.id}` },
+      {
+        status: json.status === "PENDING" || json.status === "DISABLED" ? 1 : 2,
+      }
+    )
       .then((res) => {
-        if (!res.ok) {
+        const { statusText } = res;
+        if (!statusText === "OK") {
           throw new Error("Bad response", { cause: res });
         }
 
+        setLoading(false);
+        props.setFetch(true);
         props.onClose();
       })
       .catch((err) => {
-        msg = ExceptionHandler(err);
+        setMsg(ExceptionHandler(err));
+        setLoading(false);
       });
   };
 
+  const handleInit = () => {
+    try {
+      setFname(json.first_name);
+      setMname(json.middle_name);
+      setLname(json.last_name);
+      setDepartment(json.department);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    handleInit();
+  }, [json]);
+
   return (
     <Modal
-      closeOnOverlayClick={false}
+      closeOnOverlayClick={true}
       isOpen={props.isOpen}
       onClose={props.onClose}
       isCentered
     >
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Update User</ModalHeader>
+        <ModalHeader
+          display={"flex"}
+          justifyContent="space-between"
+          color="teal"
+          fontSize={20}
+        >
+          ACCOUNT STATUS
+          {msg === "" ? null : (
+            <Box
+              h={30}
+              bg={"rgba(255,0,0,0.8)"}
+              color="white"
+              pl={5}
+              pr={2}
+              pt={1}
+              pb={1}
+              rounded={15}
+              display="flex"
+              justifyContent={"space-between"}
+              columnGap={2}
+            >
+              <Text fontSize={14} fontWeight={400}>
+                {msg}
+              </Text>
+              <Box _hover={{ cursor: "pointer" }} onClick={() => setMsg("")}>
+                <IoMdClose />
+              </Box>
+            </Box>
+          )}
+        </ModalHeader>
         <ModalBody>
           <Input
             focusBorderColor={"#008080"}
@@ -97,6 +156,8 @@ const UpdateModal = (props) => {
               Cancel
             </Button>
             <Button
+              isLoading={loading}
+              loadingText="Processing"
               color="darkorange"
               bg="white"
               _hover={{
@@ -127,7 +188,7 @@ const Users = () => {
   const { setUser } = useAuth();
   const [isFetching, setIsFetching] = useState(true);
   const [msg, setMsg] = useState("");
-  const [fetch, setFetch] = useState(false);
+  const [fetch, setFetch] = useState(true);
   const [search, setSearch] = useState("");
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState([]);
@@ -174,10 +235,14 @@ const Users = () => {
   const handleRequest = () => {
     Get({ url: primaryPathUser })
       .then((res) => {
-        if (!res.statusText === "OK") {
+        const {
+          statusText,
+          data: { data },
+        } = res;
+        if (!statusText === "OK") {
           throw new Error("Bad response", { cause: res });
         }
-        setUsers(res.data.data);
+        setUsers(data);
         setTimeout(() => setIsFetching(false), [800]);
       })
       .catch((err) => {
@@ -196,13 +261,24 @@ const Users = () => {
   const handleEdit = (e, props) => {
     e.preventDefault();
     setSelectedUser(props);
-    onOpen();
+    setTimeout(() => {
+      onOpen();
+    }, [500]);
   };
 
   const handleDeleteTask = () => {};
 
   useEffect(() => {
-    handleRequest();
+    const intervalId = setInterval(
+      () => {
+        if (fetch) {
+          setFetch(false);
+        }
+        handleRequest();
+      },
+      fetch ? 0 : 10000
+    );
+    return () => clearInterval(intervalId);
   }, [fetch]);
 
   return (
@@ -219,7 +295,12 @@ const Users = () => {
         handleDelete={handleDeleteTask}
         isFetching={isFetching}
       />
-      <UpdateModal isOpen={isOpen} onClose={onClose} data={selectedUser} />
+      <UpdateModal
+        isOpen={isOpen}
+        onClose={onClose}
+        data={selectedUser}
+        fetch={setFetch}
+      />
     </Box>
   );
 };

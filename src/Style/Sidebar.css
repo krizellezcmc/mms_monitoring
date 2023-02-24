@@ -1,0 +1,16 @@
+
+.menu-item{
+    font-size: 15px;
+    font-weight: 500;
+}
+
+
+.menu-item:hover .menu-item-text{
+    font-weight: 700;
+    color:#246877;
+}
+
+.menu-item:hover  .menu-item-icon{
+    background-color: #246877;
+    color:white;
+}

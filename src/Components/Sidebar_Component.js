@@ -6,6 +6,7 @@ import { FaUsers, FaBuilding } from "react-icons/fa";
 import { MdHistory, MdSpaceDashboard } from "react-icons/md";
 import { useNavigate } from "react-router";
 import { useState } from "react";
+import "../Style/Sidebar.css";
 
 const SidebarHeader = (props) => {
   return (
@@ -28,12 +29,25 @@ const SidebarHeader = (props) => {
 
 const MenuItemComponent = (props) => {
   return (
-    <MenuItem icon={props.child} _hover={{ bgColor: "teal.200" }}>
+    <MenuItem
+      icon={
+        <Box
+          p={2}
+          boxShadow={"lg"}
+          bg="white"
+          rounded={5}
+          className="menu-item-icon"
+        >
+          {props.child}
+        </Box>
+      }
+      className="menu-item"
+    >
       <Text
+        ml="6px"
         width="full"
-        fontWeight={400}
-        fontSize={15}
         onClick={(e) => props.click(e, props.path)}
+        className="menu-item-text"
       >
         {props.title}
       </Text>
@@ -59,10 +73,11 @@ const SidebarNavigation = (props) => {
       },
       menu: {
         menuContent: "#fbfcfd",
-        icon: "#0098e5",
+        icon: "#3e5e7e",
         hover: {
-          backgroundColor: "#e6f2fd",
-          color: "#44596e",
+          backgroundColor: "#bed9e0",
+          color: "teal",
+          boxShadow: "10px 10px 8px #888888",
         },
         active: {
           backgroundColor: "#13395e",
@@ -98,7 +113,7 @@ const SidebarNavigation = (props) => {
 
   const menuItemStyles = {
     root: {
-      fontSize: "13px",
+      fontSize: "14px",
       fontWeight: 400,
     },
     icon: {
@@ -129,45 +144,45 @@ const SidebarNavigation = (props) => {
   };
 
   return (
-    <Box>
-      <Sidebar breakPoint="lg" backgroundColor="white">
+    <Box backgroundColor="white">
+      <Sidebar h={"100vh"} backgroundColor="white" breakPoint="lg">
         <SidebarHeader collapsed={props.collapsed} />
         <Box h={20}></Box>
         <Menu menuItemStyles={menuItemStyles}>
           <MenuItemComponent
             title={"Dashboard"}
             path={"/"}
-            child={<MdSpaceDashboard color="teal" fontSize={25} />}
+            child={<MdSpaceDashboard className="icon" fontSize={20} />}
             click={handleClick}
           />
           <MenuItemComponent
             title={"Purchase Request"}
             path={"pr"}
-            child={<BsFillBagPlusFill color="teal" fontSize={25} />}
+            child={<BsFillBagPlusFill fontSize={20} />}
             click={handleClick}
           />
           <MenuItemComponent
             title={"Purchase Order"}
             path={"po"}
-            child={<BsFillBagCheckFill color="teal" fontSize={25} />}
+            child={<BsFillBagCheckFill fontSize={20} />}
             click={handleClick}
           />
           <MenuItemComponent
             title={"Users"}
             path={"users"}
-            child={<FaUsers color="teal" fontSize={25} />}
+            child={<FaUsers fontSize={20} />}
             click={handleClick}
           />
           <MenuItemComponent
             title={"Departments"}
             path={"departments"}
-            child={<FaBuilding color="teal" fontSize={25} />}
+            child={<FaBuilding fontSize={20} />}
             click={handleClick}
           />
           <MenuItemComponent
             title={"Request Logs"}
             path={"logs"}
-            child={<MdHistory color="teal" fontSize={25} />}
+            child={<MdHistory fontSize={20} />}
             click={handleClick}
           />
         </Menu>

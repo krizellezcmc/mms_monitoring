@@ -9,8 +9,6 @@ import {
   ModalCloseButton,
   useDisclosure,
   Input,
-  FormControl,
-  FormLabel,
   Button,
 } from "@chakra-ui/react";
 import { useMemo, useState, useEffect, useRef } from "react";
@@ -122,7 +120,7 @@ const Departments = () => {
   const title = "Department";
   const [isFetching, setIsFetching] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [fetch, setFetch] = useState(false);
+  const [fetch, setFetch] = useState(true);
   const [search, setSearch] = useState("");
   const [departments, setDepartments] = useState([]);
   const [selectedDept, setSelectedDept] = useState([]);
@@ -200,6 +198,7 @@ const Departments = () => {
   );
 
   const handleEdit = (props) => {
+    console.log(props);
     setSelectedDept(props);
     onOpen();
   };
@@ -223,7 +222,16 @@ const Departments = () => {
   };
 
   useEffect(() => {
-    handleFetch();
+    const intervalId = setInterval(
+      () => {
+        if (fetch) {
+          setFetch(false);
+        }
+        handleFetch();
+      },
+      fetch ? 0 : 30000
+    );
+    return () => clearInterval(intervalId);
   }, [fetch]);
 
   return (
