@@ -48,11 +48,6 @@ const Login = () => {
           throw new Error("Bad response", { cause: res });
         }
 
-        if (res.data.data.message === "Email or password incorrect") {
-          setFeedBackDescription(res.data.message);
-          return;
-        }
-
         setUser(res.data.data);
         sessionStorage.setItem("Token", res.data.Token);
         setLoading(false);
@@ -60,12 +55,16 @@ const Login = () => {
         handleReset();
       })
       .catch((err) => {
+        setLoading(false);
         const {
           response: {
             status,
             data: { json },
           },
         } = err;
+        if (status === 401) {
+          console.log(err);
+        }
         if (status === 302) {
           navigate(json.path, {
             state: {

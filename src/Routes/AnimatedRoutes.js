@@ -24,6 +24,8 @@ import AccountRegistration from "../Pages/Account_Registration";
 import PurchaseRequestProcurement from "../Pages/Purchase_Request_Procurement";
 import RequestLogs from "../Pages/Request_Logs";
 import Profile from "../Pages/Profile";
+import { Get } from "../API/Base_Http_Request";
+import { primaryPathUser } from "../API/Path_List";
 
 const LoginPage = React.lazy(() => import("../Pages/Login"));
 const MainLayoutPage = React.lazy(() => import("../Pages/Main_Layout"));
@@ -87,18 +89,18 @@ const RoutesData = [
   },
 ];
 
-const ProtectedRoute = ({ user }) => {
+const ProtectedRoute = () => {
+  const { user } = useAuth();
+
   return user === null ? <Navigate to="/login" replace /> : <Outlet />;
 };
 
 function AnimatedRoutes() {
-  const { user } = useAuth();
-
   return (
     <AnimatePresence>
       <Suspense fallback={<Loading />}>
         <Routes>
-          <Route element={<ProtectedRoute user={user} />}>
+          <Route element={<ProtectedRoute />}>
             <Route
               path="/*"
               exact

@@ -42,13 +42,9 @@ const MenuItemComponent = (props) => {
         </Box>
       }
       className="menu-item"
+      onClick={(e) => props.click(e, props.path)}
     >
-      <Text
-        ml="6px"
-        width="full"
-        onClick={(e) => props.click(e, props.path)}
-        className="menu-item-text"
-      >
+      <Text ml="6px" width="full" className="menu-item-text">
         {props.title}
       </Text>
     </MenuItem>
