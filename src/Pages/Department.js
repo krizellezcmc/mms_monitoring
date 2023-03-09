@@ -69,7 +69,7 @@ function Department(props) {
     getList();
     selectedDept();
     getIssReport();
-  }, [selected]);
+  }, [selected, label]);
 
   const exportPDF = () => {
     let element = (

@@ -20,7 +20,6 @@ import {
   Box,
   Spinner,
   Input,
-  Center,
   InputGroup,
   InputLeftElement,
 } from "@chakra-ui/react";
@@ -45,7 +44,6 @@ function IssuedByCategory(props) {
     let response = await localApi.get("/get_IssTotalperCat.php");
 
     setCategories(response.data);
-
     setLoading(false);
 
     let year = await localApi.get("/get_year.php");
@@ -56,12 +54,11 @@ function IssuedByCategory(props) {
     setLoading(true);
 
     let response = await localApi.get("/get_stocksIssued.php", {
-      params: { itemCat: cat },
+      params: { itemCat: cat, year: select },
     });
 
     setItems(response.data);
 
-    console.log(response.data);
     setLoading(false);
 
     let year = await localApi.get("/get_year.php");
@@ -72,14 +69,13 @@ function IssuedByCategory(props) {
 
   useEffect(() => {
     getList();
-  }, [search]);
+  }, [select, items]);
   return (
     <div>
       <Box align="right">
         <Box w={200}>
           <Select
             variant="simple"
-            defaultValue={select}
             options={year}
             selectedOptionStyle="check"
             onChange={(e) => {
@@ -95,7 +91,7 @@ function IssuedByCategory(props) {
               <Th textAlign="left" w={600}>
                 Category
               </Th>
-              <Th textAlign="center">Total</Th>
+              <Th textAlign="center">Total Deliveries</Th>
               <Th textAlign="center">Issued</Th>
               <Th textAlign="center">Balance</Th>
             </Tr>
@@ -219,7 +215,7 @@ function IssuedByCategory(props) {
                 <Tbody>
                   {loading ? (
                     <Tr>
-                      <Td colSpan="4" textAlign="center" py={5}>
+                      <Td colSpan="5" textAlign="center" py={5}>
                         <Spinner size="lg" colorScheme="teal" />
                       </Td>
                     </Tr>
@@ -231,7 +227,7 @@ function IssuedByCategory(props) {
                         if (select === "") {
                           return val;
                         } else if (
-                          select === val.date &&
+                          // select === val.date &&
                           val.desc.toLowerCase().includes(search.toLowerCase())
                         ) {
                           return val;
@@ -241,7 +237,7 @@ function IssuedByCategory(props) {
                         return (
                           <>
                             <Tr fontSize={13.5}>
-                              <Td>{k + 1}</Td>
+                              <Td>{j.id}</Td>
                               <Td>{j.desc}</Td>
                               <Td>{j.unit}</Td>
                               <Td textAlign="center">
@@ -258,7 +254,6 @@ function IssuedByCategory(props) {
                         );
                       })
                   )}
-
                   {items
                     .filter((val) => {
                       if (select === "") {
@@ -283,7 +278,7 @@ function IssuedByCategory(props) {
                           </Td>
                         </Tr>
                       ),
-                      ""
+                      0
                     )}
                 </Tbody>
               </Table>
