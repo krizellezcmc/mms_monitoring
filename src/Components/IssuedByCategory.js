@@ -38,14 +38,18 @@ function IssuedByCategory(props) {
 
   const [categories, setCategories] = useState([]);
 
-  const getList = async () => {
+  const getList = async (inYear) => {
     setLoading(true);
 
-    let response = await localApi.get("/get_IssTotalperCat.php");
+    let response = await localApi.get("/get_IssTotalperCat.php", {
+      params: { curYear: inYear },
+    });
 
     setCategories(response.data);
     setLoading(false);
+  };
 
+  const getYear = async () => {
     let year = await localApi.get("/get_year.php");
     setYear(year.data);
   };
@@ -79,7 +83,7 @@ function IssuedByCategory(props) {
             options={year}
             selectedOptionStyle="check"
             onChange={(e) => {
-              setSelect(e.value);
+              getList(e.value);
             }}
           />
         </Box>
@@ -107,13 +111,13 @@ function IssuedByCategory(props) {
               ""
             ) : (
               categories
-                .filter((val) => {
-                  if (select === "") {
-                    return val;
-                  } else if (select === val.year) {
-                    return val;
-                  }
-                })
+                // .filter((val) => {
+                //   if (select === "") {
+                //     return val;
+                //   } else if (select === val.year) {
+                //     return val;
+                //   }
+                // })
                 .map((j, k) => {
                   return (
                     <>

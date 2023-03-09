@@ -50,9 +50,11 @@ function Department(props) {
   };
   const selectedDept = async (e) => {
     let response = await localApi.get("/get_IssperDept.php", {
-      params: { mscWarehouseDST: selected },
+      params: { mscWarehouseDST: e },
     });
     setDeptData(response.data);
+
+    console.log(response.data);
   };
 
   const getIssReport = async () => {
@@ -67,7 +69,6 @@ function Department(props) {
 
   useEffect(() => {
     getList();
-    selectedDept();
     getIssReport();
   }, [selected, label]);
 
@@ -129,6 +130,7 @@ function Department(props) {
               onChange={(e) => {
                 setSelected(e.value);
                 setLabel(e.label);
+                selectedDept(e.value);
               }}
             />
           </Box>
