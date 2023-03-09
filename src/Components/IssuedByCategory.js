@@ -40,15 +40,19 @@ function IssuedByCategory(props) {
 
   const [categories, setCategories] = useState([]);
 
-  const getList = async () => {
+  const getList = async (inYear) => {
     setLoading(true);
 
-    let response = await localApi.get("/get_IssTotalperCat.php");
+    let response = await localApi.get("/get_IssTotalperCat.php", {
+      params: { curYear: inYear },
+    });
 
     setCategories(response.data);
 
     setLoading(false);
+  };
 
+  const getYear = async () => {
     let year = await localApi.get("/get_year.php");
     setYear(year.data);
   };
@@ -72,7 +76,7 @@ function IssuedByCategory(props) {
   let sum = 0;
 
   useEffect(() => {
-    getList();
+    getYear();
   }, [search]);
   return (
     <div>
@@ -80,11 +84,10 @@ function IssuedByCategory(props) {
         <Box w={200}>
           <Select
             variant="simple"
-            defaultValue={select}
             options={year}
             selectedOptionStyle="check"
             onChange={(e) => {
-              setSelect(e.value);
+              getList(e.value);
             }}
           />
         </Box>
@@ -96,7 +99,7 @@ function IssuedByCategory(props) {
               <Th textAlign="left" w={600}>
                 Category
               </Th>
-              <Th textAlign="center">Total</Th>
+              <Th textAlign="center">Total Deliveries</Th>
               <Th textAlign="center">Issued</Th>
               <Th textAlign="center">Balance</Th>
             </Tr>
@@ -112,13 +115,13 @@ function IssuedByCategory(props) {
               ""
             ) : (
               categories
-                .filter((val) => {
-                  if (select === "") {
-                    return val;
-                  } else if (select === val.year) {
-                    return val;
-                  }
-                })
+                // .filter((val) => {
+                //   if (select === "") {
+                //     return val;
+                //   } else if (select === val.year) {
+                //     return val;
+                //   }
+                // })
                 .map((j, k) => {
                   return (
                     <>
