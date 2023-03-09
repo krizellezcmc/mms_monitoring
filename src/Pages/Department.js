@@ -70,7 +70,7 @@ function Department(props) {
   useEffect(() => {
     getList();
     getIssReport();
-  }, [selected]);
+  }, [selected, label]);
 
   const exportPDF = () => {
     let element = (

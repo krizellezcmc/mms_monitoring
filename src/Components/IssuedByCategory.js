@@ -20,14 +20,12 @@ import {
   Box,
   Spinner,
   Input,
-  Center,
   InputGroup,
   InputLeftElement,
 } from "@chakra-ui/react";
 import localApi from "../API/localAPI";
 import { Select } from "chakra-react-select";
 import { SearchIcon } from "@chakra-ui/icons";
-import { act } from "react-dom/test-utils";
 
 function IssuedByCategory(props) {
   const [items, setItems] = useState([]);
@@ -48,7 +46,6 @@ function IssuedByCategory(props) {
     });
 
     setCategories(response.data);
-
     setLoading(false);
   };
 
@@ -61,12 +58,11 @@ function IssuedByCategory(props) {
     setLoading(true);
 
     let response = await localApi.get("/get_stocksIssued.php", {
-      params: { itemCat: cat },
+      params: { itemCat: cat, year: select },
     });
 
     setItems(response.data);
 
-    console.log(response.data);
     setLoading(false);
 
     let year = await localApi.get("/get_year.php");
@@ -76,8 +72,8 @@ function IssuedByCategory(props) {
   let sum = 0;
 
   useEffect(() => {
-    getYear();
-  }, [search]);
+    getList();
+  }, [select, items]);
   return (
     <div>
       <Box align="right">
@@ -223,7 +219,7 @@ function IssuedByCategory(props) {
                 <Tbody>
                   {loading ? (
                     <Tr>
-                      <Td colSpan="4" textAlign="center" py={5}>
+                      <Td colSpan="5" textAlign="center" py={5}>
                         <Spinner size="lg" colorScheme="teal" />
                       </Td>
                     </Tr>
@@ -235,7 +231,7 @@ function IssuedByCategory(props) {
                         if (select === "") {
                           return val;
                         } else if (
-                          select === val.date &&
+                          // select === val.date &&
                           val.desc.toLowerCase().includes(search.toLowerCase())
                         ) {
                           return val;
@@ -245,7 +241,7 @@ function IssuedByCategory(props) {
                         return (
                           <>
                             <Tr fontSize={13.5}>
-                              <Td>{k + 1}</Td>
+                              <Td>{j.id}</Td>
                               <Td>{j.desc}</Td>
                               <Td>{j.unit}</Td>
                               <Td textAlign="center">
@@ -262,7 +258,6 @@ function IssuedByCategory(props) {
                         );
                       })
                   )}
-
                   {items
                     .filter((val) => {
                       if (select === "") {
@@ -287,7 +282,7 @@ function IssuedByCategory(props) {
                           </Td>
                         </Tr>
                       ),
-                      ""
+                      0
                     )}
                 </Tbody>
               </Table>
